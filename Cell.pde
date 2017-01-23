@@ -1,17 +1,18 @@
 class Cell extends GameObject
 {
-  int size;
+  float size;
   
-  Cell(float x, float y)
+  Cell(float x, float y, float size)
   {
-    pos.x = x;
-    pos.y = y;
+    pos = new PVector(x, y);
+    this.size = size;
     c = #00FF00;
-    size = 50;
   }
   
   void render()
   {
+    stroke(c);
+    noFill();
     rect(pos.x, pos.y, size, size);
   }
 }
