@@ -21,5 +21,12 @@ void draw()
   background(0);
   myGrid.render();
   enemyGrid.render();
+  
+  ship.update();
   ship.render();
+}
+
+void mouseClicked()
+{
+  ship.mouseClicked();
 }

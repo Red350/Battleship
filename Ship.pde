@@ -22,28 +22,40 @@ class Ship extends GameObject
   {
     stroke(c);
     noFill();
-    rect(pos.x + 10, pos.y + 10, w, h);
+    rect(pos.x, pos.y, w, h);
   }
   
   void update()
   {
     if(selected)
     {
-      pos.x = mouseX;
-      pos.y = mouseY;
+      pos.x = mouseX - w / 2;
+      pos.y = mouseY - h / 2;
     }
   }
   
-  void mouseOver()
+  void mouseClicked()
   {
     if (mouseX > pos.x && mouseX < pos.x + w && mouseY > pos.y && mouseY < pos.y + h)
     {
-      hover = true;
-    }
-    else
-    {
-      hover = false;
+      selected = !selected;
     }
   }
   
+  //void mouseOver()
+  //{
+  //  if (mouseX > pos.x && mouseX < pos.x + w && mouseY > pos.y && mouseY < pos.y + h)
+  //  {
+  //    if(mousePressed)
+  //    {
+  //      selected = !selected;
+  //    }
+  //    hover = true;
+  //    println("hover!");
+  //  }
+  //  else
+  //  {
+  //    hover = false;
+  //  }
+  //}
 }
