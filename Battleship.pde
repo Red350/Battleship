@@ -5,7 +5,8 @@
  
 void setup()
 {
-  
+  size(1200, 600);
+  frameRate(60);
 }
 
 void draw()
