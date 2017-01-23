@@ -1,4 +1,4 @@
-class GameObject
+abstract class GameObject
 {
   PVector pos;
   color c;
