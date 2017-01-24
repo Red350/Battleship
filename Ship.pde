@@ -24,6 +24,10 @@ class Ship extends GameObject
   {
     stroke(c);
     noFill();
+    if(this.equals(selectedShip))
+    {
+      stroke(120);
+    }
     if(orientation)
     {
       rect(pos.x, pos.y, w, h);

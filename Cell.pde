@@ -16,7 +16,12 @@ class Cell extends GameObject
   void render()
   {
     stroke(c);
-    noFill();
+    if(occupied)
+    {
+      fill(255);
+    } else {
+      noFill();
+    }
     rect(pos.x, pos.y, size, size);
     if(hit)
     {

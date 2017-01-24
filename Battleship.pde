@@ -19,6 +19,7 @@ Grid myGrid = new Grid(50,50,500);
 Grid enemyGrid = new Grid(650,50,500);
 
 Ship ship = new Ship(100,600,5);
+Ship ship2 = new Ship(100,650,4);
 
 void setup()
 {
@@ -31,12 +32,21 @@ void setup()
 void draw()
 {
   background(0);
+  switch(state)
+  {
+    case MENU:
+      break;
+    case OPTIONS:
+      break;
+    case SETUP:
+      renderGame();
+      break;
+    case PLAYING:
+      renderGame();
+      break;
+  }
+    
   
-  myGrid.render();
-  enemyGrid.render();
-  
-  ship.update();
-  ship.render();
 }
 
 void mouseClicked()
@@ -53,6 +63,7 @@ void mouseClicked()
         if(selectedShip == null)
         {
           ship.mouseClicked();
+          ship2.mouseClicked();
         } else {
           myGrid.mouseClicked();
         }
@@ -69,4 +80,15 @@ void mouseClicked()
       break;
   }
   
+}
+
+// method to call updated and render on all game objects
+void renderGame()
+{
+  myGrid.render();
+  enemyGrid.render();
+  ship.update();
+  ship.render();
+  ship2.update();
+  ship2.render();
 }
