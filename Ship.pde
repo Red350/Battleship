@@ -5,13 +5,15 @@ class Ship extends GameObject
   color c;
   boolean hover;
   boolean selected;
+  boolean orientation;  // true is horizontal, false is vertical
   
   Ship(float x, float y, int size)
   {
     pos = new PVector(x, y);
     this.size = size;
-    w = (size * cellSize)-20;
-    h = cellSize-20;
+    w = (size * cellSize) - shipGap * 2;
+    h = cellSize - shipGap * 2;
+    orientation = true;  // Ship starts horizontal
     
     hover = false;
     selected = false;
@@ -22,14 +24,24 @@ class Ship extends GameObject
   {
     stroke(c);
     noFill();
-    rect(pos.x, pos.y, w, h);
+    if(orientation)
+    {
+      rect(pos.x, pos.y, w, h);
+    } else {
+      rect(pos.x, pos.y, h, w);
+    }
+  }
+  
+  void keyPressed()
+  {
+    orientation = !orientation;
   }
   
   void update()
   {
     if(selected)
     {
-      pos.x = mouseX - w / 2;
+      pos.x = mouseX - h / 2;
       pos.y = mouseY - h / 2;
     }
   }
@@ -38,24 +50,14 @@ class Ship extends GameObject
   {
     if (mouseX > pos.x && mouseX < pos.x + w && mouseY > pos.y && mouseY < pos.y + h)
     {
-      selected = !selected;
+      if(!selected)
+      {
+        selected = true;
+        selectedShip = this;
+      } else {
+        selected = false;
+        selectedShip = null;
+      }
     }
   }
-  
-  //void mouseOver()
-  //{
-  //  if (mouseX > pos.x && mouseX < pos.x + w && mouseY > pos.y && mouseY < pos.y + h)
-  //  {
-  //    if(mousePressed)
-  //    {
-  //      selected = !selected;
-  //    }
-  //    hover = true;
-  //    println("hover!");
-  //  }
-  //  else
-  //  {
-  //    hover = false;
-  //  }
-  //}
 }

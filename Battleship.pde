@@ -4,6 +4,10 @@
  */
  
 int cellSize = 50;
+int edgeGap = 50;
+int shipGap = 10;
+
+Ship selectedShip;
  
 Grid myGrid = new Grid(50,50,500);
 Grid enemyGrid = new Grid(650,50,500);
@@ -19,6 +23,7 @@ void setup()
 void draw()
 {
   background(0);
+  
   myGrid.render();
   enemyGrid.render();
   
@@ -28,5 +33,22 @@ void draw()
 
 void mouseClicked()
 {
-  ship.mouseClicked();
+  if(mouseButton == LEFT)
+  {
+    if(selectedShip == null)
+    {
+      ship.mouseClicked();
+    } else {
+      myGrid.mouseClicked();
+    }
+  }
+  
+  // Right click rotates a selected ship
+  if(mouseButton == RIGHT)
+  {
+    if(selectedShip != null)
+    {
+      selectedShip.keyPressed();
+    }
+  }
 }

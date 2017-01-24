@@ -15,4 +15,13 @@ class Cell extends GameObject
     noFill();
     rect(pos.x, pos.y, size, size);
   }
+  
+  boolean mouseOver()
+  {
+    if(mouseX > pos.x && mouseX < pos.x + size && mouseY > pos.y && mouseY < pos.y + size)
+    {
+      return true;
+    }
+    return false;
+  }
 }
