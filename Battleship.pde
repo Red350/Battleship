@@ -24,52 +24,19 @@ Grid enemyGrid = new Grid(650,50,500);
 Ship[] myShips = new Ship[5];
 Ship[] enemyShips = new Ship[5];
 
+ArrayList<Button> buttons = new ArrayList<Button>();
+ResetButton resetButton;
+
 void setup()
 {
   size(1200, 800);
   frameRate(60);
   
-  myShips[0] = new Ship(100,600,5,0);
-  myShips[1] = new Ship(100,650,4,1);
-  myShips[2] = new Ship(100,700,3,2);
-  myShips[3] = new Ship(600,600,3,3);
-  myShips[4] = new Ship(600,650,2,4);
+  resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
+  buttons.add(resetButton);
   
-  enemyShips[0] = new Ship(5,0);
-  enemyShips[1] = new Ship(4,1);
-  enemyShips[2] = new Ship(3,2);
-  enemyShips[3] = new Ship(3,3);
-  enemyShips[4] = new Ship(2,4);
-  
-  // Place enemy ships
-  enemyGrid.placeShip(enemyShips[0],0,0);
-  enemyGrid.placeShip(enemyShips[1],1,1);
-  enemyGrid.placeShip(enemyShips[2],2,2);
-  enemyGrid.placeShip(enemyShips[3],3,3);
-  enemyGrid.placeShip(enemyShips[4],4,4);
-  
-  //enemyGrid.cells[0][0].occupied = true;
-  //enemyGrid.cells[0][1].occupied = true;
-  //enemyGrid.cells[0][2].occupied = true;
-  //enemyGrid.cells[0][3].occupied = true;
-  //enemyGrid.cells[0][4].occupied = true;
-  
-  //enemyGrid.cells[1][0].occupied = true;
-  //enemyGrid.cells[2][0].occupied = true;
-  //enemyGrid.cells[3][0].occupied = true;
-  //enemyGrid.cells[4][0].occupied = true;
-  
-  //enemyGrid.cells[4][3].occupied = true;
-  //enemyGrid.cells[4][4].occupied = true;
-  //enemyGrid.cells[4][5].occupied = true;
-  
-  //enemyGrid.cells[5][2].occupied = true;
-  //enemyGrid.cells[5][3].occupied = true;
-  //enemyGrid.cells[5][4].occupied = true;
-  
-  //enemyGrid.cells[7][6].occupied = true;
-  //enemyGrid.cells[8][6].occupied = true;
-  
+  // Set the starting positions for the ships
+  reset();
   
   state = State.PLAYING;
   //state = State.SETUP;
@@ -169,4 +136,31 @@ void renderGame()
     myShips[i].update();
     myShips[i].render();
   }
+  for(Button b : buttons)
+  {
+    b.update();
+    b.render();
+  }
+}
+
+void reset()
+{
+  myShips[0] = new Ship(100,600,5,0);
+  myShips[1] = new Ship(100,650,4,1);
+  myShips[2] = new Ship(100,700,3,2);
+  myShips[3] = new Ship(600,600,3,3);
+  myShips[4] = new Ship(600,650,2,4);
+  
+  enemyShips[0] = new Ship(5,0);
+  enemyShips[1] = new Ship(4,1);
+  enemyShips[2] = new Ship(3,2);
+  enemyShips[3] = new Ship(3,3);
+  enemyShips[4] = new Ship(2,4);
+  
+  // Place enemy ships
+  enemyGrid.placeShip(enemyShips[0],0,0);
+  enemyGrid.placeShip(enemyShips[1],1,1);
+  enemyGrid.placeShip(enemyShips[2],2,2);
+  enemyGrid.placeShip(enemyShips[3],3,3);
+  enemyGrid.placeShip(enemyShips[4],4,4);
 }
