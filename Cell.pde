@@ -1,11 +1,15 @@
 class Cell extends GameObject
 {
   float size;
+  boolean occupied;
+  boolean hit;
   
   Cell(float x, float y, float size)
   {
     pos = new PVector(x, y);
     this.size = size;
+    occupied = false;
+    hit = false;
     c = #00FF00;
   }
   
@@ -14,6 +18,12 @@ class Cell extends GameObject
     stroke(c);
     noFill();
     rect(pos.x, pos.y, size, size);
+    if(hit)
+    {
+      stroke(#FF0000);
+      line(pos.x,pos.y,pos.x+size,pos.y+size);
+      line(pos.x,pos.y+size,pos.x+size,pos.y);
+    }
   }
   
   boolean mouseOver()

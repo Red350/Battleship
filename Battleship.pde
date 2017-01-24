@@ -3,6 +3,12 @@
  * Student number: C15755659
  */
  
+public enum State {
+  MENU, OPTIONS, SETUP, PLAYING
+}
+
+State state;
+
 int cellSize = 50;
 int edgeGap = 50;
 int shipGap = 10;
@@ -18,6 +24,8 @@ void setup()
 {
   size(1200, 800);
   frameRate(60);
+  
+  state = State.SETUP;
 }
 
 void draw()
@@ -33,22 +41,32 @@ void draw()
 
 void mouseClicked()
 {
-  if(mouseButton == LEFT)
+  switch(state)
   {
-    if(selectedShip == null)
-    {
-      ship.mouseClicked();
-    } else {
-      myGrid.mouseClicked();
-    }
+    case MENU:
+    case OPTIONS:
+    case PLAYING:
+      break;
+    case SETUP:
+      if(mouseButton == LEFT)
+      {
+        if(selectedShip == null)
+        {
+          ship.mouseClicked();
+        } else {
+          myGrid.mouseClicked();
+        }
+      }
+      
+      // Right click rotates a selected ship
+      if(mouseButton == RIGHT)
+      {
+        if(selectedShip != null)
+        {
+          selectedShip.keyPressed();
+        }
+      }
+      break;
   }
   
-  // Right click rotates a selected ship
-  if(mouseButton == RIGHT)
-  {
-    if(selectedShip != null)
-    {
-      selectedShip.keyPressed();
-    }
-  }
 }

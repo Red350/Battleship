@@ -53,13 +53,13 @@ class Grid extends GameObject
             // Here the mouse is over a cell with a ship selected
             // Must check now if the ship will fit at the location
             
+            
             println("ship placed");
             println(i + " " + j);
-            selectedShip = null;
             ship.pos.x = i*cellSize + edgeGap + shipGap;
             ship.pos.y = j*cellSize + edgeGap + shipGap;
-            
             ship.selected = false;
+            selectedShip = null;
           }
         }
       }

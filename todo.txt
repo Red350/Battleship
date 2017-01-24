@@ -1,0 +1,1 @@
+Move ship placing code from grid to a method within ship.
