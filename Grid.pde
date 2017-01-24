@@ -60,9 +60,30 @@ class Grid extends GameObject
         cells[s.cellI][j].occupied = false;
       }
     }
+    numPlaced--;
   }
   
-  void mouseClicked()
+  boolean checkHit()
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        if(cells[i][j].mouseOver())
+        {
+          if(hit[i][j] == false)
+          {
+            hit[i][j] = true;
+            cells[i][j].hit = true;
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+  
+  void checkPlacement()
   {
     if(selectedShip != null)
     {
@@ -133,6 +154,7 @@ class Grid extends GameObject
               selectedShip.placed = true;
               selectedShip.selected = false;
               selectedShip = null;
+              numPlaced++;
             }
 
           }

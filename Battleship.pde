@@ -12,6 +12,7 @@ State state;
 int cellSize = 50;
 int edgeGap = 50;
 int shipGap = 10;
+int numPlaced = 0;
 
 Ship selectedShip;
  
@@ -40,7 +41,9 @@ void setup()
   enemyShips[3] = new Ship(3);
   enemyShips[4] = new Ship(2);
   
-  state = State.SETUP;
+  enemyGrid.cells[0][0].occupied = true;
+  
+  state = State.PLAYING;
 }
 
 void draw()
@@ -54,13 +57,14 @@ void draw()
       break;
     case SETUP:
       renderGame();
+      state = (numPlaced==5) ? State.PLAYING : State.SETUP;
       break;
     case PLAYING:
       renderGame();
+      fill(255);
+      rect(100,100,100,100);
       break;
   }
-    
-  
 }
 
 void mouseClicked()
@@ -68,8 +72,11 @@ void mouseClicked()
   switch(state)
   {
     case MENU:
+      break;
     case OPTIONS:
+      break;
     case PLAYING:
+      enemyGrid.checkHit();
       break;
     case SETUP:
       if(mouseButton == LEFT)
@@ -81,7 +88,7 @@ void mouseClicked()
             myShips[i].mouseClicked();
           }
         } else {
-          myGrid.mouseClicked();
+          myGrid.checkPlacement();
         }
       }
       
