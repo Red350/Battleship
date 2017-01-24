@@ -58,7 +58,19 @@ class Ship extends GameObject
   
   void mouseClicked()
   {
-    if (mouseX > pos.x && mouseX < pos.x + w && mouseY > pos.y && mouseY < pos.y + h)
+    // Have to change how mouse over is being checked depending on the orientation
+    // of the ship
+    float tempW, tempH;
+    if(orientation)
+    {
+      tempW = w;
+      tempH = h;
+    } else {
+      tempW = h;
+      tempH = w;
+    }
+    
+    if (mouseX > pos.x && mouseX < pos.x + tempW && mouseY > pos.y && mouseY < pos.y + tempH)
     {
       if(!selected)
       {

@@ -95,7 +95,6 @@ void mouseClicked()
       }
       break;
   }
-  
 }
 
 // method to call updated and render on all game objects
