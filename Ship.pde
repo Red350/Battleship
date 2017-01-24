@@ -7,20 +7,23 @@ class Ship extends GameObject
   boolean orientation;  // true is horizontal, false is vertical
   boolean placed;
   int cellI, cellJ;
-  
-  Ship(float x, float y, int size)
+  int health;
+  int id;
+    
+  Ship(float x, float y, int size, int id)
   {
-    this(size);
+    this(size, id);
     pos = new PVector(x, y);
   }
   
-  Ship(int size)
+  Ship(int size, int id)
   {
     this.size = size;
+    this.id = id;
+    this.health = size;
     w = (size * cellSize) - shipGap * 2;
     h = cellSize - shipGap * 2;
     orientation = true;  // Ship starts horizontal
-    
     selected = false;
     placed = false;
     c = #FF0000;
@@ -40,6 +43,11 @@ class Ship extends GameObject
     } else {
       rect(pos.x, pos.y, h, w);
     }
+  }
+  
+  void checkHit(int i, int j)
+  {
+    
   }
   
   void keyPressed()
