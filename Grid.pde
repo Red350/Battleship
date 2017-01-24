@@ -4,11 +4,13 @@ class Grid extends GameObject
   int[][] occupied = new int[10][10];
   boolean[][] hit = new boolean[10][10];
   float size;
+  int shipsAlive;
   
   Grid(float x, float y, float size)
   {
     pos = new PVector(x, y);
     this.size = size;
+    shipsAlive = 5;
     
     for(int i = 0; i < 10; i++)
     {
@@ -79,38 +81,38 @@ class Grid extends GameObject
           {
             hit[i][j] = true;  // Store the hit locally
             cells[i][j].hit = true;  // Tell the cell it was hit
-            println("occupied " + occupied[i][j]);
             if(occupied[i][j] >= 0)  // If the cell was occupied
             {
-              println("hello");
               ships[occupied[i][j]].health--;  // Tell the ship it was hit
               if(ships[occupied[i][j]].health == 0)
               {
+                shipsAlive--;
                 return 2;
               }
+              return 1;
             }
-            return 1;
+            return 0;
           } else {
             return -1;
           }
         }
       }
     }
-    return 0;
+    return -1;
   }
   
   // Attempt to place a ship at coordinates (i,j) in the grid
-  void placeShip(int i, int j)
+  boolean placeShip(Ship s, int i, int j)
   {
     // First check if the ship can fit at the position
     Boolean validPos = true;
-    if(selectedShip.orientation)
+    if(s.orientation)
     {
-      if(i + selectedShip.size > 10)
+      if(i + s.size > 10)
       {
         validPos = false;
       } else {
-        for(int k = i; k < i + selectedShip.size; k++)
+        for(int k = i; k < i + s.size; k++)
         {
           if(occupied[k][j] >= 0)
           {
@@ -120,11 +122,11 @@ class Grid extends GameObject
         }
       }
     } else {
-      if(j + selectedShip.size > 10)
+      if(j + s.size > 10)
       {
         validPos = false;
       } else {
-        for(int k = j; k < j + selectedShip.size; k++)
+        for(int k = j; k < j + s.size; k++)
         {
           if(occupied[i][k] >= 0)
           {
@@ -142,22 +144,23 @@ class Grid extends GameObject
       println(i + " " + j);
       // Informs the relevant cells as to where the ship was placed
       // and updates the local occupied array.
-      if(selectedShip.orientation)
+      if(s.orientation)
       {
-        for(int k = i; k < i + selectedShip.size; k++)
+        for(int k = i; k < i + s.size; k++)
         {
-          occupied[k][j] = selectedShip.id;
-          println(selectedShip.id);
+          occupied[k][j] = s.id;
           cells[k][j].occupied = true;
         }
       } else {
-        for(int k = j; k < j + selectedShip.size; k++)
+        for(int k = j; k < j + s.size; k++)
         {
-          occupied[i][k] = selectedShip.id;
+          occupied[i][k] = s.id;
           cells[i][k].occupied = true;
         }
       }
+      return true;
     }
+    return false;
   }
   
   void mouseClicked()
@@ -170,15 +173,18 @@ class Grid extends GameObject
         {
           if(cells[i][j].mouseOver())
           {
-            placeShip(i,j);
-            selectedShip.pos.x = i*cellSize + edgeGap + shipGap;
-            selectedShip.pos.y = j*cellSize + edgeGap + shipGap;
-            selectedShip.cellI = i;
-            selectedShip.cellJ = j;
-            selectedShip.placed = true;
-            selectedShip.selected = false;
-            selectedShip = null;
-            numPlaced++;
+            if(placeShip(selectedShip,i,j))
+            {
+              // Update the ship now that it's been placed
+              selectedShip.pos.x = i*cellSize + edgeGap + shipGap;
+              selectedShip.pos.y = j*cellSize + edgeGap + shipGap;
+              selectedShip.cellI = i;
+              selectedShip.cellJ = j;
+              selectedShip.placed = true;
+              selectedShip.selected = false;
+              selectedShip = null;
+              numPlaced++;
+            }
           }
         }
       }

@@ -4,7 +4,7 @@
  */
  
 public enum State {
-  MENU, OPTIONS, SETUP, PLAYING
+  MENU, OPTIONS, SETUP, PLAYING, GAMEOVER
 }
 
 State state;
@@ -13,6 +13,8 @@ int cellSize = 50;
 int edgeGap = 50;
 int shipGap = 10;
 int numPlaced = 0;
+String info = "";
+int winner;
 
 Ship selectedShip;
  
@@ -40,31 +42,39 @@ void setup()
   enemyShips[4] = new Ship(2,4);
   
   // Place enemy ships
-  enemyGrid.cells[0][0].occupied = true;
-  enemyGrid.cells[0][1].occupied = true;
-  enemyGrid.cells[0][2].occupied = true;
-  enemyGrid.cells[0][3].occupied = true;
-  enemyGrid.cells[0][4].occupied = true;
+  enemyGrid.placeShip(enemyShips[0],0,0);
+  enemyGrid.placeShip(enemyShips[1],1,1);
+  enemyGrid.placeShip(enemyShips[2],2,2);
+  enemyGrid.placeShip(enemyShips[3],3,3);
+  enemyGrid.placeShip(enemyShips[4],4,4);
   
-  enemyGrid.cells[1][0].occupied = true;
-  enemyGrid.cells[2][0].occupied = true;
-  enemyGrid.cells[3][0].occupied = true;
-  enemyGrid.cells[4][0].occupied = true;
+  //enemyGrid.cells[0][0].occupied = true;
+  //enemyGrid.cells[0][1].occupied = true;
+  //enemyGrid.cells[0][2].occupied = true;
+  //enemyGrid.cells[0][3].occupied = true;
+  //enemyGrid.cells[0][4].occupied = true;
   
-  enemyGrid.cells[4][3].occupied = true;
-  enemyGrid.cells[4][4].occupied = true;
-  enemyGrid.cells[4][5].occupied = true;
+  //enemyGrid.cells[1][0].occupied = true;
+  //enemyGrid.cells[2][0].occupied = true;
+  //enemyGrid.cells[3][0].occupied = true;
+  //enemyGrid.cells[4][0].occupied = true;
   
-  enemyGrid.cells[5][2].occupied = true;
-  enemyGrid.cells[5][3].occupied = true;
-  enemyGrid.cells[5][4].occupied = true;
+  //enemyGrid.cells[4][3].occupied = true;
+  //enemyGrid.cells[4][4].occupied = true;
+  //enemyGrid.cells[4][5].occupied = true;
   
-  enemyGrid.cells[7][6].occupied = true;
-  enemyGrid.cells[8][6].occupied = true;
+  //enemyGrid.cells[5][2].occupied = true;
+  //enemyGrid.cells[5][3].occupied = true;
+  //enemyGrid.cells[5][4].occupied = true;
+  
+  //enemyGrid.cells[7][6].occupied = true;
+  //enemyGrid.cells[8][6].occupied = true;
   
   
   state = State.PLAYING;
   //state = State.SETUP;
+  info = "test";
+  textAlign(CENTER);
 }
 
 void draw()
@@ -83,9 +93,26 @@ void draw()
     case PLAYING:
       renderGame();
       fill(255);
-      text(enemyShips[0].health,100,600);
+      
+      // Check if either player has won
+      if(myGrid.shipsAlive == 0)
+      {
+        winner = 0;
+        state = State.GAMEOVER;
+      } else {
+        if(enemyGrid.shipsAlive == 0)
+        {
+          winner = 1;
+          state = State.GAMEOVER;
+        }
+      }
+      break;
+    case GAMEOVER:
+      renderGame();
+      info = (winner == 1) ? "You win!" : "You lose!";
       break;
   }
+  text(info,width/2,750);
 }
 
 void mouseClicked()
@@ -127,6 +154,8 @@ void mouseClicked()
         }
       }
       break;
+      case GAMEOVER:
+        break;
   }
 }
 
