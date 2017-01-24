@@ -18,6 +18,8 @@ Ship selectedShip;
 Grid myGrid = new Grid(50,50,500);
 Grid enemyGrid = new Grid(650,50,500);
 
+Ship[] myShips = new Ship[5];
+Ship[] enemyShips = new Ship[5];
 Ship ship = new Ship(100,600,5);
 Ship ship2 = new Ship(100,650,4);
 
@@ -25,6 +27,18 @@ void setup()
 {
   size(1200, 800);
   frameRate(60);
+  
+  myShips[0] = new Ship(100,600,5);
+  myShips[1] = new Ship(100,650,4);
+  myShips[2] = new Ship(100,700,3);
+  myShips[3] = new Ship(600,600,3);
+  myShips[4] = new Ship(600,650,2);
+  
+  enemyShips[0] = new Ship(5);
+  enemyShips[1] = new Ship(4);
+  enemyShips[2] = new Ship(3);
+  enemyShips[3] = new Ship(3);
+  enemyShips[4] = new Ship(2);
   
   state = State.SETUP;
 }
@@ -62,8 +76,10 @@ void mouseClicked()
       {
         if(selectedShip == null)
         {
-          ship.mouseClicked();
-          ship2.mouseClicked();
+          for(int i = 0; i < 5; i++)
+          {
+            myShips[i].mouseClicked();
+          }
         } else {
           myGrid.mouseClicked();
         }
@@ -87,8 +103,9 @@ void renderGame()
 {
   myGrid.render();
   enemyGrid.render();
-  ship.update();
-  ship.render();
-  ship2.update();
-  ship2.render();
+  for(int i = 0; i < 5; i++)
+  {
+    myShips[i].update();
+    myShips[i].render();
+  }
 }

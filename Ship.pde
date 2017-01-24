@@ -1,22 +1,28 @@
 class Ship extends GameObject
 {
   int size;
-  int w, h;
+  float w, h;
   color c;
-  boolean hover;
   boolean selected;
   boolean orientation;  // true is horizontal, false is vertical
+  boolean placed;
+  int cellI, cellJ;
   
   Ship(float x, float y, int size)
   {
+    this(size);
     pos = new PVector(x, y);
+  }
+  
+  Ship(int size)
+  {
     this.size = size;
     w = (size * cellSize) - shipGap * 2;
     h = cellSize - shipGap * 2;
     orientation = true;  // Ship starts horizontal
     
-    hover = false;
     selected = false;
+    placed = false;
     c = #FF0000;
   }
   
@@ -56,6 +62,10 @@ class Ship extends GameObject
     {
       if(!selected)
       {
+        if(placed)
+        {
+          myGrid.remove(this);
+        }
         selected = true;
         selectedShip = this;
       } else {

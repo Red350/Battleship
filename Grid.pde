@@ -4,7 +4,6 @@ class Grid extends GameObject
   Boolean[][] occupied = new Boolean[10][10];
   Boolean[][] hit = new Boolean[10][10];
   float size;
-  Ship[] ships = new Ship[5];
   
   Grid(float x, float y, float size)
   {
@@ -20,11 +19,6 @@ class Grid extends GameObject
         hit[i][j] = false;
       }
     }
-    //for(int i = 0; i < 10; i++)
-    //{
-    //  occupied[i] = new Boolean[10];
-    //  hit[i] = new Boolean[10];
-    //}
   }
   
   void render()
@@ -45,6 +39,25 @@ class Grid extends GameObject
       for(int j = 0; j < 10; j++)
       {
         cells[i][j].mouseOver();
+      }
+    }
+  }
+  
+  // Sets occupied cells to false if a ship is moved after being placed
+  void remove(Ship s)
+  {
+    if(s.orientation)
+    {
+      for(int i = s.cellI; i < s.cellI + s.size; i++)
+      {
+        occupied[i][s.cellJ] = false;
+        cells[i][s.cellJ].occupied = false;
+      }
+    } else {
+      for(int j = s.cellJ; j < s.cellJ + s.size; j++)
+      {
+        occupied[s.cellI][j] = false;
+        cells[s.cellI][j].occupied = false;
       }
     }
   }
@@ -115,6 +128,9 @@ class Grid extends GameObject
               }
               selectedShip.pos.x = i*cellSize + edgeGap + shipGap;
               selectedShip.pos.y = j*cellSize + edgeGap + shipGap;
+              selectedShip.cellI = i;
+              selectedShip.cellJ = j;
+              selectedShip.placed = true;
               selectedShip.selected = false;
               selectedShip = null;
             }
