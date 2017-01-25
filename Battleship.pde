@@ -66,10 +66,11 @@ void draw()
         b.update();
         b.render();
       }
-      state = (numPlaced==5) ? State.PLAYING : State.SETUP;
       break;
     case PLAYING:
       renderGame();
+      resetButton.update();
+      resetButton.render();
       fill(255);
       
       // Check if either player has won

@@ -16,6 +16,7 @@ class StartButton extends Button
       if(numPlaced == 5)
       {
         state = State.PLAYING;
+        info = "Game has begun, your turn";
       } else {
         info = "You must place all ships before starting";
       }
