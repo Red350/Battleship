@@ -13,8 +13,8 @@ class ResetButton extends Button
   {
     if(super.mouseOver)
     {
-      reset();
       state = State.SETUP;
+      reset();
     }
   }
 }

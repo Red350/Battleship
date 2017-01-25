@@ -12,6 +12,7 @@ State state;
 int cellSize = 50;
 int edgeGap = 50;
 int shipGap = 10;
+
 int numPlaced = 0;
 String info = "";
 int winner;
@@ -200,4 +201,5 @@ void reset()
   enemyGrid.placeShip(enemyShips[4],4,4);
   
   info = "Please place your ships";
+  numPlaced = 0;
 }
