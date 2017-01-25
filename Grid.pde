@@ -183,6 +183,7 @@ class Grid extends GameObject
           cells[i][k].occupied = true;
         }
       }
+      numPlaced++;
       return true;
     }
     return false;
@@ -202,7 +203,6 @@ class Grid extends GameObject
             {
               selectedShip.lockToGrid(this,i,j);
               selectedShip = null;
-              numPlaced++;
             }
           }
         }

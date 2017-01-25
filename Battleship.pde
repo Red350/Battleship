@@ -69,7 +69,7 @@ void draw()
   textAlign(LEFT);
   textSize(12);
   fill(255);
-  text("State: " + state, 10, 20);
+  text("State: " + state + "\nNumPlaced: " + numPlaced, 10, 20);
   switch(state)
   {
     case MENU:
