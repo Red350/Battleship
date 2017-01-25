@@ -20,6 +20,7 @@ int shipGap = 10;
 
 int numPlaced = 0;
 int delay;
+final int delayAmount = 0;
 String info = "";
 
 // For these variables, 0 is the player, 1 is the computer
@@ -53,7 +54,7 @@ void setup()
   buttons.add(startButton);
   buttons.add(autoPlaceButton);
   
-  ai = new EasyAI();
+  ai = new MediumAI();
   
   reset();
   
@@ -89,11 +90,11 @@ void draw()
       
       if(turn == 1)
       {
-        if(delay == 0)
+        if(delay <= 0)
         {
-          ai.seekShot();
+          ai.shoot();
           turn = 0;
-          delay = 60;
+          delay = delayAmount;
         }
         delay--;
       }
@@ -203,6 +204,22 @@ void renderGame()
   
 }
 
+void keyPressed()
+{
+  if (key == 'p')
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        print(myGrid.occupied[i][j] + "\t");
+      } 
+      println();
+    }
+  }
+  println();
+}
+
 // Randomly place players ships
 void randomiseShips(Ship[] s, Grid g)
 {
@@ -220,6 +237,14 @@ void randomiseShips(Ship[] s, Grid g)
       y = (int)random(10);
     }
     s[i].lockToGrid(g,x,y);
+  }
+  for(int i = 0; i < 10; i++)
+  {
+    for(int j = 0; j < 10; j++)
+    {
+      print(myGrid.occupied[i][j] + " ");
+    } 
+    println();
   }
 }
 
@@ -254,5 +279,5 @@ void reset()
   info = "Please place your ships";
   numPlaced = 0;
   turn = 0;
-  delay = 60;
+  delay = delayAmount;
 }

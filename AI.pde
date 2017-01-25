@@ -2,8 +2,15 @@ abstract class AI
 {
   ArrayList<PVector> targets;
   Mode mode;
+  int lastShot;
   
-  void seekShot()
+  AI()
+  {
+    mode = Mode.SEEK;
+    lastShot = 0;
+  }
+  
+  void shoot()
   {
     int i = (int)random(targets.size());
     int result =  myGrid.AICheckHit(myShips, targets.get(i));
@@ -41,4 +48,12 @@ abstract class AI
     }
     println("Number attempts: " + attempts);
   } 
+  
+  void printTargets()
+  {
+    for(PVector target : targets)
+    {
+      println("(" + (int)target.x + "," + (int)target.y + ")");
+    }
+  }
 }

@@ -3,6 +3,7 @@ class EasyAI extends AI
   
   EasyAI()
   {
+    super();
     targets = new ArrayList<PVector>(100);
     for(int i = 0; i < 10; i++)
     {

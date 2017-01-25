@@ -17,7 +17,7 @@ class Grid extends GameObject
     {
       for(int j = 0; j < 10; j++)
       {
-        cells[i][j] = new Cell(x + (size/10) * i, y + (size/10) * j, size/10);
+        cells[i][j] = new Cell(x + (size/10) * j, y + (size/10) * i, size/10);
         occupied[i][j] = -1;
         //hit[i][j] = false;
       }
@@ -34,6 +34,21 @@ class Grid extends GameObject
         cells[i][j].render();
       }
     }
+  }
+  
+  // Checks if a PVector coordinate is within the grid
+  // and if it's not been hit.
+  // Returns true if in bounds and not hit.
+  boolean notHit(PVector p)
+  {
+    if(p.x >= 0 && p.x < 10 && p.y >= 0 && p.y < 10)
+    {
+      if(!hit[(int)p.x][(int)p.y])
+      {
+        return true;
+      }
+    }
+    return false;
   }
   
   boolean mouseOver()
@@ -99,6 +114,7 @@ class Grid extends GameObject
       {
         if(cells[i][j].mouseOver())
         {
+          println("You clicked cell: " + i + " " + j);
           // Found the cell that was clicked
           if(hit[i][j] == false)
           {
@@ -135,20 +151,6 @@ class Grid extends GameObject
     Boolean validPos = true;
     if(s.orientation)
     {
-      if(i + s.size > 10)
-      {
-        validPos = false;
-      } else {
-        for(int k = i; k < i + s.size; k++)
-        {
-          if(occupied[k][j] >= 0)
-          {
-            validPos = false;
-            break;
-          }
-        }
-      }
-    } else {
       if(j + s.size > 10)
       {
         validPos = false;
@@ -156,6 +158,20 @@ class Grid extends GameObject
         for(int k = j; k < j + s.size; k++)
         {
           if(occupied[i][k] >= 0)
+          {
+            validPos = false;
+            break;
+          }
+        }
+      }
+    } else {
+      if(i + s.size > 10)
+      {
+        validPos = false;
+      } else {
+        for(int k = i; k < i + s.size; k++)
+        {
+          if(occupied[k][j] >= 0)
           {
             validPos = false;
             break;
@@ -171,16 +187,16 @@ class Grid extends GameObject
       // and updates the local occupied array.
       if(s.orientation)
       {
-        for(int k = i; k < i + s.size; k++)
-        {
-          occupied[k][j] = s.id;
-          cells[k][j].occupied = true;
-        }
-      } else {
         for(int k = j; k < j + s.size; k++)
         {
           occupied[i][k] = s.id;
           cells[i][k].occupied = true;
+        }
+      } else {
+        for(int k = i; k < i + s.size; k++)
+        {
+          occupied[k][j] = s.id;
+          cells[k][j].occupied = true;
         }
       }
       numPlaced++;
