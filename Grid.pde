@@ -60,6 +60,31 @@ class Grid extends GameObject
   }
   
   // Returns -1 on square already shot, 0 on miss, 1 on hit, 2 on hit and kill
+  int AICheckHit(Ship[] ships, PVector shot)
+  {
+    int x = (int)shot.x;
+    int y = (int)shot.y;
+    if(hit[x][y] == false)
+    {
+      hit[x][y] = true;
+      cells[x][y].hit = true;
+      if(occupied[x][y] >= 0)
+      {
+        ships[occupied[x][y]].health--;
+        if(ships[occupied[x][y]].health == 0)
+        {
+          shipsAlive--;
+          return 2;
+        }
+        return 1;
+      }
+      return 0;
+    } else {
+      return -1;
+    }
+  }
+  
+  // Returns -1 on square already shot, 0 on miss, 1 on hit, 2 on hit and kill
   int checkHit(Ship[] ships)
   {
     // Iterate over hit array to ensure it hasn't already been hit.

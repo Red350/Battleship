@@ -7,6 +7,11 @@ public enum State {
   MENU, OPTIONS, SETUP, PLAYING, GAMEOVER
 }
 
+private enum Mode
+{
+  SEEK, HUNT
+}
+
 State state;
 
 int cellSize = 50;
@@ -29,6 +34,8 @@ ArrayList<Button> buttons = new ArrayList<Button>();
 ResetButton resetButton;
 StartButton startButton;
 
+EasyAI easy = new EasyAI();
+
 void setup()
 {
   size(1200, 800);
@@ -45,6 +52,8 @@ void setup()
   state = State.SETUP;
   textAlign(CENTER);
   textSize(20);
+  easy.printTargets();
+  //myGrid.AICheckHit(myShips, new PVector(0,0));
 }
 
 void draw()
@@ -70,7 +79,7 @@ void draw()
     case PLAYING:
       renderGame();
       resetButton.render();
-      fill(255);
+      easy.seekShot();
       
       // Check if either player has won
       if(myGrid.shipsAlive == 0)
