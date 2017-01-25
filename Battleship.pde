@@ -38,7 +38,7 @@ ArrayList<Button> buttons = new ArrayList<Button>();
 ResetButton resetButton;
 StartButton startButton;
 
-EasyAI easy = new EasyAI();
+AI ai;
 
 void setup()
 {
@@ -50,10 +50,12 @@ void setup()
   buttons.add(resetButton);
   buttons.add(startButton);
   
+  ai = new EasyAI();
+  
   reset();
   
-  state = State.PLAYING;
-  //state = State.SETUP;
+  //state = State.PLAYING;
+  state = State.SETUP;
   textAlign(CENTER);
   textSize(20);
 }
@@ -86,7 +88,7 @@ void draw()
       {
         if(delay == 0)
         {
-          easy.seekShot();
+          ai.seekShot();
           turn = 0;
           delay = 60;
         }
@@ -206,24 +208,27 @@ void reset()
   myShips = new Ship[5];
   enemyShips = new Ship[5];
   
-  myShips[0] = new Ship(100,600,5,0);
-  myShips[1] = new Ship(100,650,4,1);
-  myShips[2] = new Ship(100,700,3,2);
-  myShips[3] = new Ship(600,600,3,3);
-  myShips[4] = new Ship(600,650,2,4);
+  myShips[0] = new Ship(100,600,5,0, true);
+  myShips[1] = new Ship(100,650,4,1, true);
+  myShips[2] = new Ship(100,700,3,2, true);
+  myShips[3] = new Ship(600,600,3,3, true);
+  myShips[4] = new Ship(600,650,2,4, true);
   
-  enemyShips[0] = new Ship(5,0);
-  enemyShips[1] = new Ship(4,1);
-  enemyShips[2] = new Ship(3,2);
-  enemyShips[3] = new Ship(3,3);
-  enemyShips[4] = new Ship(2,4);
+  enemyShips[0] = new Ship(5,0,(random(1)<0.5)?true:false);
+  enemyShips[1] = new Ship(4,1,(random(1)<0.5)?true:false);
+  enemyShips[2] = new Ship(3,2,(random(1)<0.5)?true:false);
+  enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
+  enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
   
   // Place enemy ships
-  enemyGrid.placeShip(enemyShips[0],0,0);
-  enemyGrid.placeShip(enemyShips[1],1,1);
-  enemyGrid.placeShip(enemyShips[2],2,2);
-  enemyGrid.placeShip(enemyShips[3],3,3);
-  enemyGrid.placeShip(enemyShips[4],4,4);
+  println("Before");
+  ai.placeShips();
+  println("After");
+  //enemyGrid.placeShip(enemyShips[0],0,0);
+  //enemyGrid.placeShip(enemyShips[1],1,1);
+  //enemyGrid.placeShip(enemyShips[2],2,2);
+  //enemyGrid.placeShip(enemyShips[3],3,3);
+  //enemyGrid.placeShip(enemyShips[4],4,4);
   
   info = "Please place your ships";
   numPlaced = 0;

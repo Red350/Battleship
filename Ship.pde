@@ -10,20 +10,20 @@ class Ship extends GameObject
   int health;
   int id;
     
-  Ship(float x, float y, int size, int id)
+  Ship(float x, float y, int size, int id, boolean orientation)
   {
-    this(size, id);
+    this(size, id, orientation);
     pos = new PVector(x, y);
   }
   
-  Ship(int size, int id)
+  Ship(int size, int id, boolean orientation)
   {
     this.size = size;
     this.id = id;
     this.health = size;
     w = (size * cellSize) - shipGap * 2;
     h = cellSize - shipGap * 2;
-    orientation = true;  // Ship starts horizontal
+    this.orientation = orientation;
     selected = false;
     placed = false;
     c = #FF0000;
