@@ -20,7 +20,9 @@ int shipGap = 10;
 
 int numPlaced = 0;
 String info = "";
+// For these variables, 0 is the player, 1 is the computer
 int winner;
+int turn;
 
 Ship selectedShip;
  
@@ -79,17 +81,22 @@ void draw()
     case PLAYING:
       renderGame();
       resetButton.render();
-      easy.seekShot();
+      
+      if(turn == 1)
+      {
+        easy.seekShot();
+        turn = 0;
+      }
       
       // Check if either player has won
       if(myGrid.shipsAlive == 0)
       {
-        winner = 0;
+        winner = 1;
         state = State.GAMEOVER;
       } else {
         if(enemyGrid.shipsAlive == 0)
         {
-          winner = 1;
+          winner = 0;
           state = State.GAMEOVER;
         }
       }
@@ -97,7 +104,7 @@ void draw()
     case GAMEOVER:
       renderGame();
       resetButton.render();
-      info = (winner == 1) ? "You win!" : "You lose!";
+      info = (winner == 0) ? "You win!" : "You lose!";
       break;
   }
   textAlign(CENTER, CENTER);
@@ -125,12 +132,15 @@ void mouseClicked()
         {
           case 0:
             info = "Miss";
+            turn = 1;
             break;
           case 1:
             info = "Hit";
+            turn = 1;
             break;
           case 2:
             info = "Hit. Battleship sunk.";
+            turn = 1;
             break;
           default:
             break;
@@ -212,4 +222,5 @@ void reset()
   
   info = "Please place your ships";
   numPlaced = 0;
+  turn = 0;
 }
