@@ -12,15 +12,19 @@ abstract class AI
     {
       case 0:
         println("I missed :(");
+        info = "Computer missed";
         break;
       case 1:
         println("Got 'em");
+        info = "Computer hit";
         break;
       case 2:
         println("GG no re");
+        info = "Computer sunk your battleship!";
         break;
       case -1:
         println("I am broken, help");
+        info = "Computer is broken";
         break;
     }
   }
