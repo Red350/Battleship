@@ -106,7 +106,21 @@ void mouseClicked()
       // If so check if it's a hit
       if(enemyGrid.mouseOver())
       {
-        println("Outcome of shot: " + enemyGrid.checkHit(enemyShips));
+        int shotResult = enemyGrid.checkHit(enemyShips);
+        switch(shotResult)
+        {
+          case 0:
+            info = "Miss";
+            break;
+          case 1:
+            info = "Hit";
+            break;
+          case 2:
+            info = "Hit. Battleship sunk.";
+            break;
+          default:
+            break;
+        }
       }
       break;
     case SETUP:
@@ -180,4 +194,6 @@ void reset()
   enemyGrid.placeShip(enemyShips[2],2,2);
   enemyGrid.placeShip(enemyShips[3],3,3);
   enemyGrid.placeShip(enemyShips[4],4,4);
+  
+  info = "";
 }

@@ -133,8 +133,6 @@ class Grid extends GameObject
     // If the position if valid, place the ship
     if(validPos)
     {
-      println("ship placed");
-      println(i + " " + j);
       // Informs the relevant cells as to where the ship was placed
       // and updates the local occupied array.
       if(s.orientation)
