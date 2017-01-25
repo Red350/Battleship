@@ -19,7 +19,9 @@ int edgeGap = 50;
 int shipGap = 10;
 
 int numPlaced = 0;
+int delay;
 String info = "";
+
 // For these variables, 0 is the player, 1 is the computer
 int winner;
 int turn;
@@ -50,12 +52,10 @@ void setup()
   
   reset();
   
-  //state = State.PLAYING;
-  state = State.SETUP;
+  state = State.PLAYING;
+  //state = State.SETUP;
   textAlign(CENTER);
   textSize(20);
-  easy.printTargets();
-  //myGrid.AICheckHit(myShips, new PVector(0,0));
 }
 
 void draw()
@@ -84,8 +84,13 @@ void draw()
       
       if(turn == 1)
       {
-        easy.seekShot();
-        turn = 0;
+        if(delay == 0)
+        {
+          easy.seekShot();
+          turn = 0;
+          delay = 60;
+        }
+        delay--;
       }
       
       // Check if either player has won
@@ -125,7 +130,7 @@ void mouseClicked()
       resetButton.mouseClicked();
       // Check if the mouse is over the grid
       // If so check if it's a hit
-      if(enemyGrid.mouseOver())
+      if(turn == 0 && enemyGrid.mouseOver())
       {
         int shotResult = enemyGrid.checkHit(enemyShips);
         switch(shotResult)
@@ -223,4 +228,5 @@ void reset()
   info = "Please place your ships";
   numPlaced = 0;
   turn = 0;
+  delay = 60;
 }

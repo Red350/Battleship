@@ -5,6 +5,7 @@ class Grid extends GameObject
   boolean[][] hit = new boolean[10][10];
   float size;
   int shipsAlive;
+  Cell lastHitCell;  // This keeps track of last hit cell, to allow for a different coloured marker
   
   Grid(float x, float y, float size)
   {
@@ -21,6 +22,7 @@ class Grid extends GameObject
         //hit[i][j] = false;
       }
     }
+    lastHitCell = cells[0][0];  // Initialise this to avoid having to null check it later
   }
   
   void render()
@@ -68,6 +70,9 @@ class Grid extends GameObject
     {
       hit[x][y] = true;
       cells[x][y].hit = true;
+      lastHitCell.lastHit = false;
+      lastHitCell = cells[x][y];
+      lastHitCell.lastHit = true;
       if(occupied[x][y] >= 0)
       {
         ships[occupied[x][y]].health--;
@@ -99,6 +104,10 @@ class Grid extends GameObject
           {
             hit[i][j] = true;  // Store the hit locally
             cells[i][j].hit = true;  // Tell the cell it was hit
+            // This keeps track of last hit cell, to allow for a different coloured ma
+            lastHitCell.lastHit = false;
+            lastHitCell = cells[i][j];
+            lastHitCell.lastHit = true;
             if(occupied[i][j] >= 0)  // If the cell was occupied
             {
               ships[occupied[i][j]].health--;  // Tell the ship it was hit
