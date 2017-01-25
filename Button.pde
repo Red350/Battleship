@@ -23,11 +23,19 @@ abstract class Button
   
   void render()
   {
-    noFill();
+    if(mouseOver)
+    {
+      fill(c);
+    } else {
+      noFill();
+    }
     stroke(c);
     rect(pos.x,pos.y,w,h);
-    textAlign(CENTER);
+    textAlign(CENTER, CENTER);
+    textSize(20);
     fill(c);
     text(name,pos.x+w/2,pos.y+h/2);
   }
+  
+  void mouseClicked(){}
 }

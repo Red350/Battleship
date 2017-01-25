@@ -37,13 +37,6 @@ class Grid extends GameObject
   boolean mouseOver()
   {
     return(mouseX > pos.x && mouseX < pos.x + size && mouseY > pos.y && mouseY < pos.y + size);
-    //for(int i = 0; i < 10; i++)
-    //{
-    //  for(int j = 0; j < 10; j++)
-    //  {
-    //    cells[i][j].mouseOver();
-    //  }
-    //}
   }
   
   // Sets occupied cells to -1 if a ship is moved after being placed

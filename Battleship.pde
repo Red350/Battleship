@@ -18,11 +18,11 @@ int winner;
 
 Ship selectedShip;
  
-Grid myGrid = new Grid(50,50,500);
-Grid enemyGrid = new Grid(650,50,500);
+Grid myGrid;
+Grid enemyGrid;
 
-Ship[] myShips = new Ship[5];
-Ship[] enemyShips = new Ship[5];
+Ship[] myShips;
+Ship[] enemyShips;
 
 ArrayList<Button> buttons = new ArrayList<Button>();
 ResetButton resetButton;
@@ -35,18 +35,22 @@ void setup()
   resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
   buttons.add(resetButton);
   
-  // Set the starting positions for the ships
   reset();
   
   state = State.PLAYING;
   //state = State.SETUP;
   info = "test";
   textAlign(CENTER);
+  textSize(20);
 }
 
 void draw()
 {
   background(0);
+  textAlign(LEFT);
+  textSize(12);
+  fill(255);
+  text("State: " + state, 10, 20);
   switch(state)
   {
     case MENU:
@@ -79,11 +83,18 @@ void draw()
       info = (winner == 1) ? "You win!" : "You lose!";
       break;
   }
+  textAlign(CENTER, CENTER);
+  textSize(20);
+  fill(255);
   text(info,width/2,750);
 }
 
 void mouseClicked()
 {
+  for(Button b : buttons)
+  {
+    b.mouseClicked();
+  }
   switch(state)
   {
     case MENU:
@@ -145,6 +156,12 @@ void renderGame()
 
 void reset()
 {
+  myGrid = new Grid(50,50,500);
+  enemyGrid = new Grid(650,50,500);
+  
+  myShips = new Ship[5];
+  enemyShips = new Ship[5];
+  
   myShips[0] = new Ship(100,600,5,0);
   myShips[1] = new Ship(100,650,4,1);
   myShips[2] = new Ship(100,700,3,2);
