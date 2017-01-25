@@ -200,13 +200,7 @@ class Grid extends GameObject
           {
             if(placeShip(selectedShip,i,j))
             {
-              // Update the ship now that it's been placed
-              selectedShip.pos.x = i*cellSize + edgeGap + shipGap;
-              selectedShip.pos.y = j*cellSize + edgeGap + shipGap;
-              selectedShip.cellI = i;
-              selectedShip.cellJ = j;
-              selectedShip.placed = true;
-              selectedShip.selected = false;
+              selectedShip.lockToGrid(this,i,j);
               selectedShip = null;
               numPlaced++;
             }

@@ -94,4 +94,14 @@ class Ship extends GameObject
       }
     }
   }
+  
+  void lockToGrid(Grid g, int x, int y)
+  {
+    pos.x = x*cellSize + edgeGap + shipGap;
+    pos.y = y*cellSize + edgeGap + shipGap;
+    cellI = x;
+    cellJ = y;
+    placed = true;
+    selected = false;
+  }
 }

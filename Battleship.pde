@@ -37,6 +37,7 @@ Ship[] enemyShips;
 ArrayList<Button> buttons = new ArrayList<Button>();
 ResetButton resetButton;
 StartButton startButton;
+AutoPlaceButton autoPlaceButton;
 
 AI ai;
 
@@ -47,8 +48,10 @@ void setup()
   
   resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
   startButton = new StartButton("Start", new PVector(900,625),100, 50, #FFFF00);
+  autoPlaceButton = new AutoPlaceButton("Randomise", new PVector(1025,625),100, 50, #FFFF00);
   buttons.add(resetButton);
   buttons.add(startButton);
+  buttons.add(autoPlaceButton);
   
   ai = new EasyAI();
   
@@ -221,9 +224,7 @@ void reset()
   enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
   
   // Place enemy ships
-  println("Before");
-  ai.placeShips();
-  println("After");
+  ai.randomiseShips(enemyShips, enemyGrid);
   //enemyGrid.placeShip(enemyShips[0],0,0);
   //enemyGrid.placeShip(enemyShips[1],1,1);
   //enemyGrid.placeShip(enemyShips[2],2,2);

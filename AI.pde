@@ -25,16 +25,15 @@ abstract class AI
     }
   }
   
-  void placeShips()
+  void randomiseShips(Ship[] s, Grid g)
   {
     int attempts = 0;
     for(int i = 0; i < 5; i++)
     {
-      while(!enemyGrid.placeShip(enemyShips[i],(int)random(10),(int)random(10)))
+      while(!g.placeShip(s[i],(int)random(10),(int)random(10)))
       {
         attempts++;
       }
-      println("Ship placed");
     }
     println("Number attempts: " + attempts);
   } 
