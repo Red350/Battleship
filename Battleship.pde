@@ -26,6 +26,7 @@ Ship[] enemyShips;
 
 ArrayList<Button> buttons = new ArrayList<Button>();
 ResetButton resetButton;
+StartButton startButton;
 
 void setup()
 {
@@ -33,13 +34,14 @@ void setup()
   frameRate(60);
   
   resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
+  startButton = new StartButton("Start", new PVector(900,625),100, 50, #FFFF00);
   buttons.add(resetButton);
+  buttons.add(startButton);
   
   reset();
   
-  state = State.PLAYING;
-  //state = State.SETUP;
-  info = "test";
+  //state = State.PLAYING;
+  state = State.SETUP;
   textAlign(CENTER);
   textSize(20);
 }
@@ -59,6 +61,11 @@ void draw()
       break;
     case SETUP:
       renderGame();
+      for(Button b : buttons)
+      {
+        b.update();
+        b.render();
+      }
       state = (numPlaced==5) ? State.PLAYING : State.SETUP;
       break;
     case PLAYING:
@@ -161,11 +168,7 @@ void renderGame()
     myShips[i].update();
     myShips[i].render();
   }
-  for(Button b : buttons)
-  {
-    b.update();
-    b.render();
-  }
+  
 }
 
 void reset()
@@ -195,5 +198,5 @@ void reset()
   enemyGrid.placeShip(enemyShips[3],3,3);
   enemyGrid.placeShip(enemyShips[4],4,4);
   
-  info = "";
+  info = "Please place your ships";
 }
