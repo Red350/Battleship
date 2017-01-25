@@ -23,6 +23,7 @@ abstract class Button
   
   void render()
   {
+    update();
     if(mouseOver)
     {
       fill(c);

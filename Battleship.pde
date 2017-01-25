@@ -64,13 +64,11 @@ void draw()
       renderGame();
       for(Button b : buttons)
       {
-        b.update();
         b.render();
       }
       break;
     case PLAYING:
       renderGame();
-      resetButton.update();
       resetButton.render();
       fill(255);
       
@@ -89,6 +87,7 @@ void draw()
       break;
     case GAMEOVER:
       renderGame();
+      resetButton.render();
       info = (winner == 1) ? "You win!" : "You lose!";
       break;
   }
@@ -100,10 +99,6 @@ void draw()
 
 void mouseClicked()
 {
-  for(Button b : buttons)
-  {
-    b.mouseClicked();
-  }
   switch(state)
   {
     case MENU:
@@ -111,6 +106,7 @@ void mouseClicked()
     case OPTIONS:
       break;
     case PLAYING:
+      resetButton.mouseClicked();
       // Check if the mouse is over the grid
       // If so check if it's a hit
       if(enemyGrid.mouseOver())
@@ -133,6 +129,10 @@ void mouseClicked()
       }
       break;
     case SETUP:
+      for(Button b : buttons)
+      {
+        b.mouseClicked();
+      }
       if(mouseButton == LEFT)
       {
         if(selectedShip == null)
@@ -156,6 +156,7 @@ void mouseClicked()
       }
       break;
       case GAMEOVER:
+        resetButton.mouseClicked();
         break;
   }
 }
