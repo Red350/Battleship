@@ -203,6 +203,26 @@ void renderGame()
   
 }
 
+// Randomly place players ships
+void randomiseShips(Ship[] s, Grid g)
+{
+  int x,y;
+  
+  numPlaced = 0;
+  for(int i = 0; i < 5; i++)
+  {
+    s[i].orientation = (random(1)<0.5)?true:false;
+    x = (int)random(10);
+    y = (int)random(10);
+    while(!g.placeShip(s[i],x,y))
+    {
+      x = (int)random(10);
+      y = (int)random(10);
+    }
+    s[i].lockToGrid(g,x,y);
+  }
+}
+
 void reset()
 {
   myGrid = new Grid(50,50,500);

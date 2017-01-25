@@ -13,7 +13,8 @@ class AutoPlaceButton extends Button
   {
     if(super.mouseOver)
     {
-      ai.randomiseShips(myShips, myGrid);
+      myGrid.reset();
+      randomiseShips(myShips, myGrid);
     }
   }
 }

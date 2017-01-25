@@ -1,7 +1,7 @@
 class Grid extends GameObject
 {
   Cell[][] cells = new Cell[10][10];
-  int[][] occupied = new int[10][10];
+  int[][] occupied = new int[10][10];  // Stores the id of the ship, or -1 if not occupied
   boolean[][] hit = new boolean[10][10];
   float size;
   int shipsAlive;
@@ -206,6 +206,19 @@ class Grid extends GameObject
             }
           }
         }
+      }
+    }
+  }
+  
+  void reset()
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        cells[i][j].occupied = false;
+        occupied[i][j] = -1;
+        hit[i][j] = false;
       }
     }
   }
