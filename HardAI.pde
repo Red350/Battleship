@@ -1,10 +1,10 @@
-class MediumAI extends AI
+class HardAI extends AI
 {
   ArrayList<PVector> vertTargets;
   ArrayList<PVector> horizTargets;
   PVector pivot;
   
-  MediumAI()
+  HardAI()
   {
     super();
     targets = new ArrayList<PVector>();
@@ -12,7 +12,10 @@ class MediumAI extends AI
     {
       for(int j = 0; j < 10; j++)
       {
-        targets.add(new PVector(i,j));
+        if((i + j) % 2 == 0)
+        {
+          targets.add(new PVector(i,j));
+        }
       }
     }
     vertTargets = new ArrayList<PVector>();
@@ -27,6 +30,7 @@ class MediumAI extends AI
     if(mode == Mode.SEEK)
     {
       int i = (int)random(targets.size());
+      println("I IS " + i + "------------------------");
       pivot = targets.get(i);
       result =  myGrid.AICheckHit(myShips, pivot);
       println("Ai just targeted " + pivot);

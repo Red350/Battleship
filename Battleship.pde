@@ -54,7 +54,7 @@ void setup()
   buttons.add(startButton);
   buttons.add(autoPlaceButton);
   
-  ai = new MediumAI();
+  ai = new HardAI();
   
   reset();
   
@@ -216,8 +216,27 @@ void keyPressed()
       } 
       println();
     }
+    println();
   }
-  println();
+  
+  if (key == 'o')
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        print(enemyGrid.occupied[i][j] + "\t");
+      } 
+      println();
+    }
+    println();
+  }
+  
+  if (key == 't')
+  {
+    println(ai.targets);
+  }
+  
 }
 
 // Randomly place players ships
