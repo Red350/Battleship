@@ -238,14 +238,6 @@ void randomiseShips(Ship[] s, Grid g)
     }
     s[i].lockToGrid(g,x,y);
   }
-  for(int i = 0; i < 10; i++)
-  {
-    for(int j = 0; j < 10; j++)
-    {
-      print(myGrid.occupied[i][j] + " ");
-    } 
-    println();
-  }
 }
 
 void reset()

@@ -55,42 +55,54 @@ class MediumAI extends AI
         {
           horizTargets.add(temp);
         }
-        System.out.println(vertTargets);
-        System.out.println(horizTargets);
+        println("Hit a pivot, targets as follows:");
+        println(vertTargets);
+        println(horizTargets);
         mode = Mode.HUNT;
       }
       targets.remove(i);
     } else {
+      println("AI is hunting...");
       if(vertTargets.size() > 0)
       {
-        // CHECKING THE VERTICAL ARRAY, THEN ADDING ANOTHER ELEMENT IF IT HITS
+        println("Vert Targets: " + vertTargets);
         PVector check = vertTargets.get(0);  // Shoot the first cell in the vertical array
+        println("Ai has chosen: " + check);
         result = myGrid.AICheckHit(myShips, check);
         switch(result)
         {
           case 0:
+            vertTargets.remove(0);
             break;
           case 1:
-            // The target was successful, add the
+            println("Success");
+            // The target was successful. Add the
             // next target to the start of the list
             if(check.x > pivot.x)
             {
+              println("Below");
               temp = new PVector(check.x+1, check.y);
+              vertTargets.remove(0);
               if(myGrid.notHit(temp))
               {
-                vertTargets.remove(0);
+                println("Valid");
                 vertTargets.add(0,temp);
               }
             } else {
+              println("Above");
               temp = new PVector(check.x-1, check.y);
+              vertTargets.remove(0);
               if(myGrid.notHit(temp))
               {
-                vertTargets.remove(0);
+                println("Valid");
                 vertTargets.add(0,temp);
               }
             }
             break;
           case 2:
+            // Ship dead, clear target arrays
+            vertTargets.clear();
+            horizTargets.clear();
             mode = Mode.SEEK;
             break;
         }

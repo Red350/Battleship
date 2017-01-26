@@ -13,12 +13,4 @@ class EasyAI extends AI
       }
     }
   }
-  
-  void printTargets()
-  {
-    for(PVector target : targets)
-    {
-      println("(" + (int)target.x + "," + (int)target.y + ")");
-    }
-  }
 }
