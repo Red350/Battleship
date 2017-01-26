@@ -106,6 +106,48 @@ class MediumAI extends AI
             mode = Mode.SEEK;
             break;
         }
+      } else {
+        println("Horiz Targets: " + horizTargets);
+        PVector check = horizTargets.get(0);  // Shoot the first cell in the horizontal array
+        println("Ai has chosen: " + check);
+        result = myGrid.AICheckHit(myShips, check);
+        switch(result)
+        {
+          case 0:
+            horizTargets.remove(0);
+            break;
+          case 1:
+            println("Success");
+            // The target was successful. Add the
+            // next target to the start of the list
+            if(check.y > pivot.y)
+            {
+              println("Right");
+              temp = new PVector(check.x, check.y+1);
+              horizTargets.remove(0);
+              if(myGrid.notHit(temp))
+              {
+                println("Valid");
+                horizTargets.add(0,temp);
+              }
+            } else {
+              println("Left");
+              temp = new PVector(check.x, check.y-1);
+              horizTargets.remove(0);
+              if(myGrid.notHit(temp))
+              {
+                println("Valid");
+                horizTargets.add(0,temp);
+              }
+            }
+            break;
+          case 2:
+            // Ship dead, clear target arrays
+            vertTargets.clear();
+            horizTargets.clear();
+            mode = Mode.SEEK;
+            break;
+        }
       }
     }
   }
