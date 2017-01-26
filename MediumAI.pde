@@ -67,6 +67,7 @@ class MediumAI extends AI
       {
         println("Vert Targets: " + vertTargets);
         PVector check = vertTargets.get(0);  // Shoot the first cell in the vertical array
+        targets.remove(check);  // remove the cell being checked from the targets
         println("Ai has chosen: " + check);
         result = myGrid.AICheckHit(myShips, check);
         switch(result)
@@ -109,6 +110,7 @@ class MediumAI extends AI
       } else {
         println("Horiz Targets: " + horizTargets);
         PVector check = horizTargets.get(0);  // Shoot the first cell in the horizontal array
+        targets.remove(check);  // remove the cell being checked from the targets
         println("Ai has chosen: " + check);
         result = myGrid.AICheckHit(myShips, check);
         switch(result)

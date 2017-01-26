@@ -30,11 +30,17 @@ class HardAI extends AI
     if(mode == Mode.SEEK)
     {
       int i = (int)random(targets.size());
-      println("I IS " + i + "------------------------");
+      println("Randomly generated: " + i);
+      for(int j = 0; j < targets.size(); j++)
+      {
+        print(j + " " + targets.get(j)+ ", ");
+      }
+      println();
+      myGrid.printHitCells();
       pivot = targets.get(i);
       result =  myGrid.AICheckHit(myShips, pivot);
-      println("Ai just targeted " + pivot);
-      
+      println("Ai just targeted " + pivot + "with a result of " + result);
+
       if(result == 1)
       {
         // Add the vertical cells as targets
@@ -71,6 +77,7 @@ class HardAI extends AI
       {
         println("Vert Targets: " + vertTargets);
         PVector check = vertTargets.get(0);  // Shoot the first cell in the vertical array
+        targets.remove(check);  // remove the cell being checked from the targets
         println("Ai has chosen: " + check);
         result = myGrid.AICheckHit(myShips, check);
         switch(result)
@@ -113,6 +120,7 @@ class HardAI extends AI
       } else {
         println("Horiz Targets: " + horizTargets);
         PVector check = horizTargets.get(0);  // Shoot the first cell in the horizontal array
+        targets.remove(check);  // remove the cell being checked from the targets
         println("Ai has chosen: " + check);
         result = myGrid.AICheckHit(myShips, check);
         switch(result)

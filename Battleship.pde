@@ -26,6 +26,7 @@ String info = "";
 // For these variables, 0 is the player, 1 is the computer
 int winner;
 int turn;
+boolean turnLock;
 
 Ship selectedShip;
  
@@ -88,8 +89,9 @@ void draw()
       renderGame();
       resetButton.render();
       
-      if(turn == 1)
+      if(turn == 1 && !turnLock)
       {
+        turnLock = true;
         if(delay <= 0)
         {
           ai.shoot();
@@ -97,6 +99,7 @@ void draw()
           delay = delayAmount;
         }
         delay--;
+        turnLock = false;
       }
       
       // Check if either player has won
@@ -133,31 +136,43 @@ void mouseClicked()
     case OPTIONS:
       break;
     case PLAYING:
+    {
       resetButton.mouseClicked();
       // Check if the mouse is over the grid
       // If so check if it's a hit
-      if(turn == 0 && enemyGrid.mouseOver())
+      if(turn == 0 && enemyGrid.mouseOver() && !turnLock)
       {
+        turnLock = true;
+        println("Player shot started");
         int shotResult = enemyGrid.checkHit(enemyShips);
         switch(shotResult)
         {
           case 0:
+            println("Missed");
             info = "Miss";
             turn = 1;
             break;
           case 1:
+            println("Hit");
             info = "Hit";
             turn = 1;
             break;
           case 2:
+            println("Sunk");
             info = "Hit. Battleship sunk.";
             turn = 1;
             break;
           default:
+            turn = 0; // Still your turn
+            println("Already clicked");
             break;
         }
+        turnLock = false;
+      }else{
+        println("NOT YOUR TURN");
       }
       break;
+    }
     case SETUP:
       for(Button b : buttons)
       {
@@ -237,6 +252,15 @@ void keyPressed()
     println(ai.targets);
   }
   
+  if(key == 'z')
+  {
+    myGrid.printOccupiedCells();
+  }
+  if(key == 'x')
+  {
+    myGrid.printOccupiedCells();
+  }
+  
 }
 
 // Randomly place players ships
@@ -290,5 +314,6 @@ void reset()
   info = "Please place your ships";
   numPlaced = 0;
   turn = 0;
+  turnLock = false;
   delay = delayAmount;
 }

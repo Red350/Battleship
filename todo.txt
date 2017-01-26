@@ -1,1 +1,7 @@
-Move ship placing code from grid to a method within ship.
+Change colour of Xs over ship when ship is destroyed.
+
+Store the current colour of the X so it doesn't have to check each time it renders.
+
+Make hard and medium ai inherit correctly.
+
+Add menu.

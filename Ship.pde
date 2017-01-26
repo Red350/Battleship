@@ -32,6 +32,7 @@ class Ship extends GameObject
   void render()
   {
     stroke(c);
+    strokeWeight(1);
     noFill();
     if(this.equals(selectedShip))
     {

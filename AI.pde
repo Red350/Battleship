@@ -3,11 +3,13 @@ abstract class AI
   ArrayList<PVector> targets;
   Mode mode;
   int lastShot;
+  int shotsTaken;
   
   AI()
   {
     mode = Mode.SEEK;
     lastShot = 0;
+    shotsTaken = 0;
   }
   
   void shoot()
