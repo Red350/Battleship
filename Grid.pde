@@ -75,6 +75,23 @@ class Grid extends GameObject
     }
     numPlaced--;
   }
+  
+  // Tells the relevant cells that the ship they are holding has sunk
+  void sinkShip(Ship s)
+  {
+    if (s.orientation)
+    {
+      for (int k = s.cellJ; k < s.cellJ + s.size; k++)
+      {
+        cells[s.cellI][k].sunk = true;
+      }
+    } else {
+      for (int k = s.cellI; k < s.cellI + s.size; k++)
+      {
+        cells[k][s.cellJ].sunk = true;
+      }
+    }
+  }
 
   // Returns -1 on square already shot, 0 on miss, 1 on hit, 2 on hit and kill
   int AICheckHit(Ship[] ships, PVector shot)
@@ -94,20 +111,7 @@ class Grid extends GameObject
         s.health--;
         if (s.health == 0)
         {
-          if (s.orientation)
-          {
-            for (int k = s.cellJ; k < s.cellJ + s.size; k++)
-            {
-              cells[x][k].sunk = true;
-              println("SINKING " + x + " " + k);
-            }
-          } else {
-            for (int k = s.cellI; k < s.cellI + s.size; k++)
-            {
-              cells[k][y].sunk = true;
-              println("SINKING " + k + " " + y);
-            }
-          }
+          sinkShip(s);
           shipsAlive--;
           return 2;
         }
@@ -141,9 +145,11 @@ class Grid extends GameObject
             lastHitCell.lastHit = true;
             if (occupied[i][j] >= 0)  // If the cell was occupied
             {
-              ships[occupied[i][j]].health--;  // Tell the ship it was hit
-              if (ships[occupied[i][j]].health == 0)
+              Ship s = ships[occupied[i][j]];
+              s.health--;  // Tell the ship it was hit
+              if (s.health == 0)
               {
+                sinkShip(s);
                 shipsAlive--;
                 return 2;
               }

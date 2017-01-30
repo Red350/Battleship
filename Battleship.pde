@@ -30,7 +30,7 @@ boolean turnLock;
 
 Ship selectedShip;
  
-Grid myGrid;
+Grid myGrid;  
 Grid enemyGrid;
 
 Ship[] myShips;
