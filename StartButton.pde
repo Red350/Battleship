@@ -18,8 +18,6 @@ class StartButton extends Button
         super.mouseOver = false;
         state = State.PLAYING;
         info = "Game has begun, your turn";
-        myGrid.printOccupiedCells();
-        enemyGrid.printOccupiedCells();
       } else {
         info = "You must place all ships before starting";
       }

@@ -83,7 +83,6 @@ class Grid extends GameObject
     int y = (int)shot.y;
     if (hit[x][y] == false)
     {
-      println("AI chose a valid square");
       hit[x][y] = true;
       cells[x][y].hit = true;
       lastHitCell.lastHit = false;
@@ -91,9 +90,24 @@ class Grid extends GameObject
       lastHitCell.lastHit = true;
       if (occupied[x][y] >= 0)
       {
-        ships[occupied[x][y]].health--;
-        if (ships[occupied[x][y]].health == 0)
+        Ship s = ships[occupied[x][y]];
+        s.health--;
+        if (s.health == 0)
         {
+          if (s.orientation)
+          {
+            for (int k = s.cellJ; k < s.cellJ + s.size; k++)
+            {
+              cells[x][k].sunk = true;
+              println("SINKING " + x + " " + k);
+            }
+          } else {
+            for (int k = s.cellI; k < s.cellI + s.size; k++)
+            {
+              cells[k][y].sunk = true;
+              println("SINKING " + k + " " + y);
+            }
+          }
           shipsAlive--;
           return 2;
         }
@@ -201,6 +215,10 @@ class Grid extends GameObject
         }
       }
       numPlaced++;
+      if(numPlaced == 5)
+      {
+        info = "Press Start to begin";
+      }
       return true;
     }
     return false;
@@ -276,6 +294,23 @@ class Grid extends GameObject
       println();
     }
     println("Total occupied cells: " + count);
+    println();
+  }
+  
+  void printSunkCells(){
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        if(cells[i][j].sunk == true)
+        {
+          print("1 ");
+        } else {
+          print("0 ");
+        }
+      }
+      println();
+    }
     println();
   }
 }

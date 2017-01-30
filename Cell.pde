@@ -4,6 +4,7 @@ class Cell extends GameObject
   boolean occupied;
   boolean hit;
   boolean lastHit;
+  boolean sunk;
   
   Cell(float x, float y, float size)
   {
@@ -12,6 +13,7 @@ class Cell extends GameObject
     occupied = false;
     hit = false;
     lastHit = false;
+    sunk = false;
     c = #00FF00;
   }
   
@@ -29,6 +31,9 @@ class Cell extends GameObject
         {
           strokeWeight(3);
           stroke(#00FF00);
+        } else if(sunk) {
+          strokeWeight(1);
+          stroke(#FFFF00);
         } else {
           strokeWeight(1);
           stroke(#00FF00);

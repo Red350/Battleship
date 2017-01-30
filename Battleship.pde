@@ -94,9 +94,15 @@ void draw()
         turnLock = true;
         if(delay <= 0)
         {
+          //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+          //println("Start AI turn");
+          //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
           ai.shoot();
           turn = 0;
           delay = delayAmount;
+          //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+          //println("End AI turn");
+          //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
         delay--;
         turnLock = false;
@@ -108,7 +114,7 @@ void draw()
         winner = 1;
         state = State.GAMEOVER;
       } else {
-        if(enemyGrid.shipsAlive == 0)
+          if(enemyGrid.shipsAlive == 0)
         {
           winner = 0;
           state = State.GAMEOVER;
@@ -143,33 +149,32 @@ void mouseClicked()
       if(turn == 0 && enemyGrid.mouseOver() && !turnLock)
       {
         turnLock = true;
-        println("Player shot started");
+        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //println("Start Player turn");
+        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         int shotResult = enemyGrid.checkHit(enemyShips);
         switch(shotResult)
         {
           case 0:
-            println("Missed");
             info = "Miss";
             turn = 1;
             break;
           case 1:
-            println("Hit");
             info = "Hit";
             turn = 1;
             break;
           case 2:
-            println("Sunk");
             info = "Hit. Battleship sunk.";
             turn = 1;
             break;
           default:
             turn = 0; // Still your turn
-            println("Already clicked");
             break;
         }
         turnLock = false;
-      }else{
-        println("NOT YOUR TURN");
+        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //println("End Player turn");
+        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
       }
       break;
     }
@@ -219,46 +224,30 @@ void renderGame()
   
 }
 
+// Print some debug info
 void keyPressed()
 {
-  if (key == 'p')
-  {
-    for(int i = 0; i < 10; i++)
-    {
-      for(int j = 0; j < 10; j++)
-      {
-        print(myGrid.occupied[i][j] + "\t");
-      } 
-      println();
-    }
-    println();
-  }
-  
-  if (key == 'o')
-  {
-    for(int i = 0; i < 10; i++)
-    {
-      for(int j = 0; j < 10; j++)
-      {
-        print(enemyGrid.occupied[i][j] + "\t");
-      } 
-      println();
-    }
-    println();
-  }
-  
+  // Print ai's current list of targets
   if (key == 't')
   {
     println(ai.targets);
   }
   
+  // Print player ship locations
   if(key == 'z')
   {
     myGrid.printOccupiedCells();
   }
+  
+  // Print ai ship locations
   if(key == 'x')
   {
     myGrid.printOccupiedCells();
+  }
+  
+  if(key == 's')
+  {
+    myGrid.printSunkCells();
   }
   
 }
@@ -305,11 +294,6 @@ void reset()
   
   // Place enemy ships
   ai.randomiseShips(enemyShips, enemyGrid);
-  //enemyGrid.placeShip(enemyShips[0],0,0);
-  //enemyGrid.placeShip(enemyShips[1],1,1);
-  //enemyGrid.placeShip(enemyShips[2],2,2);
-  //enemyGrid.placeShip(enemyShips[3],3,3);
-  //enemyGrid.placeShip(enemyShips[4],4,4);
   
   info = "Please place your ships";
   numPlaced = 0;

@@ -5,3 +5,7 @@ Store the current colour of the X so it doesn't have to check each time it rende
 Make hard and medium ai inherit correctly.
 
 Add menu.
+
+Have ai parse game board after sinking ship, checking for partially sunk ships.
+
+Ships picked up after randomise can not be placed on the squares they were just on

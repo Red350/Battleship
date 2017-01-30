@@ -8,6 +8,7 @@ class HardAI extends AI
   {
     super();
     targets = new ArrayList<PVector>();
+    // Adds every second location to the targets list
     for(int i = 0; i < 10; i++)
     {
       for(int j = 0; j < 10; j++)
@@ -22,21 +23,30 @@ class HardAI extends AI
     horizTargets = new ArrayList<PVector>();
   }
   
+  // Add the next node in line with the current hit
+  // Must take into account an adjacent node might
+  // be a successful hit on the same ship
+  void addNextNode()
+  {
+    
+  }
+  
   void shoot()
   {
     PVector temp;
     int result;
+    //for(int j = 0; j < targets.size(); j++)
+    //{
+    //  print(j + " " + targets.get(j)+ ", ");
+    //}
     
     if(mode == Mode.SEEK)
     {
       int i = (int)random(targets.size());
-      println("Randomly generated: " + i);
-      for(int j = 0; j < targets.size(); j++)
-      {
-        print(j + " " + targets.get(j)+ ", ");
-      }
+      println("Index Generated: " + i);
+      
       println();
-      myGrid.printHitCells();
+      //myGrid.printHitCells();
       pivot = targets.get(i);
       result =  myGrid.AICheckHit(myShips, pivot);
       println("Ai just targeted " + pivot + "with a result of " + result);
@@ -91,21 +101,17 @@ class HardAI extends AI
             // next target to the start of the list
             if(check.x > pivot.x)
             {
-              println("Below");
               temp = new PVector(check.x+1, check.y);
               vertTargets.remove(0);
               if(myGrid.notHit(temp))
               {
-                println("Valid");
                 vertTargets.add(0,temp);
               }
             } else {
-              println("Above");
               temp = new PVector(check.x-1, check.y);
               vertTargets.remove(0);
               if(myGrid.notHit(temp))
               {
-                println("Valid");
                 vertTargets.add(0,temp);
               }
             }

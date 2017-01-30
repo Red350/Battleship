@@ -46,11 +46,6 @@ class Ship extends GameObject
     }
   }
   
-  void checkHit(int i, int j)
-  {
-    
-  }
-  
   void keyPressed()
   {
     orientation = !orientation;
