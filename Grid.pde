@@ -35,6 +35,23 @@ class Grid extends GameObject
       }
     }
   }
+  
+  // Returns coordinates of a cell that's been hit
+  // but does not contain a sunk ship
+  PVector findUnSunk()
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        if(cells[i][j].hit && !cells[i][j].sunk)
+        {
+          return new PVector(i,j);
+        }
+      }
+    }
+    return new PVector(-1,-1);
+  }
 
   // Checks if a PVector coordinate is within the grid
   // and if it's not been hit.
