@@ -113,13 +113,21 @@ class HuntAI extends AI
             }
             break;
           case 2:
-            // Ship dead, clear target arrays
+            // Ship dead, check for any unsunk ships that have been hit
             vertTargets.clear();
             horizTargets.clear();
-            mode = Mode.SEEK;
+            pivot = myGrid.findUnSunk();
+            if(pivot.x == -1)
+            {
+              println("RETURNING TO SEEK");
+              mode = Mode.SEEK;
+            } else {
+              println("NEW TARGET ACQUIRED");
+              loadHuntTargets();
+            }
             break;
         }
-      } else {
+      } else if(horizTargets.size() > 0) {
         println("Horiz Targets: " + horizTargets);
         PVector check = horizTargets.get(0);  // Shoot the first cell in the horizontal array
         targets.remove(check);  // remove the cell being checked from the targets
@@ -136,32 +144,39 @@ class HuntAI extends AI
             // next target to the start of the list
             if(check.y > pivot.y)
             {
-              println("Right");
               temp = new PVector(check.x, check.y+1);
               horizTargets.remove(0);
               if(myGrid.notHit(temp))
               {
-                println("Valid");
                 horizTargets.add(0,temp);
               }
             } else {
-              println("Left");
               temp = new PVector(check.x, check.y-1);
               horizTargets.remove(0);
               if(myGrid.notHit(temp))
               {
-                println("Valid");
                 horizTargets.add(0,temp);
               }
             }
             break;
           case 2:
-            // Ship dead, clear target arrays
+            // Ship dead, check for any unsunk ships that have been hit
             vertTargets.clear();
             horizTargets.clear();
-            mode = Mode.SEEK;
+            pivot = myGrid.findUnSunk();
+            if(pivot.x == -1)
+            {
+              println("RETURNING TO SEEK");
+              mode = Mode.SEEK;
+            } else {
+              println("NEW TARGET ACQUIRED");
+              loadHuntTargets();
+            }
             break;
         }
+      } else {
+        mode = Mode.SEEK;
+        println("I HAVE FAILED, RETURNING TO SEEK");
       }
     }
   }
