@@ -67,7 +67,7 @@ class Grid extends GameObject
         cells[s.cellI][j].occupied = false;
       }
     } else {
-      for (int i = s.cellJ; i < s.cellJ + s.size; i++)
+      for (int i = s.cellI; i < s.cellI + s.size; i++)
       {
         occupied[i][s.cellJ] = -1;
         cells[i][s.cellJ].occupied = false;
