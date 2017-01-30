@@ -19,6 +19,39 @@ class HuntAI extends AI
     
   }
   
+  // Loads potential ship positions based on the current pivot 
+  void loadHuntTargets()
+  {
+    PVector temp;
+    // Add the vertical cells as targets
+    temp = new PVector(pivot.x-1,pivot.y);
+    if(myGrid.notHit(temp))
+    {
+      vertTargets.add(temp);
+    }
+    temp = new PVector(pivot.x+1,pivot.y);
+    if(myGrid.notHit(temp))
+    {
+      vertTargets.add(temp);
+    }
+    
+    // Add horizontal cells as targets
+    temp = new PVector(pivot.x,pivot.y-1);
+    if(myGrid.notHit(temp))
+    {
+      horizTargets.add(temp);
+    }
+    temp = new PVector(pivot.x,pivot.y+1);
+    if(myGrid.notHit(temp))
+    {
+      horizTargets.add(temp);
+    }
+    println("Hit a pivot, targets as follows:");
+    println(vertTargets);
+    println(horizTargets);
+    mode = Mode.HUNT;
+  }
+  
   void shoot()
   {
     PVector temp;
@@ -41,32 +74,7 @@ class HuntAI extends AI
 
       if(result == 1)
       {
-        // Add the vertical cells as targets
-        temp = new PVector(pivot.x-1,pivot.y);
-        if(myGrid.notHit(temp))
-        {
-          vertTargets.add(temp);
-        }
-        temp = new PVector(pivot.x+1,pivot.y);
-        if(myGrid.notHit(temp))
-        {
-          vertTargets.add(temp);
-        }
-        // Add horizontal cells as targets
-        temp = new PVector(pivot.x,pivot.y-1);
-        if(myGrid.notHit(temp))
-        {
-          horizTargets.add(temp);
-        }
-        temp = new PVector(pivot.x,pivot.y+1);
-        if(myGrid.notHit(temp))
-        {
-          horizTargets.add(temp);
-        }
-        println("Hit a pivot, targets as follows:");
-        println(vertTargets);
-        println(horizTargets);
-        mode = Mode.HUNT;
+        loadHuntTargets();
       }
       targets.remove(i);
     } else {
@@ -119,7 +127,7 @@ class HuntAI extends AI
         result = myGrid.AICheckHit(myShips, check);
         switch(result)
         {
-          case 0:
+          case 0: 
             horizTargets.remove(0);
             break;
           case 1:
