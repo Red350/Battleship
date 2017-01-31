@@ -55,7 +55,7 @@ void setup()
   buttons.add(startButton);
   buttons.add(autoPlaceButton);
   
-  
+  ai = new HardAI();
   
   reset();
   
@@ -123,6 +123,7 @@ void draw()
       break;
     case GAMEOVER:
       renderGame();
+      renderEnemy();
       resetButton.render();
       info = (winner == 0) ? "You win!" : "You lose!";
       break;
@@ -211,7 +212,6 @@ void mouseClicked()
   }
 }
 
-// method to call updated and render on all game objects
 void renderGame()
 {
   myGrid.render();
@@ -221,7 +221,14 @@ void renderGame()
     myShips[i].update();
     myShips[i].render();
   }
-  
+}
+
+void renderEnemy()
+{
+  for(int i = 0; i < 5; i++)
+  {
+    enemyShips[i].render();
+  }
 }
 
 // Print some debug info
@@ -297,7 +304,7 @@ void reset()
   enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
   enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
   
-  ai = new HardAI();
+  ai.reset();
   ai.randomiseShips(enemyShips, enemyGrid);
   
   info = "Please place your ships";

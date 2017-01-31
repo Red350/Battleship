@@ -20,12 +20,20 @@ abstract class AI
   
   void randomiseShips(Ship[] s, Grid g)
   {
+    int x, y;
     for(int i = 0; i < 5; i++)
     {
-      while(!g.placeShip(s[i],(int)random(10),(int)random(10)))
+      x = (int)random(10);
+      y = (int)random(10);
+      while(!g.placeShip(s[i],x,y))
       {
+        x = (int)random(10);
+        y = (int)random(10);
         // Trying to place ship
       }
+      // Place the graphical representation of the ship
+      // (Hidden from the player until the game ends)
+      s[i].lockToGrid(g,x,y);
     }
   } 
   

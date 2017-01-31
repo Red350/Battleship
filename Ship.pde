@@ -18,6 +18,7 @@ class Ship extends GameObject
   
   Ship(int size, int id, boolean orientation)
   {
+    pos = new PVector(0,0);
     this.size = size;
     this.id = id;
     this.health = size;
@@ -93,8 +94,8 @@ class Ship extends GameObject
   
   void lockToGrid(Grid g, int i, int j)
   {
-    pos.x = j*cellSize + edgeGap + shipGap;
-    pos.y = i*cellSize + edgeGap + shipGap;
+    pos.x = j*cellSize + g.pos.x + shipGap;
+    pos.y = i*cellSize + g.pos.y + shipGap;
     cellI = i;
     cellJ = j;
     placed = true;
