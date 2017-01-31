@@ -40,6 +40,7 @@ ArrayList<Button> gameButtons = new ArrayList<Button>();
 ResetButton resetButton;
 StartButton startButton;
 AutoPlaceButton autoPlaceButton;
+MainMenuButton mainMenuButton;
 
 ArrayList<Button> menuButtons = new ArrayList<Button>();
 PlayButton playButton;
@@ -55,12 +56,14 @@ void setup()
   size(1200, 800);
   frameRate(60);
   
-  resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
   startButton = new StartButton("Start", new PVector(900,625),100, 50, #FFFF00);
+  resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
   autoPlaceButton = new AutoPlaceButton("Randomise", new PVector(1025,625),100, 50, #FFFF00);
+  mainMenuButton = new MainMenuButton("Main Menu", new PVector(1025,700),100, 50, #FFFF00);
   gameButtons.add(resetButton);
   gameButtons.add(startButton);
   gameButtons.add(autoPlaceButton);
+  gameButtons.add(mainMenuButton);
   
   playButton = new PlayButton("Play", new PVector(width/2, height/2),100,50, #FFFF00);
   easyButton = new EasyButton("Easy", new PVector(200, height/2+200),100,50, #FFFF00);
