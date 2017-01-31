@@ -7,6 +7,11 @@ class HardAI extends HuntAI
   HardAI()
   {
     super();
+    reset();
+  }
+  
+  void reset()
+  {
     targets = new ArrayList<PVector>();
     // Adds every second location to the targets list
     for(int i = 0; i < 10; i++)

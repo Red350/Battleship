@@ -12,9 +12,11 @@ abstract class AI
     shotsTaken = 0;
   }
   
+  void reset()
+  {}
+  
   void shoot()
-  {
-  }
+  {}
   
   void randomiseShips(Ship[] s, Grid g)
   {

@@ -55,7 +55,7 @@ void setup()
   buttons.add(startButton);
   buttons.add(autoPlaceButton);
   
-  ai = new HardAI();
+  
   
   reset();
   
@@ -297,7 +297,7 @@ void reset()
   enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
   enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
   
-  // Place enemy ships
+  ai = new HardAI();
   ai.randomiseShips(enemyShips, enemyGrid);
   
   info = "Please place your ships";
