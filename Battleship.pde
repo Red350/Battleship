@@ -36,10 +36,13 @@ Grid enemyGrid;
 Ship[] myShips;
 Ship[] enemyShips;
 
-ArrayList<Button> buttons = new ArrayList<Button>();
+ArrayList<Button> gameButtons = new ArrayList<Button>();
 ResetButton resetButton;
 StartButton startButton;
 AutoPlaceButton autoPlaceButton;
+
+ArrayList<Button> menuButtons = new ArrayList<Button>();
+PlayButton playButton;
 
 AI ai;
 
@@ -51,16 +54,16 @@ void setup()
   resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
   startButton = new StartButton("Start", new PVector(900,625),100, 50, #FFFF00);
   autoPlaceButton = new AutoPlaceButton("Randomise", new PVector(1025,625),100, 50, #FFFF00);
-  buttons.add(resetButton);
-  buttons.add(startButton);
-  buttons.add(autoPlaceButton);
+  gameButtons.add(resetButton);
+  gameButtons.add(startButton);
+  gameButtons.add(autoPlaceButton);
+  
+  playButton = new PlayButton("Play", new PVector(width/2, height/2),100,50, #FFFF00);
+  menuButtons.add(playButton);
   
   ai = new HardAI();
   
-  reset();
-  
-  //state = State.PLAYING;
-  state = State.SETUP;
+  state = State.MENU;
   textAlign(CENTER);
   textSize(20);
 }
@@ -75,12 +78,13 @@ void draw()
   switch(state)
   {
     case MENU:
+      renderMenu();
       break;
     case OPTIONS:
       break;
     case SETUP:
       renderGame();
-      for(Button b : buttons)
+      for(Button b : gameButtons)
       {
         b.render();
       }
@@ -128,10 +132,6 @@ void draw()
       info = (winner == 0) ? "You win!" : "You lose!";
       break;
   }
-  textAlign(CENTER, CENTER);
-  textSize(20);
-  fill(255);
-  text(info,width/2,750);
 }
 
 void mouseClicked()
@@ -139,6 +139,10 @@ void mouseClicked()
   switch(state)
   {
     case MENU:
+      for(Button b : menuButtons)
+      {
+        b.mouseClicked();
+      }
       break;
     case OPTIONS:
       break;
@@ -180,7 +184,7 @@ void mouseClicked()
       break;
     }
     case SETUP:
-      for(Button b : buttons)
+      for(Button b : gameButtons)
       {
         b.mouseClicked();
       }
@@ -212,6 +216,18 @@ void mouseClicked()
   }
 }
 
+void renderMenu()
+{
+  textSize(30);
+  textAlign(CENTER);
+  text("BATTLESHIP", width/2, 100);
+  for(Button b : menuButtons)
+  {
+    b.update();
+    b.render();
+  }
+}
+
 void renderGame()
 {
   myGrid.render();
@@ -221,6 +237,10 @@ void renderGame()
     myShips[i].update();
     myShips[i].render();
   }
+  textAlign(CENTER, CENTER);
+  textSize(20);
+  fill(255);
+  text(info,width/2,750);
 }
 
 void renderEnemy()
@@ -312,4 +332,5 @@ void reset()
   turn = 0;
   turnLock = false;
   delay = delayAmount;
+  state = State.SETUP;
 }

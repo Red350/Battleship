@@ -1,6 +1,6 @@
-class ResetButton extends Button
+class PlayButton extends Button
 {
-  ResetButton(String name, PVector pos, int w, int h, color c)
+  PlayButton(String name, PVector pos, int w, int h, color c)
   {
     super(c);
     this.name = name;
