@@ -43,8 +43,12 @@ AutoPlaceButton autoPlaceButton;
 
 ArrayList<Button> menuButtons = new ArrayList<Button>();
 PlayButton playButton;
+EasyButton easyButton;
+MediumButton mediumButton;
+HardButton hardButton;
 
 AI ai;
+int difficulty;
 
 void setup()
 {
@@ -59,9 +63,16 @@ void setup()
   gameButtons.add(autoPlaceButton);
   
   playButton = new PlayButton("Play", new PVector(width/2, height/2),100,50, #FFFF00);
+  easyButton = new EasyButton("Easy", new PVector(200, height/2+200),100,50, #FFFF00);
+  mediumButton = new MediumButton("Medium", new PVector(width/2, height/2+200),100,50, #FFFF00);
+  hardButton = new HardButton("Hard", new PVector(800, height/2+200),100,50, #FFFF00);
   menuButtons.add(playButton);
+  menuButtons.add(easyButton);
+  menuButtons.add(mediumButton);
+  menuButtons.add(hardButton);
   
-  ai = new HardAI();
+  difficulty = 0;
+  ai = new EasyAI();
   
   state = State.MENU;
   textAlign(CENTER);
@@ -74,7 +85,7 @@ void draw()
   textAlign(LEFT);
   textSize(12);
   fill(255);
-  text("State: " + state, 10, 20);
+  text("State: " + state + "\nDifficulty: " + difficulty, 10, 20);
   switch(state)
   {
     case MENU:
@@ -324,7 +335,18 @@ void reset()
   enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
   enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
   
-  ai.reset();
+  switch(difficulty)
+  {
+    case 0:
+      ai = new EasyAI();
+      break;
+    case 1:
+      ai = new MediumAI();
+      break;
+    case 2:
+      ai = new HardAI();
+      break;
+  }
   ai.randomiseShips(enemyShips, enemyGrid);
   
   info = "Please place your ships";
