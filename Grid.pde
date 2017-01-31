@@ -44,7 +44,7 @@ class Grid extends GameObject
     {
       for(int j = 0; j < 10; j++)
       {
-        if(cells[i][j].hit && !cells[i][j].sunk)
+        if(cells[i][j].hit && cells[i][j].occupied && !cells[i][j].sunk)
         {
           return new PVector(i,j);
         }

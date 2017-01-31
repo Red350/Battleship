@@ -250,6 +250,11 @@ void keyPressed()
     myGrid.printSunkCells();
   }
   
+  if(key == 'q')
+  {
+    turn = 1;
+  }
+  
 }
 
 // Randomly place players ships

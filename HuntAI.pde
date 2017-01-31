@@ -169,7 +169,7 @@ class HuntAI extends AI
               println("RETURNING TO SEEK");
               mode = Mode.SEEK;
             } else {
-              println("NEW TARGET ACQUIRED");
+              println("NEW TARGET ACQUIRED: " + pivot);
               loadHuntTargets();
             }
             break;
