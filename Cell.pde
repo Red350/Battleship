@@ -25,28 +25,25 @@ class Cell extends GameObject
     rect(pos.x, pos.y, size, size);
     if(hit)
     {
+      // Set the correct strokeWeight
+      if(lastHit)
+      {
+        strokeWeight(3);
+      } else {
+        strokeWeight(1);
+      }
+      
+      // Set the correct colour
       if(occupied)
       {
-        if(lastHit)
+        if(sunk)
         {
-          strokeWeight(3);
-          stroke(#00FF00);
-        } else if(sunk) {
-          strokeWeight(1);
           stroke(#FFFF00);
         } else {
-          strokeWeight(1);
           stroke(#00FF00);
         }
       } else {
-        if(lastHit)
-        {
-          strokeWeight(3);
-          stroke(#FF0000);
-        } else {
-          strokeWeight(1);
-          stroke(#FF0000);
-        }
+        stroke(#FF0000);
       }
       
       line(pos.x,pos.y,pos.x+size,pos.y+size);
