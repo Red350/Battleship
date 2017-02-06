@@ -14,7 +14,7 @@ Student Number: C15755659
 This is a single-player implementation of the classic game, Battleship.
 
 ## Controls
-The game is entirely mouse controlled.
+The game is mostly mouse controlled.
 
 When placing ships:
  Left click: Select/place ship
@@ -22,6 +22,8 @@ When placing ships:
 
 During gameplay:
  Left click to target a cell.
+
+When viewing the demo on the menu screen, you can speed up or slow down the AI by pressing the up or down arrows.
 
 ## How to play
 From the main menu, you can select the difficulty of AI you will face.
@@ -56,3 +58,7 @@ If it finds one, it repeats the process above as though it had just hit that cel
 Hard AI follows the exact same algorithm as medium, with the only difference being its list of targets.
 Instead of storing every cell, it only stores every second square.
 As the smallest ship is of size 2, this list of targets is guaranteed to hit every ship at least once, and after one hit the algorithm will find the rest of the ship.
+
+### Randomised ship placement
+The AI class deals with randomising ship placement both for itself and for the player.
+It's fairly simple, as the grid already has a method to ensure a ship is being placed validly. All it does is continually try to place a ship until it succeeds, then moves on to the next ship.
