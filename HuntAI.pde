@@ -20,29 +20,29 @@ class HuntAI extends AI
   }
   
   // Loads potential ship positions based on the current pivot 
-  void loadHuntTargets()
+  void loadHuntTargets(Grid g)
   {
     PVector temp;
     // Add the vertical cells as targets
     temp = new PVector(pivot.x-1,pivot.y);
-    if(myGrid.notHit(temp))
+    if(g.notHit(temp))
     {
       vertTargets.add(temp);
     }
     temp = new PVector(pivot.x+1,pivot.y);
-    if(myGrid.notHit(temp))
+    if(g.notHit(temp))
     {
       vertTargets.add(temp);
     }
     
     // Add horizontal cells as targets
     temp = new PVector(pivot.x,pivot.y-1);
-    if(myGrid.notHit(temp))
+    if(g.notHit(temp))
     {
       horizTargets.add(temp);
     }
     temp = new PVector(pivot.x,pivot.y+1);
-    if(myGrid.notHit(temp))
+    if(g.notHit(temp))
     {
       horizTargets.add(temp);
     }
@@ -52,7 +52,7 @@ class HuntAI extends AI
     mode = Mode.HUNT;
   }
   
-  void shoot()
+  void shoot(Grid g, Ship[] ships)
   {
     PVector temp;
     int result;
@@ -69,12 +69,12 @@ class HuntAI extends AI
       println();
       //myGrid.printHitCells();
       pivot = targets.get(i);
-      result =  myGrid.AICheckHit(myShips, pivot);
+      result =  g.AICheckHit(ships, pivot);
       println("Ai just targeted " + pivot + "with a result of " + result);
 
       if(result == 1)
       {
-        loadHuntTargets();
+        loadHuntTargets(g);
       }
       targets.remove(i);
     } else {
@@ -85,7 +85,7 @@ class HuntAI extends AI
         PVector check = vertTargets.get(0);  // Shoot the first cell in the vertical array
         targets.remove(check);  // remove the cell being checked from the targets
         println("Ai has chosen: " + check);
-        result = myGrid.AICheckHit(myShips, check);
+        result = g.AICheckHit(ships, check);
         switch(result)
         {
           case 0:
@@ -99,14 +99,14 @@ class HuntAI extends AI
             {
               temp = new PVector(check.x+1, check.y);
               vertTargets.remove(0);
-              if(myGrid.notHit(temp))
+              if(g.notHit(temp))
               {
                 vertTargets.add(0,temp);
               }
             } else {
               temp = new PVector(check.x-1, check.y);
               vertTargets.remove(0);
-              if(myGrid.notHit(temp))
+              if(g.notHit(temp))
               {
                 vertTargets.add(0,temp);
               }
@@ -116,14 +116,14 @@ class HuntAI extends AI
             // Ship dead, check for any unsunk ships that have been hit
             vertTargets.clear();
             horizTargets.clear();
-            pivot = myGrid.findUnSunk();
+            pivot = g.findUnSunk();
             if(pivot.x == -1)
             {
               println("RETURNING TO SEEK");
               mode = Mode.SEEK;
             } else {
               println("NEW TARGET ACQUIRED");
-              loadHuntTargets();
+              loadHuntTargets(g);
             }
             break;
         }
@@ -132,7 +132,7 @@ class HuntAI extends AI
         PVector check = horizTargets.get(0);  // Shoot the first cell in the horizontal array
         targets.remove(check);  // remove the cell being checked from the targets
         println("Ai has chosen: " + check);
-        result = myGrid.AICheckHit(myShips, check);
+        result = g.AICheckHit(ships, check);
         switch(result)
         {
           case 0: 
@@ -146,14 +146,14 @@ class HuntAI extends AI
             {
               temp = new PVector(check.x, check.y+1);
               horizTargets.remove(0);
-              if(myGrid.notHit(temp))
+              if(g.notHit(temp))
               {
                 horizTargets.add(0,temp);
               }
             } else {
               temp = new PVector(check.x, check.y-1);
               horizTargets.remove(0);
-              if(myGrid.notHit(temp))
+              if(g.notHit(temp))
               {
                 horizTargets.add(0,temp);
               }
@@ -163,14 +163,14 @@ class HuntAI extends AI
             // Ship dead, check for any unsunk ships that have been hit
             vertTargets.clear();
             horizTargets.clear();
-            pivot = myGrid.findUnSunk();
+            pivot = g.findUnSunk();
             if(pivot.x == -1)
             {
               println("RETURNING TO SEEK");
               mode = Mode.SEEK;
             } else {
               println("NEW TARGET ACQUIRED: " + pivot);
-              loadHuntTargets();
+              loadHuntTargets(g);
             }
             break;
         }

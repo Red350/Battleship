@@ -23,6 +23,9 @@ int delay;
 final int delayAmount = 0;
 String info = "";
 
+int demoResetTimer;
+int demoDelay = 10;
+
 // For these variables, 0 is the player, 1 is the computer
 int winner;
 int turn;
@@ -32,9 +35,11 @@ Ship selectedShip;
  
 Grid myGrid;  
 Grid enemyGrid;
+Grid demoGrid;
 
 Ship[] myShips;
 Ship[] enemyShips;
+Ship[] demoShips;
 
 ArrayList<Button> gameButtons = new ArrayList<Button>();
 ResetButton resetButton;
@@ -49,6 +54,7 @@ MediumButton mediumButton;
 HardButton hardButton;
 
 AI ai;
+AI demoAI;
 int difficulty;
 
 void setup()
@@ -75,8 +81,8 @@ void setup()
   menuButtons.add(hardButton);
   
   difficulty = 0;
-  ai = new EasyAI();
-  
+
+  resetDemo();
   state = State.MENU;
   textAlign(CENTER);
   textSize(20);
@@ -115,7 +121,7 @@ void draw()
           //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
           //println("Start AI turn");
           //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-          ai.shoot();
+          ai.shoot(myGrid, myShips);
           turn = 0;
           delay = delayAmount;
           //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -240,6 +246,28 @@ void renderMenu()
     b.update();
     b.render();
   }
+  
+  // Draw the demo grid and ships
+  demoGrid.render();
+  for(Ship s : demoShips)
+  {
+    s.update();
+  }
+  
+  // Have the ai play out the board
+  if(demoGrid.shipsAlive != 0)
+  {
+    if(frameCount % demoDelay == 0)
+    {
+      demoAI.shoot(demoGrid, demoShips);
+    }
+  } else {
+    demoResetTimer++;
+    if(demoResetTimer == 120)
+    {
+      resetDemo();
+    }
+  }
 }
 
 void renderGame()
@@ -358,4 +386,21 @@ void reset()
   turnLock = false;
   delay = delayAmount;
   state = State.SETUP;
+}
+
+void resetDemo()
+{
+  demoGrid = new Grid(400,400,200);
+  demoAI = new HardAI();
+  demoShips = new Ship[5];
+  
+  demoShips[0] = new Ship(5,0,(random(1)<0.5)?true:false);
+  demoShips[1] = new Ship(4,1,(random(1)<0.5)?true:false);
+  demoShips[2] = new Ship(3,2,(random(1)<0.5)?true:false);
+  demoShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
+  demoShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
+  
+  demoAI.randomiseShips(demoShips, demoGrid);
+  
+  demoResetTimer = 0;
 }
