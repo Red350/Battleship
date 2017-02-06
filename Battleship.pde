@@ -69,10 +69,10 @@ void setup()
   gameButtons.add(autoPlaceButton);
   gameButtons.add(mainMenuButton);
   
-  playButton = new PlayButton("Play", new PVector(width/2-50, 500),100,50, #FFFF00);
-  easyButton = new EasyButton("Easy", new PVector(200, height/2+200),100,50, #FFFF00);
-  mediumButton = new MediumButton("Medium", new PVector(width/2, height/2+200),100,50, #FFFF00);
-  hardButton = new HardButton("Hard", new PVector(800, height/2+200),100,50, #FFFF00);
+  playButton = new PlayButton("Play", new PVector(width/2-50, 475),100,50, #FFFF00);
+  easyButton = new EasyButton("Easy", new PVector(width/2 - 200, height/2+200),100,50, #FFFF00);
+  mediumButton = new MediumButton("Medium", new PVector(width/2-50, height/2+200),100,50, #FFFF00);
+  hardButton = new HardButton("Hard", new PVector(width/2 + 100, height/2+200),100,50, #FFFF00);
   menuButtons.add(playButton);
   menuButtons.add(easyButton);
   menuButtons.add(mediumButton);
@@ -92,7 +92,7 @@ void draw()
   textAlign(LEFT);
   textSize(12);
   fill(255);
-  text("State: " + state + "\nDifficulty: " + difficulty, 10, 20);
+  text("State: " + state + "\nDifficulty: " + difficulty + "\n(" + mouseX + ", " + mouseY + ")", 10, 20);
   switch(state)
   {
     case MENU:
@@ -179,15 +179,15 @@ void mouseClicked()
         switch(shotResult)
         {
           case 0:
-            info = "Miss";
+            info = "You missed. Enemies turn.";
             turn = 1;
             break;
           case 1:
-            info = "Hit";
+            info = "You hit. Your turn.";
             turn = 1;
             break;
           case 2:
-            info = "Hit. Battleship sunk.";
+            info = "You sunk their battleship! Enemies turn.";
             turn = 1;
             break;
           default:
@@ -236,9 +236,11 @@ void mouseClicked()
 
 void renderMenu()
 {
-  textSize(30);
-  textAlign(CENTER);
-  text("BATTLESHIP", width/2, 100);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  text("BATTLESHIP", width/2, 50);
+  textSize(18);
+  text("Difficulty:",width/2,575);
   for(Button b : menuButtons)
   {
     b.update();
@@ -371,8 +373,8 @@ void reset()
   myShips[0] = new Ship(100,600,5,0, true, 500/10);
   myShips[1] = new Ship(100,650,4,1, true, 500/10);
   myShips[2] = new Ship(100,700,3,2, true, 500/10);
-  myShips[3] = new Ship(600,600,3,3, true, 500/10);
-  myShips[4] = new Ship(600,650,2,4, true, 500/10);
+  myShips[3] = new Ship(375,600,3,3, true, 500/10);
+  myShips[4] = new Ship(375,650,2,4, true, 500/10);
   
   enemyShips[0] = new Ship(5,0,(random(1)<0.5)?true:false, 500/10);
   enemyShips[1] = new Ship(4,1,(random(1)<0.5)?true:false, 500/10);
