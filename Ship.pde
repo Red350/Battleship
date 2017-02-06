@@ -8,6 +8,7 @@ class Ship extends GameObject
   boolean placed;
   int cellI, cellJ;
   float cellSize;
+  float shipGap;
   int health;
   int id;
     
@@ -24,6 +25,7 @@ class Ship extends GameObject
     this.id = id;
     this.health = size;
     this.cellSize = cellSize;
+    this.shipGap = cellSize / 5;
     w = (size * cellSize) - shipGap * 2;
     h = cellSize - shipGap * 2;
     this.orientation = orientation;

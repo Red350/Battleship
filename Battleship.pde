@@ -15,7 +15,6 @@ private enum Mode
 State state;
 
 int edgeGap = 50;
-int shipGap = 10;
 
 int numPlaced = 0;
 int delay;
@@ -262,7 +261,7 @@ void renderMenu()
     }
   } else {
     demoResetTimer++;
-    if(demoResetTimer == 120)
+    if(demoResetTimer > 0)
     {
       resetDemo();
     }
