@@ -251,7 +251,7 @@ void renderMenu()
   demoGrid.render();
   for(Ship s : demoShips)
   {
-    s.update();
+    s.render();
   }
   
   // Have the ai play out the board
@@ -296,33 +296,50 @@ void renderEnemy()
 // Print some debug info
 void keyPressed()
 {
-  // Print ai's current list of targets
-  if (key == 't')
+  switch(state)
   {
-    println(ai.targets);
+    case MENU:
+      if(keyCode == UP)
+      {
+        if(demoDelay != 1)
+        {
+          println("Speeding up");
+          demoDelay--;
+        }
+      }else if(keyCode == DOWN)
+      {
+        demoDelay++;
+      }
+      break;
+    case PLAYING:
+      // Print ai's current list of targets
+      if (key == 't')
+      {
+        println(ai.targets);
+      }
+      
+      // Print player ship locations
+      if(key == 'z')
+      {
+        myGrid.printOccupiedCells();
+      }
+      
+      // Print ai ship locations
+      if(key == 'x')
+      {
+        myGrid.printOccupiedCells();
+      }
+      
+      // Skip turn
+      if(key == 'q')
+      {
+        turn = 1;
+      }
+      break;
+    default:
+      break; 
   }
   
-  // Print player ship locations
-  if(key == 'z')
-  {
-    myGrid.printOccupiedCells();
-  }
-  
-  // Print ai ship locations
-  if(key == 'x')
-  {
-    myGrid.printOccupiedCells();
-  }
-  
-  if(key == 's')
-  {
-    myGrid.printSunkCells();
-  }
-  
-  if(key == 'q')
-  {
-    turn = 1;
-  }
   
 }
 

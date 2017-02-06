@@ -58,6 +58,7 @@ class Grid extends GameObject
   // Returns true if in bounds and not hit.
   boolean notHit(PVector p)
   {
+    // Bounds check
     if (p.x >= 0 && p.x < 10 && p.y >= 0 && p.y < 10)
     {
       if (!hit[(int)p.x][(int)p.y])

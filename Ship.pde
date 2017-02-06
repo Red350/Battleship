@@ -30,6 +30,11 @@ class Ship extends GameObject
     c = #FF0000;
   }
   
+  void setSize()
+  {
+    
+  }
+  
   void render()
   {
     stroke(c);
