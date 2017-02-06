@@ -14,7 +14,6 @@ private enum Mode
 
 State state;
 
-int cellSize = 50;
 int edgeGap = 50;
 int shipGap = 10;
 
@@ -371,17 +370,17 @@ void reset()
   myShips = new Ship[5];
   enemyShips = new Ship[5];
   
-  myShips[0] = new Ship(100,600,5,0, true);
-  myShips[1] = new Ship(100,650,4,1, true);
-  myShips[2] = new Ship(100,700,3,2, true);
-  myShips[3] = new Ship(600,600,3,3, true);
-  myShips[4] = new Ship(600,650,2,4, true);
+  myShips[0] = new Ship(100,600,5,0, true, 500/10);
+  myShips[1] = new Ship(100,650,4,1, true, 500/10);
+  myShips[2] = new Ship(100,700,3,2, true, 500/10);
+  myShips[3] = new Ship(600,600,3,3, true, 500/10);
+  myShips[4] = new Ship(600,650,2,4, true, 500/10);
   
-  enemyShips[0] = new Ship(5,0,(random(1)<0.5)?true:false);
-  enemyShips[1] = new Ship(4,1,(random(1)<0.5)?true:false);
-  enemyShips[2] = new Ship(3,2,(random(1)<0.5)?true:false);
-  enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
-  enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
+  enemyShips[0] = new Ship(5,0,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[1] = new Ship(4,1,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[2] = new Ship(3,2,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false, 500/10);
   
   switch(difficulty)
   {
@@ -411,11 +410,11 @@ void resetDemo()
   demoAI = new HardAI();
   demoShips = new Ship[5];
   
-  demoShips[0] = new Ship(5,0,(random(1)<0.5)?true:false);
-  demoShips[1] = new Ship(4,1,(random(1)<0.5)?true:false);
-  demoShips[2] = new Ship(3,2,(random(1)<0.5)?true:false);
-  demoShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
-  demoShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
+  demoShips[0] = new Ship(5,0,(random(1)<0.5)?true:false, 200/10);
+  demoShips[1] = new Ship(4,1,(random(1)<0.5)?true:false, 200/10);
+  demoShips[2] = new Ship(3,2,(random(1)<0.5)?true:false, 200/10);
+  demoShips[3] = new Ship(3,3,(random(1)<0.5)?true:false, 200/10);
+  demoShips[4] = new Ship(2,4,(random(1)<0.5)?true:false, 200/10);
   
   demoAI.randomiseShips(demoShips, demoGrid);
   
