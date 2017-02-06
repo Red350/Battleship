@@ -69,7 +69,7 @@ void setup()
   gameButtons.add(autoPlaceButton);
   gameButtons.add(mainMenuButton);
   
-  playButton = new PlayButton("Play", new PVector(width/2, height/2),100,50, #FFFF00);
+  playButton = new PlayButton("Play", new PVector(width/2-50, 500),100,50, #FFFF00);
   easyButton = new EasyButton("Easy", new PVector(200, height/2+200),100,50, #FFFF00);
   mediumButton = new MediumButton("Medium", new PVector(width/2, height/2+200),100,50, #FFFF00);
   hardButton = new HardButton("Hard", new PVector(800, height/2+200),100,50, #FFFF00);
@@ -405,15 +405,16 @@ void reset()
 
 void resetDemo()
 {
-  demoGrid = new Grid(400,400,200);
+  float demoGridSize = 300;
+  demoGrid = new Grid(width/2-150,150,demoGridSize);
   demoAI = new HardAI();
   demoShips = new Ship[5];
   
-  demoShips[0] = new Ship(5,0,(random(1)<0.5)?true:false, 200/10);
-  demoShips[1] = new Ship(4,1,(random(1)<0.5)?true:false, 200/10);
-  demoShips[2] = new Ship(3,2,(random(1)<0.5)?true:false, 200/10);
-  demoShips[3] = new Ship(3,3,(random(1)<0.5)?true:false, 200/10);
-  demoShips[4] = new Ship(2,4,(random(1)<0.5)?true:false, 200/10);
+  demoShips[0] = new Ship(5,0,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[1] = new Ship(4,1,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[2] = new Ship(3,2,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[3] = new Ship(3,3,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[4] = new Ship(2,4,(random(1)<0.5)?true:false, demoGridSize/10);
   
   demoAI.randomiseShips(demoShips, demoGrid);
   

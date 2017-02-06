@@ -2,6 +2,7 @@ class HuntAI extends AI
 {
   ArrayList<PVector> vertTargets;
   ArrayList<PVector> horizTargets;
+  ArrayList<PVector> backupTargets;
   PVector pivot;
   
   HuntAI()
@@ -9,6 +10,7 @@ class HuntAI extends AI
     super();
     vertTargets = new ArrayList<PVector>();
     horizTargets = new ArrayList<PVector>();
+    backupTargets = new ArrayList<PVector>();
   }
   
   // Add the next node in line with the current hit
@@ -84,6 +86,7 @@ class HuntAI extends AI
         println("Vert Targets: " + vertTargets);
         PVector check = vertTargets.get(0);  // Shoot the first cell in the vertical array
         targets.remove(check);  // remove the cell being checked from the targets
+        backupTargets.remove(check);
         println("Ai has chosen: " + check);
         result = g.AICheckHit(ships, check);
         switch(result)
@@ -131,6 +134,7 @@ class HuntAI extends AI
         println("Horiz Targets: " + horizTargets);
         PVector check = horizTargets.get(0);  // Shoot the first cell in the horizontal array
         targets.remove(check);  // remove the cell being checked from the targets
+        backupTargets.remove(check);
         println("Ai has chosen: " + check);
         result = g.AICheckHit(ships, check);
         switch(result)

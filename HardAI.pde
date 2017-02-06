@@ -3,9 +3,7 @@ class HardAI extends HuntAI
   ArrayList<PVector> vertTargets;
   ArrayList<PVector> horizTargets;
   PVector pivot;
-  
-  ArrayList<PVector> backupTargets;
-  
+    
   HardAI()
   {
     super();

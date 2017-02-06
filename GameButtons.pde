@@ -2,11 +2,7 @@ class AutoPlaceButton extends Button
 {
   AutoPlaceButton(String name, PVector pos, int w, int h, color c)
   {
-    super(c);
-    this.name = name;
-    this.pos = pos;
-    this.w = w;
-    this.h = h;
+    super(name,pos,w,h,c);
   }
   
   void mouseClicked()
@@ -23,11 +19,7 @@ class PlayButton extends Button
 {
   PlayButton(String name, PVector pos, int w, int h, color c)
   {
-    super(c);
-    this.name = name;
-    this.pos = pos;
-    this.w = w;
-    this.h = h;
+    super(name,pos,w,h,c);
   }
   
   void mouseClicked()
@@ -43,11 +35,7 @@ class ResetButton extends Button
 {
   ResetButton(String name, PVector pos, int w, int h, color c)
   {
-    super(c);
-    this.name = name;
-    this.pos = pos;
-    this.w = w;
-    this.h = h;
+    super(name,pos,w,h,c);
   }
   
   void mouseClicked()
@@ -63,11 +51,7 @@ class MainMenuButton extends Button
 {
   MainMenuButton(String name, PVector pos, int w, int h, color c)
   {
-    super(c);
-    this.name = name;
-    this.pos = pos;
-    this.w = w;
-    this.h = h;
+    super(name,pos,w,h,c);
   }
   
   void mouseClicked()
