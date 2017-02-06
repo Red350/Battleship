@@ -301,7 +301,6 @@ void keyPressed()
       {
         if(demoDelay != 1)
         {
-          println("Speeding up");
           demoDelay--;
         }
       }else if(keyCode == DOWN)
