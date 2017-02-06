@@ -34,6 +34,19 @@ class Grid extends GameObject
         cells[i][j].render();
       }
     }
+    
+    strokeWeight(1);
+    fill(#DDDDDD);
+    for(int i = 0; i < 10; i++)
+    {
+      textSize(size/25);
+      
+      textAlign(CENTER, BOTTOM);
+      text(i+1, pos.x + size/20 + i*size/10, pos.y - 5);
+      
+      textAlign(CENTER, CENTER);
+      text((char)('A'+i), pos.x - 12, pos.y + size/20 + i*size/10);
+    }
   }
   
   // Returns coordinates of a cell that's been hit
