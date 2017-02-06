@@ -6,10 +6,16 @@ abstract class Button
   boolean mouseOver;
   color c;
   
-  Button(color c)
+  Button(String name, PVector pos, int w, int h, color c)
   {
+    this.name = name;
+    this.pos = pos;
+    this.w = w;
+    this.h = h;
     this.c = c;
   }
+  
+  Button(){}
   
   void update()
   {
@@ -24,17 +30,23 @@ abstract class Button
   void render()
   {
     update();
+    color textColor;
+    color buttonColor;
     if(mouseOver)
     {
-      fill(c);
+      buttonColor = c;
+      textColor = 0;
     } else {
-      noFill();
+      buttonColor = 0;
+      textColor = c;
     }
+    
     stroke(c);
+    fill(buttonColor);
     rect(pos.x,pos.y,w,h);
     textAlign(CENTER, CENTER);
     textSize(20);
-    fill(c);
+    fill(textColor);
     text(name,pos.x+w/2,pos.y+h/2);
   }
   

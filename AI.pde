@@ -15,13 +15,13 @@ abstract class AI
   void reset()
   {}
   
-  void shoot()
+  void shoot(Grid g, Ship[] ships)
   {}
   
   void randomiseShips(Ship[] s, Grid g)
   {
-    int x, y;
-    for(int i = 0; i < 5; i++)
+   int x, y;
+   for(int i = 0; i < 5; i++)
     {
       x = (int)random(10);
       y = (int)random(10);

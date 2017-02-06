@@ -19,10 +19,10 @@ class EasyAI extends AI
     }
   }
   
-  void shoot()
+  void shoot(Grid g, Ship[] ships)
   {
     int i = (int)random(targets.size());
-    int result =  myGrid.AICheckHit(myShips, targets.get(i));
+    int result =  g.AICheckHit(ships, targets.get(i));
     targets.remove(i);
     switch(result)
     {

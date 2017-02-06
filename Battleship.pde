@@ -14,14 +14,15 @@ private enum Mode
 
 State state;
 
-int cellSize = 50;
 int edgeGap = 50;
-int shipGap = 10;
 
 int numPlaced = 0;
 int delay;
 final int delayAmount = 0;
 String info = "";
+
+int demoResetTimer;
+int demoDelay = 10;
 
 // For these variables, 0 is the player, 1 is the computer
 int winner;
@@ -32,35 +33,55 @@ Ship selectedShip;
  
 Grid myGrid;  
 Grid enemyGrid;
+Grid demoGrid;
 
 Ship[] myShips;
 Ship[] enemyShips;
+Ship[] demoShips;
 
-ArrayList<Button> buttons = new ArrayList<Button>();
+ArrayList<Button> gameButtons = new ArrayList<Button>();
 ResetButton resetButton;
 StartButton startButton;
 AutoPlaceButton autoPlaceButton;
+MainMenuButton mainMenuButton;
+
+ArrayList<Button> menuButtons = new ArrayList<Button>();
+PlayButton playButton;
+EasyButton easyButton;
+MediumButton mediumButton;
+HardButton hardButton;
 
 AI ai;
+AI demoAI;
+int difficulty;
 
 void setup()
 {
   size(1200, 800);
   frameRate(60);
   
-  resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
   startButton = new StartButton("Start", new PVector(900,625),100, 50, #FFFF00);
+  resetButton = new ResetButton("Reset", new PVector(900,700),100, 50, #FFFF00);
   autoPlaceButton = new AutoPlaceButton("Randomise", new PVector(1025,625),100, 50, #FFFF00);
-  buttons.add(resetButton);
-  buttons.add(startButton);
-  buttons.add(autoPlaceButton);
+  mainMenuButton = new MainMenuButton("Main Menu", new PVector(1025,700),100, 50, #FFFF00);
+  gameButtons.add(resetButton);
+  gameButtons.add(startButton);
+  gameButtons.add(autoPlaceButton);
+  gameButtons.add(mainMenuButton);
   
-  ai = new HardAI();
+  playButton = new PlayButton("Play", new PVector(width/2-50, 500),100,50, #FFFF00);
+  easyButton = new EasyButton("Easy", new PVector(200, height/2+200),100,50, #FFFF00);
+  mediumButton = new MediumButton("Medium", new PVector(width/2, height/2+200),100,50, #FFFF00);
+  hardButton = new HardButton("Hard", new PVector(800, height/2+200),100,50, #FFFF00);
+  menuButtons.add(playButton);
+  menuButtons.add(easyButton);
+  menuButtons.add(mediumButton);
+  menuButtons.add(hardButton);
   
-  reset();
-  
-  //state = State.PLAYING;
-  state = State.SETUP;
+  difficulty = 0;
+
+  resetDemo();
+  state = State.MENU;
   textAlign(CENTER);
   textSize(20);
 }
@@ -71,16 +92,17 @@ void draw()
   textAlign(LEFT);
   textSize(12);
   fill(255);
-  text("State: " + state, 10, 20);
+  text("State: " + state + "\nDifficulty: " + difficulty, 10, 20);
   switch(state)
   {
     case MENU:
+      renderMenu();
       break;
     case OPTIONS:
       break;
     case SETUP:
       renderGame();
-      for(Button b : buttons)
+      for(Button b : gameButtons)
       {
         b.render();
       }
@@ -97,7 +119,7 @@ void draw()
           //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
           //println("Start AI turn");
           //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-          ai.shoot();
+          ai.shoot(myGrid, myShips);
           turn = 0;
           delay = delayAmount;
           //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -128,10 +150,6 @@ void draw()
       info = (winner == 0) ? "You win!" : "You lose!";
       break;
   }
-  textAlign(CENTER, CENTER);
-  textSize(20);
-  fill(255);
-  text(info,width/2,750);
 }
 
 void mouseClicked()
@@ -139,6 +157,10 @@ void mouseClicked()
   switch(state)
   {
     case MENU:
+      for(Button b : menuButtons)
+      {
+        b.mouseClicked();
+      }
       break;
     case OPTIONS:
       break;
@@ -180,7 +202,7 @@ void mouseClicked()
       break;
     }
     case SETUP:
-      for(Button b : buttons)
+      for(Button b : gameButtons)
       {
         b.mouseClicked();
       }
@@ -212,6 +234,40 @@ void mouseClicked()
   }
 }
 
+void renderMenu()
+{
+  textSize(30);
+  textAlign(CENTER);
+  text("BATTLESHIP", width/2, 100);
+  for(Button b : menuButtons)
+  {
+    b.update();
+    b.render();
+  }
+  
+  // Draw the demo grid and ships
+  demoGrid.render();
+  for(Ship s : demoShips)
+  {
+    s.render();
+  }
+  
+  // Have the ai play out the board
+  if(demoGrid.shipsAlive != 0)
+  {
+    if(frameCount % demoDelay == 0)
+    {
+      demoAI.shoot(demoGrid, demoShips);
+    }
+  } else {
+    demoResetTimer++;
+    if(demoResetTimer > 0)
+    {
+      resetDemo();
+    }
+  }
+}
+
 void renderGame()
 {
   myGrid.render();
@@ -221,6 +277,10 @@ void renderGame()
     myShips[i].update();
     myShips[i].render();
   }
+  textAlign(CENTER, CENTER);
+  textSize(20);
+  fill(255);
+  text(info,width/2,750);
 }
 
 void renderEnemy()
@@ -234,33 +294,49 @@ void renderEnemy()
 // Print some debug info
 void keyPressed()
 {
-  // Print ai's current list of targets
-  if (key == 't')
+  switch(state)
   {
-    println(ai.targets);
+    case MENU:
+      if(keyCode == UP)
+      {
+        if(demoDelay != 1)
+        {
+          demoDelay--;
+        }
+      }else if(keyCode == DOWN)
+      {
+        demoDelay++;
+      }
+      break;
+    case PLAYING:
+      // Print ai's current list of targets
+      if (key == 't')
+      {
+        println(ai.targets);
+      }
+      
+      // Print player ship locations
+      if(key == 'z')
+      {
+        myGrid.printOccupiedCells();
+      }
+      
+      // Print ai ship locations
+      if(key == 'x')
+      {
+        myGrid.printOccupiedCells();
+      }
+      
+      // Skip turn
+      if(key == 'q')
+      {
+        turn = 1;
+      }
+      break;
+    default:
+      break; 
   }
   
-  // Print player ship locations
-  if(key == 'z')
-  {
-    myGrid.printOccupiedCells();
-  }
-  
-  // Print ai ship locations
-  if(key == 'x')
-  {
-    myGrid.printOccupiedCells();
-  }
-  
-  if(key == 's')
-  {
-    myGrid.printSunkCells();
-  }
-  
-  if(key == 'q')
-  {
-    turn = 1;
-  }
   
 }
 
@@ -292,19 +368,30 @@ void reset()
   myShips = new Ship[5];
   enemyShips = new Ship[5];
   
-  myShips[0] = new Ship(100,600,5,0, true);
-  myShips[1] = new Ship(100,650,4,1, true);
-  myShips[2] = new Ship(100,700,3,2, true);
-  myShips[3] = new Ship(600,600,3,3, true);
-  myShips[4] = new Ship(600,650,2,4, true);
+  myShips[0] = new Ship(100,600,5,0, true, 500/10);
+  myShips[1] = new Ship(100,650,4,1, true, 500/10);
+  myShips[2] = new Ship(100,700,3,2, true, 500/10);
+  myShips[3] = new Ship(600,600,3,3, true, 500/10);
+  myShips[4] = new Ship(600,650,2,4, true, 500/10);
   
-  enemyShips[0] = new Ship(5,0,(random(1)<0.5)?true:false);
-  enemyShips[1] = new Ship(4,1,(random(1)<0.5)?true:false);
-  enemyShips[2] = new Ship(3,2,(random(1)<0.5)?true:false);
-  enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false);
-  enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false);
+  enemyShips[0] = new Ship(5,0,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[1] = new Ship(4,1,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[2] = new Ship(3,2,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[3] = new Ship(3,3,(random(1)<0.5)?true:false, 500/10);
+  enemyShips[4] = new Ship(2,4,(random(1)<0.5)?true:false, 500/10);
   
-  ai.reset();
+  switch(difficulty)
+  {
+    case 0:
+      ai = new EasyAI();
+      break;
+    case 1:
+      ai = new MediumAI();
+      break;
+    case 2:
+      ai = new HardAI();
+      break;
+  }
   ai.randomiseShips(enemyShips, enemyGrid);
   
   info = "Please place your ships";
@@ -312,4 +399,23 @@ void reset()
   turn = 0;
   turnLock = false;
   delay = delayAmount;
+  state = State.SETUP;
+}
+
+void resetDemo()
+{
+  float demoGridSize = 300;
+  demoGrid = new Grid(width/2-150,150,demoGridSize);
+  demoAI = new HardAI();
+  demoShips = new Ship[5];
+  
+  demoShips[0] = new Ship(5,0,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[1] = new Ship(4,1,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[2] = new Ship(3,2,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[3] = new Ship(3,3,(random(1)<0.5)?true:false, demoGridSize/10);
+  demoShips[4] = new Ship(2,4,(random(1)<0.5)?true:false, demoGridSize/10);
+  
+  demoAI.randomiseShips(demoShips, demoGrid);
+  
+  demoResetTimer = 0;
 }
