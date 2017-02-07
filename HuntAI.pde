@@ -72,6 +72,7 @@ class HuntAI extends AI
       //myGrid.printHitCells();
       pivot = targets.get(i);
       result =  g.AICheckHit(ships, pivot);
+      updateInfo(result);
       println("Ai just targeted " + pivot + "with a result of " + result);
 
       if(result == 1)
@@ -89,6 +90,7 @@ class HuntAI extends AI
         backupTargets.remove(check);
         println("Ai has chosen: " + check);
         result = g.AICheckHit(ships, check);
+        updateInfo(result);
         switch(result)
         {
           case 0:
@@ -137,6 +139,7 @@ class HuntAI extends AI
         backupTargets.remove(check);
         println("Ai has chosen: " + check);
         result = g.AICheckHit(ships, check);
+        updateInfo(result);
         switch(result)
         {
           case 0: 

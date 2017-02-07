@@ -266,9 +266,10 @@ class Grid extends GameObject
     cells[i][j].hovered = 0;
     
     numPlaced++;
-    if(numPlaced == 5)
+    if(this == myGrid && numPlaced == 5)
     {
-      info = "Press Start to begin";
+      infoQueue.remove();
+      infoQueue.add("Press Start to begin");
     }
   }
   // Check if a ship can be placed at coordinates (i,j) in the grid

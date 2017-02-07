@@ -4,6 +4,7 @@
  */
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public enum State {
   MENU, CONTROLS, SETUP, PLAYING, GAMEOVER
@@ -21,10 +22,10 @@ State state;
 int edgeGap = 50;
 
 int numPlaced = 0;
-int delay;
-final int delayAmount = 0;
+int enemyDelay;
+final int enemyDelayAmount = 120;
 
-String info = "";
+LinkedList<String> infoQueue;
 String howToPlay = "";
 
 int demoResetTimer;
@@ -64,7 +65,7 @@ AI ai;
 AI demoAI;
 int difficulty;
 
-PFont titleFont, buttonFont, headingFont, howToFont;
+PFont titleFont, buttonFont, headingFont, howToFont, infoFont;
 int defaultTextSize = 9;
 
 void setup()
@@ -94,16 +95,19 @@ void setup()
   
   backButton  = new MainMenuButton("Back", new PVector(width/2 - 50, height-75), 100, 50, #FFFF00);
   
+  infoQueue = new LinkedList<String>();
+  
   loadHowToPlay();
-
   
   titleFont = createFont("Gameplay.ttf", 50);
   buttonFont = createFont("Pixeled.ttf", defaultTextSize);
+  infoFont = createFont("Pixeled.ttf", 14);
   headingFont = createFont("Pixeled.ttf", 20);
   howToFont = createFont("coolvetica rg.ttf", 25);
 
   difficulty = 0;
 
+  reset();
   resetDemo();
   state = State.MENU;
 }
@@ -144,13 +148,13 @@ void draw()
     if (turn == 1 && !turnLock)
     {
       turnLock = true;
-      if (delay <= 0)
+      if (enemyDelay <= 0)
       {
         ai.shoot(myGrid, myShips);
         turn = 0;
-        delay = delayAmount;
+        enemyDelay = enemyDelayAmount;
       }
-      delay--;
+      enemyDelay--;
       turnLock = false;
     }
 
@@ -160,12 +164,16 @@ void draw()
       winner = 1;
       state = State.GAMEOVER;
       enemyGrid.clearHovered();
+      infoQueue.remove();
+      infoQueue.add("You win!");
     } else {
       if (enemyGrid.shipsAlive == 0)
       {
         winner = 0;
         state = State.GAMEOVER;
         enemyGrid.clearHovered();
+        infoQueue.remove();
+        infoQueue.add("You lose!");
       }
     }
     break;
@@ -174,7 +182,6 @@ void draw()
     renderEnemy();
     resetButton.render();
     mainMenuButton.render();
-    info = (winner == 0) ? "You win!" : "You lose!";
     break;
   }
 }
@@ -200,22 +207,22 @@ void mouseClicked()
       if (turn == 0 && enemyGrid.mouseOver() && !turnLock)
       {
         turnLock = true;
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        //println("Start Player turn");
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         int shotResult = enemyGrid.checkHit(enemyShips);
         switch(shotResult)
         {
         case 0:
-          info = "You missed. Enemy's turn.";
+          infoQueue.remove();
+          infoQueue.add("You missed. Enemy turn.");
           turn = 1;
           break;
         case 1:
-          info = "You hit. Enemy's turn.";
+          infoQueue.remove();
+          infoQueue.add("You hit. Enemy turn.");
           turn = 1;
           break;
         case 2:
-          info = "You sunk their battleship! Enemy's turn.";
+          infoQueue.remove();
+          infoQueue.add("You sunk their battleship! Enemy turn.");
           turn = 1;
           break;
         default:
@@ -223,9 +230,6 @@ void mouseClicked()
           break;
         }
         turnLock = false;
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        //println("End Player turn");
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
       }
       break;
     }
@@ -316,9 +320,16 @@ void renderGame()
   textFont(headingFont);
   text("YOUR GRID", myGrid.pos.x+myGrid.size/2, 30);
   text("ENEMY GRID", enemyGrid.pos.x+enemyGrid.size/2, 30);
-  textSize(14);
-  text(info, width/2, 750);
-  textSize(defaultTextSize);
+  
+  // Print info
+  textFont(infoFont);
+  fill(20);
+  text(infoQueue.get(0), width/2, height-25);
+  fill(50);
+  text(infoQueue.get(1), width/2, height-50);
+  fill(255);
+  text(infoQueue.get(2), width/2, height-75);
+  //text(info, width/2, 750);
 }
 
 void renderHowTo()
@@ -392,7 +403,7 @@ void keyPressed()
 
 // Method called when then reset button is pushed
 void reset()
-{
+{  
   myGrid = new Grid(50, 100, 500);
   enemyGrid = new Grid(650, 100, 500);
 
@@ -424,12 +435,16 @@ void reset()
     break;
   }
   ai.randomiseShips(enemyShips, enemyGrid);
+  
+  infoQueue.clear();
+  infoQueue.add("");
+  infoQueue.add("");
+  infoQueue.add("Please place your ships");
 
-  info = "Please place your ships";
   numPlaced = 0;
   turn = 0;
   turnLock = false;
-  delay = delayAmount;
+  enemyDelay = enemyDelayAmount;
   state = State.SETUP;
 }
 

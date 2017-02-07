@@ -18,6 +18,29 @@ abstract class AI
   void shoot(Grid g, Ship[] ships)
   {}
   
+  void updateInfo(int result)
+  {
+    switch(result)
+    {
+      case 0:
+        infoQueue.remove();
+        infoQueue.add("Computer missed. Your turn");
+        break;
+      case 1:
+        infoQueue.remove();
+        infoQueue.add("Computer hit. Your turn");
+        break;
+      case 2:
+        infoQueue.remove();
+        infoQueue.add("Computer sunk your battleship! Your turn");
+        break;
+      case -1:
+        infoQueue.remove();
+        infoQueue.add("Computer is broken, call a programmer. Also your turn I guess...");
+        break;
+    }
+  }
+  
   void randomiseShips(Ship[] s, Grid g)
   {
    int x, y;
