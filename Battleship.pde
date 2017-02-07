@@ -28,14 +28,16 @@ float buttonWidth;
 float buttonHeight;
 
 int numPlaced = 0;
-int enemyDelay;
-final int enemyDelayAmount = 0;
+
+int enemyDelayTimer;
+final int enemyDelayInitial = 60;
+
+int demoResetDelayTimer;
+final int demoResetDelayInitial = 60;
+int demoTurnDelay = 10;
 
 LinkedList<String> infoQueue;
 String howToPlay = "";
-
-int demoResetTimer;
-int demoDelay = 10;
 
 // For these variables, 0 is the player, 1 is the computer
 int winner;
@@ -161,13 +163,13 @@ void draw()
     if (turn == 1 && !turnLock)
     {
       turnLock = true;
-      if (enemyDelay <= 0)
+      if (enemyDelayTimer <= 0)
       {
         ai.shoot(myGrid, myShips);
         turn = 0;
-        enemyDelay = enemyDelayAmount;
+        enemyDelayTimer = enemyDelayInitial;
       }
-      enemyDelay--;
+      enemyDelayTimer--;
       turnLock = false;
     }
 
@@ -304,13 +306,13 @@ void renderMenu()
   // Have the ai play out the board
   if (demoGrid.shipsAlive != 0)
   {
-    if (frameCount % demoDelay == 0)
+    if (frameCount % demoTurnDelay == 0)
     {
       demoAI.shoot(demoGrid, demoShips);
     }
   } else {
-    demoResetTimer++;
-    if (demoResetTimer > 0)
+    demoResetDelayTimer--;
+    if (demoResetDelayTimer <= 0)
     {
       resetDemo();
     }
@@ -371,13 +373,13 @@ void keyPressed()
   case MENU:
     if (keyCode == UP)
     {
-      if (demoDelay != 1)
+      if (demoTurnDelay != 1)
       {
-        demoDelay--;
+        demoTurnDelay--;
       }
     } else if (keyCode == DOWN)
     {
-      demoDelay++;
+      demoTurnDelay++;
     }
     break;
   case PLAYING:
@@ -456,7 +458,7 @@ void reset()
   numPlaced = 0;
   turn = 0;
   turnLock = false;
-  enemyDelay = enemyDelayAmount;
+  enemyDelayTimer = enemyDelayInitial;
   state = State.SETUP;
 }
 
@@ -476,7 +478,7 @@ void resetDemo()
 
   demoAI.randomiseShips(demoShips, demoGrid);
 
-  demoResetTimer = 0;
+  demoResetDelayTimer = demoResetDelayInitial;
 }
 
 void loadHowToPlay()

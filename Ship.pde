@@ -31,7 +31,7 @@ class Ship extends GameObject
     this.orientation = orientation;
     selected = false;
     placed = false;
-    c = #0000FF;
+    c = #1155FF;
   }
   
   void render()
