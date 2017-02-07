@@ -290,9 +290,9 @@ void renderGame()
   textSize(20);
   text("Your board", myGrid.pos.x+myGrid.size/2, 30);
   text("Enemy board", enemyGrid.pos.x+enemyGrid.size/2, 30);
-  textSize(defaultTextSize);
-  //text("Enemy board");
+  textSize(14);
   text(info, width/2, 750);
+  textSize(defaultTextSize);
 }
 
 void renderEnemy()
@@ -359,11 +359,11 @@ void reset()
   myShips = new Ship[5];
   enemyShips = new Ship[5];
 
-  myShips[0] = new Ship(100, 600, 5, 0, true, 500/10);
-  myShips[1] = new Ship(100, 650, 4, 1, true, 500/10);
-  myShips[2] = new Ship(100, 700, 3, 2, true, 500/10);
-  myShips[3] = new Ship(375, 600, 3, 3, true, 500/10);
-  myShips[4] = new Ship(375, 650, 2, 4, true, 500/10);
+  myShips[0] = new Ship(100, 625, 5, 0, true, 500/10);
+  myShips[1] = new Ship(100, 675, 4, 1, true, 500/10);
+  myShips[2] = new Ship(100, 725, 3, 2, true, 500/10);
+  myShips[3] = new Ship(375, 625, 3, 3, true, 500/10);
+  myShips[4] = new Ship(375, 675, 2, 4, true, 500/10);
 
   enemyShips[0] = new Ship(5, 0, (random(1)<0.5)?true:false, 500/10);
   enemyShips[1] = new Ship(4, 1, (random(1)<0.5)?true:false, 500/10);

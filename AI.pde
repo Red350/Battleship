@@ -21,6 +21,7 @@ abstract class AI
   void randomiseShips(Ship[] s, Grid g)
   {
    int x, y;
+   numPlaced = 0;
    for(int i = 0; i < 5; i++)
     {
       s[i].orientation = (random(1)<0.5)?true:false;
