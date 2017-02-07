@@ -34,7 +34,6 @@ abstract class DifficultyButton extends Button
     fill(buttonColor);
     rect(pos.x,pos.y,w,h);
     textAlign(CENTER, CENTER);
-    textSize(16);
     fill(textColor);
     text(name,pos.x+w/2,pos.y+h/2);
   }

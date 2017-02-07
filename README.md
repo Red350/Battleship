@@ -62,3 +62,7 @@ As the smallest ship is of size 2, this list of targets is guaranteed to hit eve
 ### Randomised ship placement
 The AI class deals with randomising ship placement both for itself and for the player.
 It's fairly simple, as the grid already has a method to ensure a ship is being placed validly. All it does is continually try to place a ship until it succeeds, then moves on to the next ship.
+
+## Asset Credits
+http://www.dafont.com/game-over.font
+http://www.dafont.com/pixeled.font

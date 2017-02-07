@@ -39,7 +39,7 @@ class Grid extends GameObject
     fill(#DDDDDD);
     for(int i = 0; i < 10; i++)
     {
-      textSize(size/25);
+      textSize(size/50);
       
       textAlign(CENTER, BOTTOM);
       text(i+1, pos.x + size/20 + i*size/10, pos.y - 5);
@@ -85,6 +85,17 @@ class Grid extends GameObject
   boolean mouseOver()
   {
     return(mouseX > pos.x && mouseX < pos.x + size && mouseY > pos.y && mouseY < pos.y + size);
+  }
+  
+  void checkHover()
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        cells[i][j].updateHover();
+      }
+    }
   }
 
   // Sets occupied cells to -1 if a ship is moved after being placed
