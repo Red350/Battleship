@@ -1,3 +1,11 @@
 Store the current colour of the X so it doesn't have to check each time it renders.
 
-have the x's render over the ships
+Make everything scale
+
+Remove ai printouts
+
+Readme
+	Scrolling info text
+	demo of ai
+	Check if ship can be placed
+	scalevalue

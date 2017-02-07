@@ -1,12 +1,12 @@
 abstract class Button
 {
   PVector pos;
-  int w,h;
+  float w,h;
   String name;
   boolean mouseOver;
   color c;
   
-  Button(String name, PVector pos, int w, int h, color c)
+  Button(String name, PVector pos, float w, float h, color c)
   {
     this.name = name;
     this.pos = pos;

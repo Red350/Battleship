@@ -1,6 +1,6 @@
 class RandomiseButton extends Button
 {
-  RandomiseButton(String name, PVector pos, int w, int h, color c)
+  RandomiseButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
   }
@@ -17,7 +17,7 @@ class RandomiseButton extends Button
 
 class StartButton extends Button
 {
-  StartButton(String name, PVector pos, int w, int h, color c)
+  StartButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
   }
@@ -43,7 +43,7 @@ class StartButton extends Button
 
 class ResetButton extends Button
 {
-  ResetButton(String name, PVector pos, int w, int h, color c)
+  ResetButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
   }
@@ -59,7 +59,7 @@ class ResetButton extends Button
 
 class MainMenuButton extends Button
 {
-  MainMenuButton(String name, PVector pos, int w, int h, color c)
+  MainMenuButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
   }

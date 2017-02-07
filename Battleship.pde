@@ -62,7 +62,7 @@ MainMenuButton mainMenuButton;
 
 ArrayList<Button> menuButtons = new ArrayList<Button>();
 PlayButton playButton;
-ControlsButton controlsButton;
+HowToButton howToButton;
 EasyButton easyButton;
 MediumButton mediumButton;
 HardButton hardButton;
@@ -74,11 +74,10 @@ AI demoAI;
 int difficulty;
 
 PFont titleFont, buttonFont, headingFont, howToFont, infoFont;
-int defaultTextSize = 9;
 
 void setup()
 {
-  size(1200, 800);
+  size(1200,800);
   frameRate(60);
   
   scaleValue = (float)width/1200;
@@ -88,37 +87,37 @@ void setup()
   buttonWidth = 100*scaleValue;
   buttonHeight = 50*scaleValue;
 
-  startButton = new StartButton("START", new PVector(900, 625), 100, 50, #FFFF00);
-  resetButton = new ResetButton("RESET", new PVector(900, 700), 100, 50, #FFFF00);
-  randomiseButton = new RandomiseButton("RANDOMISE", new PVector(1025, 625), 100, 50, #FFFF00);
-  mainMenuButton = new MainMenuButton("MAIN MENU", new PVector(1025, 700), 100, 50, #FFFF00);
+  startButton = new StartButton("START", new PVector(scaleValue*900, scaleValue*625), buttonWidth, buttonHeight, #FFFF00);
+  resetButton = new ResetButton("RESET", new PVector(scaleValue*900, scaleValue*700), buttonWidth, buttonHeight, #FFFF00);
+  randomiseButton = new RandomiseButton("RANDOMISE", new PVector(scaleValue*1025, scaleValue*625), buttonWidth, buttonHeight, #FFFF00);
+  mainMenuButton = new MainMenuButton("MAIN MENU", new PVector(scaleValue*1025, scaleValue*700), buttonWidth, buttonHeight, #FFFF00);
   gameButtons.add(resetButton);
   gameButtons.add(startButton);
   gameButtons.add(randomiseButton);
   gameButtons.add(mainMenuButton);
 
-  playButton = new PlayButton("PLAY", new PVector(width/2-150, 500), 100, 50, #FFFF00);
-  controlsButton = new ControlsButton("HOW TO PLAY", new PVector(width/2+50, 500), 100, 50, #FFFF00);
-  easyButton = new EasyButton("EASY", new PVector(width/2 - 200, height/2+250), 100, 50, #FFFF00);
-  mediumButton = new MediumButton("MEDIUM", new PVector(width/2-50, height/2+250), 100, 50, #FFFF00);
-  hardButton = new HardButton("HARD", new PVector(width/2 + 100, height/2+250), 100, 50, #FFFF00);
+  playButton = new PlayButton("PLAY", new PVector(width/2-scaleValue*150, scaleValue*500), buttonWidth, buttonHeight, #FFFF00);
+  howToButton = new HowToButton("HOW TO PLAY", new PVector(width/2+scaleValue*50, scaleValue*500), buttonWidth, buttonHeight, #FFFF00);
+  easyButton = new EasyButton("EASY", new PVector(width/2 - scaleValue*200, height/2+scaleValue*250), buttonWidth, buttonHeight, #FFFF00);
+  mediumButton = new MediumButton("MEDIUM", new PVector(width/2-scaleValue*50, height/2+scaleValue*250), buttonWidth, buttonHeight, #FFFF00);
+  hardButton = new HardButton("HARD", new PVector(width/2 + scaleValue*100, height/2+scaleValue*250), buttonWidth, buttonHeight, #FFFF00);
   menuButtons.add(playButton);
-  menuButtons.add(controlsButton);
+  menuButtons.add(howToButton);
   menuButtons.add(easyButton);
   menuButtons.add(mediumButton);
   menuButtons.add(hardButton);
   
-  backButton  = new MainMenuButton("Back", new PVector(width/2 - 50, height-75), 100, 50, #FFFF00);
+  backButton  = new MainMenuButton("BACK", new PVector(width/2 - scaleValue*50, height-scaleValue*75), buttonWidth, buttonHeight, #FFFF00);
   
   infoQueue = new LinkedList<String>();
   
   loadHowToPlay();
   
-  titleFont = createFont("Gameplay.ttf", 50);
-  buttonFont = createFont("Pixeled.ttf", defaultTextSize);
-  infoFont = createFont("Pixeled.ttf", 14);
-  headingFont = createFont("Pixeled.ttf", 20);
-  howToFont = createFont("coolvetica rg.ttf", 25);
+  titleFont = createFont("Gameplay.ttf", 50*scaleValue);
+  buttonFont = createFont("Pixeled.ttf", 9*scaleValue);
+  infoFont = createFont("Pixeled.ttf", 14*scaleValue);
+  headingFont = createFont("Pixeled.ttf", 20*scaleValue);
+  howToFont = createFont("coolvetica rg.ttf", 25*scaleValue);
 
   difficulty = 2;
 
@@ -285,11 +284,10 @@ void renderMenu()
 {
   textAlign(CENTER, CENTER);
   textFont(titleFont);
-  text("BATTLESHIP", width/2, 50);
+  text("BATTLESHIP", width/2, scaleValue*50);
   textFont(buttonFont);
   textSize(16);
-  text("Difficulty:", width/2, 600);
-  textSize(defaultTextSize);
+  text("Difficulty:", width/2, scaleValue*600);
   for (Button b : menuButtons)
   {
     b.update();
@@ -338,12 +336,11 @@ void renderGame()
   // Print info
   textFont(infoFont);
   fill(20);
-  text(infoQueue.get(0), width/2, height-100);
+  text(infoQueue.get(0), width/2, height-scaleValue*100);
   fill(50);
-  text(infoQueue.get(1), width/2, height-125);
+  text(infoQueue.get(1), width/2, height-scaleValue*125);
   fill(255);
-  text(infoQueue.get(2), width/2, height-150);
-  //text(info, width/2, 750);
+  text(infoQueue.get(2), width/2, height-scaleValue*150);
 }
 
 void renderHowTo()
@@ -466,7 +463,7 @@ void reset()
 void resetDemo()
 {
   float demoGridSize = width/4;
-  demoGrid = new Grid(width/2-150, 150, demoGridSize);
+  demoGrid = new Grid(width/2-scaleValue*150, scaleValue*150, demoGridSize);
   demoAI = new HardAI();
   demoShips = new Ship[5];
 

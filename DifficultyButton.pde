@@ -1,7 +1,7 @@
 abstract class DifficultyButton extends Button
 {
   boolean selected;
-  DifficultyButton(String name, PVector pos, int w, int h, color c)
+  DifficultyButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
   }
@@ -43,7 +43,7 @@ abstract class DifficultyButton extends Button
 class EasyButton extends DifficultyButton
 {  
   
-  EasyButton(String name, PVector pos, int w, int h, color c)
+  EasyButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
     selected = false;
@@ -63,7 +63,7 @@ class EasyButton extends DifficultyButton
 
 class MediumButton extends DifficultyButton
 {  
-  MediumButton(String name, PVector pos, int w, int h, color c)
+  MediumButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
     selected = false;
@@ -83,7 +83,7 @@ class MediumButton extends DifficultyButton
 
 class HardButton extends DifficultyButton
 {  
-  HardButton(String name, PVector pos, int w, int h, color c)
+  HardButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
     selected = true;

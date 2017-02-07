@@ -1,8 +1,6 @@
-
-
 class PlayButton extends Button
 {
-  PlayButton(String name, PVector pos, int w, int h, color c)
+  PlayButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
   }
@@ -16,9 +14,9 @@ class PlayButton extends Button
   }
 }
 
-class ControlsButton extends Button
+class HowToButton extends Button
 {
-  ControlsButton(String name, PVector pos, int w, int h, color c)
+  HowToButton(String name, PVector pos, float w, float h, color c)
   {
     super(name,pos,w,h,c);
   }
