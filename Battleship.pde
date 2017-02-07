@@ -4,13 +4,15 @@
  */
 
 public enum State {
-  MENU, OPTIONS, SETUP, PLAYING, GAMEOVER
+  MENU, CONTROLS, SETUP, PLAYING, GAMEOVER
 }
 
 private enum Mode
 {
   SEEK, HUNT
 }
+
+boolean debug = false;
 
 State state;
 
@@ -47,9 +49,12 @@ MainMenuButton mainMenuButton;
 
 ArrayList<Button> menuButtons = new ArrayList<Button>();
 PlayButton playButton;
+ControlsButton controlsButton;
 EasyButton easyButton;
 MediumButton mediumButton;
 HardButton hardButton;
+
+MainMenuButton backButton;
 
 AI ai;
 AI demoAI;
@@ -72,14 +77,19 @@ void setup()
   gameButtons.add(randomiseButton);
   gameButtons.add(mainMenuButton);
 
-  playButton = new PlayButton("Play", new PVector(width/2-50, 475), 100, 50, #FFFF00);
-  easyButton = new EasyButton("Easy", new PVector(width/2 - 200, height/2+200), 100, 50, #FFFF00);
-  mediumButton = new MediumButton("Medium", new PVector(width/2-50, height/2+200), 100, 50, #FFFF00);
-  hardButton = new HardButton("Hard", new PVector(width/2 + 100, height/2+200), 100, 50, #FFFF00);
+  playButton = new PlayButton("Play", new PVector(width/2-150, 500), 100, 50, #FFFF00);
+  controlsButton = new ControlsButton("Controls", new PVector(width/2+50, 500), 100, 50, #FFFF00);
+  easyButton = new EasyButton("Easy", new PVector(width/2 - 200, height/2+250), 100, 50, #FFFF00);
+  mediumButton = new MediumButton("Medium", new PVector(width/2-50, height/2+250), 100, 50, #FFFF00);
+  hardButton = new HardButton("Hard", new PVector(width/2 + 100, height/2+250), 100, 50, #FFFF00);
   menuButtons.add(playButton);
+  menuButtons.add(controlsButton);
   menuButtons.add(easyButton);
   menuButtons.add(mediumButton);
   menuButtons.add(hardButton);
+  
+  backButton  = new MainMenuButton("Back", new PVector(1025, 700), 100, 50, #FFFF00);
+
   
   titleFont = createFont("game_over.ttf", 200);
   titleFont = createFont("Gameplay.ttf", 50);
@@ -94,15 +104,18 @@ void setup()
 void draw()
 {
   background(0);
-  textAlign(LEFT);
-  fill(255);
-  text("State: " + state + "\nDifficulty: " + difficulty + "\n(" + mouseX + ", " + mouseY + ")", 10, 20);
+  if(debug)
+  {
+    displayDebugInfo();
+  }
+  
   switch(state)
   {
   case MENU:
     renderMenu();
     break;
-  case OPTIONS:
+  case CONTROLS:
+    renderControls();
     break;
   case SETUP:
     renderGame();
@@ -166,7 +179,8 @@ void mouseClicked()
       b.mouseClicked();
     }
     break;
-  case OPTIONS:
+  case CONTROLS:
+    backButton.mouseClicked();
     break;
   case PLAYING:
     {
@@ -244,7 +258,9 @@ void renderMenu()
   textFont(titleFont);
   text("BATTLESHIP", width/2, 50);
   textFont(textFont);
-  text("Difficulty:", width/2, 575);
+  textSize(16);
+  text("Difficulty:", width/2, 600);
+  textSize(defaultTextSize);
   for (Button b : menuButtons)
   {
     b.update();
@@ -295,6 +311,12 @@ void renderGame()
   textSize(defaultTextSize);
 }
 
+void renderControls()
+{
+  backButton.update();
+  backButton.render();
+}
+
 void renderEnemy()
 {
   for (int i = 0; i < 5; i++)
@@ -321,30 +343,33 @@ void keyPressed()
     }
     break;
   case PLAYING:
-    // Print ai's current list of targets
-    if (key == 't')
+    if(debug)
     {
-      println(ai.targets);
+      // Print ai's current list of targets
+      if (key == 't')
+      {
+        println(ai.targets);
+      }
+  
+      // Print player ship locations
+      if (key == 'z')
+      {
+        myGrid.printOccupiedCells();
+      }
+  
+      // Print ai ship locations
+      if (key == 'x')
+      {
+        myGrid.printOccupiedCells();
+      }
+  
+      // Skip turn
+      if (key == 'q')
+      {
+        turn = 1;
+      }
+      break;
     }
-
-    // Print player ship locations
-    if (key == 'z')
-    {
-      myGrid.printOccupiedCells();
-    }
-
-    // Print ai ship locations
-    if (key == 'x')
-    {
-      myGrid.printOccupiedCells();
-    }
-
-    // Skip turn
-    if (key == 'q')
-    {
-      turn = 1;
-    }
-    break;
   default:
     break;
   }
@@ -410,4 +435,12 @@ void resetDemo()
   demoAI.randomiseShips(demoShips, demoGrid);
 
   demoResetTimer = 0;
+}
+
+void displayDebugInfo()
+{
+  textAlign(LEFT);
+  textFont(textFont);
+  fill(255);
+  text("Framerate: " + frameRate + "\nState: " + state + "\nDifficulty: " + difficulty + "\n(" + mouseX + ", " + mouseY + ")", 10, 20);
 }
