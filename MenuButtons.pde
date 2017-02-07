@@ -1,6 +1,8 @@
-class StartButton extends Button
+
+
+class PlayButton extends Button
 {
-  StartButton(String name, PVector pos, int w, int h, color c)
+  PlayButton(String name, PVector pos, int w, int h, color c)
   {
     super(name,pos,w,h,c);
   }
@@ -9,14 +11,7 @@ class StartButton extends Button
   {
     if(super.mouseOver)
     {
-      if(numPlaced == 5)
-      {
-        super.mouseOver = false;
-        state = State.PLAYING;
-        info = "Game has begun, your turn";
-      } else {
-        info = "You must place all ships before starting";
-      }
+      reset();
     }
   }
 }

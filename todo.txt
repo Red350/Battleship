@@ -5,3 +5,5 @@ When holding a ship, show if it can be placed
 have the ai do the player randomisation
 
 have the x's render over the ships
+
+load controls from file

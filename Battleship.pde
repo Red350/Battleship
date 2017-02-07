@@ -12,7 +12,7 @@ private enum Mode
   SEEK, HUNT
 }
 
-boolean debug = false;
+boolean debug = true;
 
 State state;
 
@@ -152,11 +152,13 @@ void draw()
     {
       winner = 1;
       state = State.GAMEOVER;
+      enemyGrid.clearHovered();
     } else {
       if (enemyGrid.shipsAlive == 0)
       {
         winner = 0;
         state = State.GAMEOVER;
+        enemyGrid.clearHovered();
       }
     }
     break;
@@ -164,6 +166,7 @@ void draw()
     renderGame();
     renderEnemy();
     resetButton.render();
+    mainMenuButton.render();
     info = (winner == 0) ? "You win!" : "You lose!";
     break;
   }

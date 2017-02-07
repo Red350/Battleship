@@ -120,7 +120,18 @@ class Grid extends GameObject
         }
       }
     }
-  } 
+  }
+  
+  void clearHovered()
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        cells[i][j].hovered = 0;
+      }
+    }
+  }
 
   // Sets occupied cells to -1 if a ship is moved after being placed
   void remove(Ship s)
