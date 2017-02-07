@@ -363,11 +363,12 @@ void randomiseShips(Ship[] s, Grid g)
     s[i].orientation = (random(1)<0.5)?true:false;
     x = (int)random(10);
     y = (int)random(10);
-    while (!g.placeShip(s[i], x, y))
+    while (!g.checkShipPlaceable(s[i], x, y))
     {
       x = (int)random(10);
       y = (int)random(10);
     }
+    g.placeShip(s[i], x, y);
     s[i].lockToGrid(g, x, y);
   }
 }

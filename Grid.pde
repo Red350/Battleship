@@ -207,9 +207,33 @@ class Grid extends GameObject
     return -1;
   }
 
-    
-  // Attempt to place a ship at coordinates (i,j) in the grid
-  boolean placeShip(Ship s, int i, int j)
+  // Place ship at coordinates (i,j)
+  void placeShip(Ship s, int i, int j)
+  {
+    // Informs the relevant cells as to where the ship was placed
+    // and updates the local occupied array.
+    if (s.orientation)
+    {
+      for (int k = j; k < j + s.size; k++)
+      {
+        occupied[i][k] = s.id;
+        cells[i][k].occupied = true;
+      }
+    } else {
+      for (int k = i; k < i + s.size; k++)
+      {
+        occupied[k][j] = s.id;
+        cells[k][j].occupied = true;
+      }
+    }
+    numPlaced++;
+    if(numPlaced == 5)
+    {
+      info = "Press Start to begin";
+    }
+  }
+  // Check if a ship can be placed at coordinates (i,j) in the grid
+  boolean checkShipPlaceable(Ship s, int i, int j)
   {
     // First check if the ship can fit at the position
     Boolean validPos = true;
@@ -247,27 +271,6 @@ class Grid extends GameObject
     // If the position if valid, place the ship
     if (validPos)
     {
-      // Informs the relevant cells as to where the ship was placed
-      // and updates the local occupied array.
-      if (s.orientation)
-      {
-        for (int k = j; k < j + s.size; k++)
-        {
-          occupied[i][k] = s.id;
-          cells[i][k].occupied = true;
-        }
-      } else {
-        for (int k = i; k < i + s.size; k++)
-        {
-          occupied[k][j] = s.id;
-          cells[k][j].occupied = true;
-        }
-      }
-      numPlaced++;
-      if(numPlaced == 5)
-      {
-        info = "Press Start to begin";
-      }
       return true;
     }
     return false;
@@ -283,8 +286,9 @@ class Grid extends GameObject
         {
           if (cells[i][j].mouseOver())
           {
-            if (placeShip(selectedShip, i, j))
+            if (checkShipPlaceable(selectedShip, i, j))
             {
+              placeShip(selectedShip, i, j);
               selectedShip.lockToGrid(this, i, j);
               selectedShip = null;
             }

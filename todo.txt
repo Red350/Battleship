@@ -1,5 +1,5 @@
 Store the current colour of the X so it doesn't have to check each time it renders.
 
-Add menu.
+When holding a ship, show if it can be placed
 
-Have ai parse game board after sinking ship, checking for partially sunk ships.
+have the ai do the player randomisation
