@@ -3,6 +3,8 @@
  * Student number: C15755659
  */
 
+import java.util.Arrays;
+
 public enum State {
   MENU, CONTROLS, SETUP, PLAYING, GAMEOVER
 }
@@ -21,7 +23,9 @@ int edgeGap = 50;
 int numPlaced = 0;
 int delay;
 final int delayAmount = 0;
+
 String info = "";
+String howToPlay = "";
 
 int demoResetTimer;
 int demoDelay = 10;
@@ -60,40 +64,43 @@ AI ai;
 AI demoAI;
 int difficulty;
 
-PFont titleFont, textFont;
-int defaultTextSize = 10;
+PFont titleFont, buttonFont, headingFont, howToFont;
+int defaultTextSize = 9;
 
 void setup()
 {
   size(1200, 800);
   frameRate(60);
 
-  startButton = new StartButton("Start", new PVector(900, 625), 100, 50, #FFFF00);
-  resetButton = new ResetButton("Reset", new PVector(900, 700), 100, 50, #FFFF00);
-  randomiseButton = new RandomiseButton("Randomise", new PVector(1025, 625), 100, 50, #FFFF00);
-  mainMenuButton = new MainMenuButton("Main Menu", new PVector(1025, 700), 100, 50, #FFFF00);
+  startButton = new StartButton("START", new PVector(900, 625), 100, 50, #FFFF00);
+  resetButton = new ResetButton("RESET", new PVector(900, 700), 100, 50, #FFFF00);
+  randomiseButton = new RandomiseButton("RANDOMISE", new PVector(1025, 625), 100, 50, #FFFF00);
+  mainMenuButton = new MainMenuButton("MAIN MENU", new PVector(1025, 700), 100, 50, #FFFF00);
   gameButtons.add(resetButton);
   gameButtons.add(startButton);
   gameButtons.add(randomiseButton);
   gameButtons.add(mainMenuButton);
 
-  playButton = new PlayButton("Play", new PVector(width/2-150, 500), 100, 50, #FFFF00);
-  controlsButton = new ControlsButton("Controls", new PVector(width/2+50, 500), 100, 50, #FFFF00);
-  easyButton = new EasyButton("Easy", new PVector(width/2 - 200, height/2+250), 100, 50, #FFFF00);
-  mediumButton = new MediumButton("Medium", new PVector(width/2-50, height/2+250), 100, 50, #FFFF00);
-  hardButton = new HardButton("Hard", new PVector(width/2 + 100, height/2+250), 100, 50, #FFFF00);
+  playButton = new PlayButton("PLAY", new PVector(width/2-150, 500), 100, 50, #FFFF00);
+  controlsButton = new ControlsButton("HOW TO PLAY", new PVector(width/2+50, 500), 100, 50, #FFFF00);
+  easyButton = new EasyButton("EASY", new PVector(width/2 - 200, height/2+250), 100, 50, #FFFF00);
+  mediumButton = new MediumButton("MEDIUM", new PVector(width/2-50, height/2+250), 100, 50, #FFFF00);
+  hardButton = new HardButton("HARD", new PVector(width/2 + 100, height/2+250), 100, 50, #FFFF00);
   menuButtons.add(playButton);
   menuButtons.add(controlsButton);
   menuButtons.add(easyButton);
   menuButtons.add(mediumButton);
   menuButtons.add(hardButton);
   
-  backButton  = new MainMenuButton("Back", new PVector(1025, 700), 100, 50, #FFFF00);
+  backButton  = new MainMenuButton("Back", new PVector(width/2 - 50, height-75), 100, 50, #FFFF00);
+  
+  loadHowToPlay();
 
   
-  titleFont = createFont("game_over.ttf", 200);
   titleFont = createFont("Gameplay.ttf", 50);
-  textFont = createFont("Pixeled.ttf", defaultTextSize);
+  buttonFont = createFont("Pixeled.ttf", defaultTextSize);
+  headingFont = createFont("Pixeled.ttf", 20);
+  howToFont = createFont("coolvetica rg.ttf", 25);
 
   difficulty = 0;
 
@@ -115,7 +122,7 @@ void draw()
     renderMenu();
     break;
   case CONTROLS:
-    renderControls();
+    renderHowTo();
     break;
   case SETUP:
     renderGame();
@@ -260,7 +267,7 @@ void renderMenu()
   textAlign(CENTER, CENTER);
   textFont(titleFont);
   text("BATTLESHIP", width/2, 50);
-  textFont(textFont);
+  textFont(buttonFont);
   textSize(16);
   text("Difficulty:", width/2, 600);
   textSize(defaultTextSize);
@@ -306,18 +313,23 @@ void renderGame()
   
   textAlign(CENTER, CENTER);
   fill(255);
-  textSize(20);
-  text("Your board", myGrid.pos.x+myGrid.size/2, 30);
-  text("Enemy board", enemyGrid.pos.x+enemyGrid.size/2, 30);
+  textFont(headingFont);
+  text("YOUR GRID", myGrid.pos.x+myGrid.size/2, 30);
+  text("ENEMY GRID", enemyGrid.pos.x+enemyGrid.size/2, 30);
   textSize(14);
   text(info, width/2, 750);
   textSize(defaultTextSize);
 }
 
-void renderControls()
+void renderHowTo()
 {
   backButton.update();
   backButton.render();
+  
+  textAlign(CENTER, CENTER);
+  textFont(howToFont);
+  fill(255);
+  text(howToPlay, width/2, height/2);
 }
 
 void renderEnemy()
@@ -440,10 +452,20 @@ void resetDemo()
   demoResetTimer = 0;
 }
 
+void loadHowToPlay()
+{
+  String[] temp = loadStrings("howtoplay.txt");
+  for(String s : temp)
+  {
+    howToPlay += s;
+    howToPlay += "\n";
+  }
+}
+
 void displayDebugInfo()
 {
   textAlign(LEFT);
-  textFont(textFont);
+  textFont(buttonFont);
   fill(255);
   text("Framerate: " + frameRate + "\nState: " + state + "\nDifficulty: " + difficulty + "\n(" + mouseX + ", " + mouseY + ")", 10, 20);
 }

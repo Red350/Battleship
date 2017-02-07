@@ -1,0 +1,16 @@
+Begin by placing your ships on your grid
+
+Left click: Select ship
+Right click: Rotate selected ship
+
+You can also randomly place them with the randomise button
+
+You and the computer then alternate taking shots
+
+Miss: Red X
+Hit: Green X
+Sunk ship: Yellow X
+
+Whoever sinks all of their opponents ships first is the winner
+
+Demo on the home screen can be sped up or slowed down using the up and down arrow keys
