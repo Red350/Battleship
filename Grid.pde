@@ -97,6 +97,30 @@ class Grid extends GameObject
       }
     }
   }
+  
+  // Highlight a cell being hovered while a ship is selected
+  // Cell lights up green if it's a valid position,
+  // red if it's invalid
+  void checkSelectedShipHover()
+  {
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        if(cells[i][j].mouseOver())
+        {
+          if(checkShipPlaceable(selectedShip, i, j))
+          {
+            cells[i][j].hovered = 1;
+          } else {
+            cells[i][j].hovered = 2;
+          }
+        } else {
+          cells[i][j].hovered = 0;
+        }
+      }
+    }
+  } 
 
   // Sets occupied cells to -1 if a ship is moved after being placed
   void remove(Ship s)
@@ -226,6 +250,10 @@ class Grid extends GameObject
         cells[k][j].occupied = true;
       }
     }
+    
+    // Clears the cell from being hovered
+    cells[i][j].hovered = 0;
+    
     numPlaced++;
     if(numPlaced == 5)
     {
@@ -268,7 +296,6 @@ class Grid extends GameObject
       }
     }
 
-    // If the position if valid, place the ship
     if (validPos)
     {
       return true;

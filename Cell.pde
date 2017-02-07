@@ -5,7 +5,7 @@ class Cell extends GameObject
   boolean hit;
   boolean lastHit;
   boolean sunk;
-  boolean hovered;
+  int hovered;
   
   Cell(float x, float y, float size)
   {
@@ -21,11 +21,16 @@ class Cell extends GameObject
   void render()
   {
     stroke(c);
-    if(hovered)
+    switch(hovered)
     {
-      fill(#005500);
-    } else {
-      noFill();
+      case 0:
+        noFill();
+        break;
+      case 1:
+        fill(#005500);
+        break;
+      case 2:
+        fill(#550000);
     }
     
     strokeWeight(1);
@@ -60,7 +65,12 @@ class Cell extends GameObject
   
   void updateHover()
   {
-    hovered = mouseOver();
+    if(mouseOver())
+    {
+      hovered = 1;
+    } else {
+      hovered = 0;
+    }
   }
   
   boolean mouseOver()

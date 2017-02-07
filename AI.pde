@@ -23,17 +23,19 @@ abstract class AI
    int x, y;
    for(int i = 0; i < 5; i++)
     {
+      s[i].orientation = (random(1)<0.5)?true:false;
       x = (int)random(10);
       y = (int)random(10);
       while(!g.checkShipPlaceable(s[i],x,y))
       {
+        // Generate new orientation and position until the ship is placeable
+        s[i].orientation = (random(1)<0.5)?true:false;
         x = (int)random(10);
         y = (int)random(10);
-        // Trying to place ship
       }
       g.placeShip(s[i],x,y);
+      
       // Place the graphical representation of the ship
-      // (Hidden from the player until the game ends)
       s[i].lockToGrid(g,x,y);
     }
   } 

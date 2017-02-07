@@ -1,6 +1,6 @@
-class AutoPlaceButton extends Button
+class RandomiseButton extends Button
 {
-  AutoPlaceButton(String name, PVector pos, int w, int h, color c)
+  RandomiseButton(String name, PVector pos, int w, int h, color c)
   {
     super(name,pos,w,h,c);
   }
@@ -10,7 +10,7 @@ class AutoPlaceButton extends Button
     if(super.mouseOver)
     {
       myGrid.reset();
-      randomiseShips(myShips, myGrid);
+      ai.randomiseShips(myShips, myGrid);
     }
   }
 }

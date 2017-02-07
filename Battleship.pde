@@ -42,7 +42,7 @@ Ship[] demoShips;
 ArrayList<Button> gameButtons = new ArrayList<Button>();
 ResetButton resetButton;
 StartButton startButton;
-AutoPlaceButton autoPlaceButton;
+RandomiseButton randomiseButton;
 MainMenuButton mainMenuButton;
 
 ArrayList<Button> menuButtons = new ArrayList<Button>();
@@ -65,11 +65,11 @@ void setup()
 
   startButton = new StartButton("Start", new PVector(900, 625), 100, 50, #FFFF00);
   resetButton = new ResetButton("Reset", new PVector(900, 700), 100, 50, #FFFF00);
-  autoPlaceButton = new AutoPlaceButton("Randomise", new PVector(1025, 625), 100, 50, #FFFF00);
+  randomiseButton = new RandomiseButton("Randomise", new PVector(1025, 625), 100, 50, #FFFF00);
   mainMenuButton = new MainMenuButton("Main Menu", new PVector(1025, 700), 100, 50, #FFFF00);
   gameButtons.add(resetButton);
   gameButtons.add(startButton);
-  gameButtons.add(autoPlaceButton);
+  gameButtons.add(randomiseButton);
   gameButtons.add(mainMenuButton);
 
   playButton = new PlayButton("Play", new PVector(width/2-50, 475), 100, 50, #FFFF00);
@@ -110,6 +110,10 @@ void draw()
     {
       b.render();
     }
+    if(selectedShip != null)
+    {
+      myGrid.checkSelectedShipHover();
+    }
     break;
   case PLAYING:
     renderGame();
@@ -122,15 +126,9 @@ void draw()
       turnLock = true;
       if (delay <= 0)
       {
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        //println("Start AI turn");
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         ai.shoot(myGrid, myShips);
         turn = 0;
         delay = delayAmount;
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        //println("End AI turn");
-        //println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
       }
       delay--;
       turnLock = false;
@@ -352,27 +350,7 @@ void keyPressed()
   }
 }
 
-// Randomly place players ships
-void randomiseShips(Ship[] s, Grid g)
-{
-  int x, y;
-
-  numPlaced = 0;
-  for (int i = 0; i < 5; i++)
-  {
-    s[i].orientation = (random(1)<0.5)?true:false;
-    x = (int)random(10);
-    y = (int)random(10);
-    while (!g.checkShipPlaceable(s[i], x, y))
-    {
-      x = (int)random(10);
-      y = (int)random(10);
-    }
-    g.placeShip(s[i], x, y);
-    s[i].lockToGrid(g, x, y);
-  }
-}
-
+// Method called when then reset button is pushed
 void reset()
 {
   myGrid = new Grid(50, 100, 500);
@@ -415,6 +393,7 @@ void reset()
   state = State.SETUP;
 }
 
+// Resets the demo shown on the main menu
 void resetDemo()
 {
   float demoGridSize = 300;

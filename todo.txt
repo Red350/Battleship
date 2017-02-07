@@ -3,3 +3,5 @@ Store the current colour of the X so it doesn't have to check each time it rende
 When holding a ship, show if it can be placed
 
 have the ai do the player randomisation
+
+have the x's render over the ships
