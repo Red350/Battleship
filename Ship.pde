@@ -31,13 +31,13 @@ class Ship extends GameObject
     this.orientation = orientation;
     selected = false;
     placed = false;
-    c = #FF0000;
+    c = #0000FF;
   }
   
   void render()
   {
     stroke(c);
-    strokeWeight(1);
+    strokeWeight(2);
     noFill();
     if(this.equals(selectedShip))
     {

@@ -42,6 +42,7 @@ abstract class Button
     }
     
     stroke(c);
+    strokeWeight(1);
     fill(buttonColor);
     rect(pos.x,pos.y,w,h);
     textAlign(CENTER, CENTER);

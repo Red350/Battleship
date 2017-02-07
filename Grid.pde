@@ -207,6 +207,7 @@ class Grid extends GameObject
     return -1;
   }
 
+    
   // Attempt to place a ship at coordinates (i,j) in the grid
   boolean placeShip(Ship s, int i, int j)
   {

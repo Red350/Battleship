@@ -31,6 +31,7 @@ abstract class DifficultyButton extends Button
     }
     
     stroke(temp);
+    strokeWeight(1);
     fill(buttonColor);
     rect(pos.x,pos.y,w,h);
     textAlign(CENTER, CENTER);

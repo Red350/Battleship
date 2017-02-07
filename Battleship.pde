@@ -82,6 +82,7 @@ void setup()
   menuButtons.add(hardButton);
   
   titleFont = createFont("game_over.ttf", 200);
+  titleFont = createFont("Gameplay.ttf", 50);
   textFont = createFont("Pixeled.ttf", defaultTextSize);
 
   difficulty = 0;
