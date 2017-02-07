@@ -15,15 +15,21 @@ private enum Mode
   SEEK, HUNT
 }
 
-boolean debug = true;
+boolean debug = false;
 
 State state;
 
-int edgeGap = 50;
+float scaleValue;
+
+float edgeGap;
+float gridSize;
+
+float buttonWidth;
+float buttonHeight;
 
 int numPlaced = 0;
 int enemyDelay;
-final int enemyDelayAmount = 120;
+final int enemyDelayAmount = 0;
 
 LinkedList<String> infoQueue;
 String howToPlay = "";
@@ -72,6 +78,13 @@ void setup()
 {
   size(1200, 800);
   frameRate(60);
+  
+  scaleValue = (float)width/1200;
+  
+  edgeGap = 50*scaleValue;
+  gridSize = width*5/12;
+  buttonWidth = 100*scaleValue;
+  buttonHeight = 50*scaleValue;
 
   startButton = new StartButton("START", new PVector(900, 625), 100, 50, #FFFF00);
   resetButton = new ResetButton("RESET", new PVector(900, 700), 100, 50, #FFFF00);
@@ -105,7 +118,7 @@ void setup()
   headingFont = createFont("Pixeled.ttf", 20);
   howToFont = createFont("coolvetica rg.ttf", 25);
 
-  difficulty = 0;
+  difficulty = 2;
 
   reset();
   resetDemo();
@@ -165,7 +178,7 @@ void draw()
       state = State.GAMEOVER;
       enemyGrid.clearHovered();
       infoQueue.remove();
-      infoQueue.add("You win!");
+      infoQueue.add("You lose!");
     } else {
       if (enemyGrid.shipsAlive == 0)
       {
@@ -173,7 +186,7 @@ void draw()
         state = State.GAMEOVER;
         enemyGrid.clearHovered();
         infoQueue.remove();
-        infoQueue.add("You lose!");
+        infoQueue.add("You win!");
       }
     }
     break;
@@ -306,14 +319,13 @@ void renderMenu()
 
 void renderGame()
 {
-  
   myGrid.render();
   enemyGrid.render();
   for (int i = 0; i < 5; i++)
   {
     myShips[i].update();
     myShips[i].render();
-  }
+  } 
   
   textAlign(CENTER, CENTER);
   fill(255);
@@ -324,11 +336,11 @@ void renderGame()
   // Print info
   textFont(infoFont);
   fill(20);
-  text(infoQueue.get(0), width/2, height-25);
+  text(infoQueue.get(0), width/2, height-100);
   fill(50);
-  text(infoQueue.get(1), width/2, height-50);
+  text(infoQueue.get(1), width/2, height-125);
   fill(255);
-  text(infoQueue.get(2), width/2, height-75);
+  text(infoQueue.get(2), width/2, height-150);
   //text(info, width/2, 750);
 }
 
@@ -404,17 +416,17 @@ void keyPressed()
 // Method called when then reset button is pushed
 void reset()
 {  
-  myGrid = new Grid(50, 100, 500);
-  enemyGrid = new Grid(650, 100, 500);
+  myGrid = new Grid(edgeGap, edgeGap*2, gridSize);
+  enemyGrid = new Grid(width/2+edgeGap, edgeGap*2, gridSize);
 
   myShips = new Ship[5];
   enemyShips = new Ship[5];
 
-  myShips[0] = new Ship(100, 625, 5, 0, true, 500/10);
-  myShips[1] = new Ship(100, 675, 4, 1, true, 500/10);
-  myShips[2] = new Ship(100, 725, 3, 2, true, 500/10);
-  myShips[3] = new Ship(375, 625, 3, 3, true, 500/10);
-  myShips[4] = new Ship(375, 675, 2, 4, true, 500/10);
+  myShips[0] = new Ship(50*scaleValue, 625*scaleValue, 5, 0, true, gridSize/10);
+  myShips[1] = new Ship(50*scaleValue, 675*scaleValue, 4, 1, true, gridSize/10);
+  myShips[2] = new Ship(50*scaleValue, 725*scaleValue, 3, 2, true, gridSize/10);
+  myShips[3] = new Ship(200*scaleValue, 725*scaleValue, 3, 3, true, gridSize/10);
+  myShips[4] = new Ship(250*scaleValue, 675*scaleValue, 2, 4, true, gridSize/10);
 
   enemyShips[0] = new Ship(5, 0, (random(1)<0.5)?true:false, 500/10);
   enemyShips[1] = new Ship(4, 1, (random(1)<0.5)?true:false, 500/10);
@@ -451,7 +463,7 @@ void reset()
 // Resets the demo shown on the main menu
 void resetDemo()
 {
-  float demoGridSize = 300;
+  float demoGridSize = width/4;
   demoGrid = new Grid(width/2-150, 150, demoGridSize);
   demoAI = new HardAI();
   demoShips = new Ship[5];
@@ -480,7 +492,8 @@ void loadHowToPlay()
 void displayDebugInfo()
 {
   textAlign(LEFT);
-  textFont(buttonFont);
+  textFont(howToFont);
+  textSize(16);
   fill(255);
   text("Framerate: " + frameRate + "\nState: " + state + "\nDifficulty: " + difficulty + "\n(" + mouseX + ", " + mouseY + ")", 10, 20);
 }

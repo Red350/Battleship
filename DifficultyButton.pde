@@ -46,7 +46,7 @@ class EasyButton extends DifficultyButton
   EasyButton(String name, PVector pos, int w, int h, color c)
   {
     super(name,pos,w,h,c);
-    selected = true;
+    selected = false;
   }
   
   void mouseClicked()
@@ -86,7 +86,7 @@ class HardButton extends DifficultyButton
   HardButton(String name, PVector pos, int w, int h, color c)
   {
     super(name,pos,w,h,c);
-    selected = false;
+    selected = true;
   }
   
   void mouseClicked()
