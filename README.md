@@ -47,7 +47,6 @@ The AI has three difficulty settings: easy, medium and hard.
 
 ### Easy
 The easy setting stores a list of every possible targetable cell, and simply randomly picks one every turn, regardless of what has happened in previous turns.
-It's obviously very bad, and should be reliably beaten by any slightly intelligent strategy.
 
 ### Medium
 This stores the same list of targets as the easy AI. The difference is it has two states, seek and hunt.
