@@ -87,6 +87,6 @@ To check if a position is valid, it first checks if it an physically fit in the 
 ## Asset Credits
 
 ### Fonts
-http://www.dafont.com/pixeled.font 
-http://www.dafont.com/gameplay.font 
-http://www.dafont.com/coolvetica.font 
+http://www.dafont.com/pixeled.font <br>
+http://www.dafont.com/gameplay.font <br>
+http://www.dafont.com/coolvetica.font <br>
