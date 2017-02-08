@@ -38,7 +38,7 @@ int numPlaced = 0;
 
 int enemyDelayTimer;
 // Set this to 0 to have the ai take its turn immediately
-int enemyDelayInitial = 60;
+int enemyDelayInitial = 20;
 
 int demoResetDelayTimer;
 // Set this to 0 to have the demo reset immediately after completion

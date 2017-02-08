@@ -77,12 +77,14 @@ I couldn't decide how to present the main menu at first, as I don't have much ar
 It uses the Hard AI to perpetually generate and solve boards, and as mentioned above, it can be sped up or slowed down using the arrow keys.
 
 ### Info text
-When playing, the outcome last 3 actions are displayed to the player. They are stored in a queue of strings, everytime a new string is added, the oldest is removed.
-I wanted a way to make it clear which was the most recent action. The most recent is displayed in white, and they fade into grey as they get older.
+When playing, the outcome of the last 3 actions are displayed to the player. They are stored in a queue of string. Everytime a new string is added, the oldest is removed.
+
+To make it clear which action happened most recently, that one is displayed in white, with the other two fading to grey as they get older.
 
 ### Ship Placement Checking
 During setup, when holding a ship over the grid, the cell you hover over will highlight either red or green depending on whether the ship can be placed there.
-To check if a position is valid, it first checks if it an physically fit in the grid at that position. If so, it checks every cell it would occupy, to ensure there isn't already a ship in that position.
+
+To check if a position is valid, it first checks if it can physically fit in the grid at that position. If so, it checks every cell it would occupy, to ensure there isn't already a ship in that cell.
 
 ## Asset Credits
 
