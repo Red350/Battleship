@@ -34,19 +34,19 @@ abstract class AI
     {
       case 0:
         infoQueue.remove();
-        infoQueue.add("Computer missed. Your turn");
+        infoQueue.add("COMPUTER MISSED, YOUR TURN");
         break;
       case 1:
         infoQueue.remove();
-        infoQueue.add("Computer hit. Your turn");
+        infoQueue.add("COMPUTER HIT, YOUR TURN");
         break;
       case 2:
         infoQueue.remove();
-        infoQueue.add("Computer sunk your battleship! Your turn");
+        infoQueue.add("COMPUTER SUNK YOUR BATTLESHIP! YOUR TURN");
         break;
       case -1:
         infoQueue.remove();
-        infoQueue.add("Computer is broken, call a programmer. Also your turn I guess...");
+        infoQueue.add("COMPUTER IS BROKEN, CALL A PROGRAMMER...");
         break;
     }
   }

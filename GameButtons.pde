@@ -34,10 +34,10 @@ class StartButton extends Button
         state = State.PLAYING;
         myGrid.clearHovered();
         infoQueue.remove();
-        infoQueue.add("Game has begun, your turn");
+        infoQueue.add("GAME HAS BEGUN, YOUR TURN");
       } else {
         infoQueue.remove();
-        infoQueue.add("You must place all ships before starting");
+        infoQueue.add("YOU MUST PLACE ALL SHIPS BEFORE STARTING");
       }
     }
   }

@@ -196,7 +196,7 @@ void draw()
       state = State.GAMEOVER;
       enemyGrid.clearHovered();
       infoQueue.remove();
-      infoQueue.add("You lose!");
+      infoQueue.add("YOU LOSE!");
     } else {
       if (enemyGrid.shipsAlive == 0)
       {
@@ -204,7 +204,7 @@ void draw()
         state = State.GAMEOVER;
         enemyGrid.clearHovered();
         infoQueue.remove();
-        infoQueue.add("You win!");
+        infoQueue.add("YOU WIN!");
       }
     }
     break;
@@ -243,17 +243,17 @@ void mouseClicked()
         {
         case 0:
           infoQueue.remove();
-          infoQueue.add("You missed. Enemy turn.");
+          infoQueue.add("YOU MISSED, ENEMY TURN");
           turn = 1;
           break;
         case 1:
           infoQueue.remove();
-          infoQueue.add("You hit. Enemy turn.");
+          infoQueue.add("YOU HIT, ENEMY TURN");
           turn = 1;
           break;
         case 2:
           infoQueue.remove();
-          infoQueue.add("You sunk their battleship! Enemy turn.");
+          infoQueue.add("YOU SUNK THEIR BATTLESHIP! ENEMY TURN");
           turn = 1;
           break;
         default:
@@ -467,7 +467,7 @@ void reset()
   infoQueue.clear();
   infoQueue.add("");
   infoQueue.add("");
-  infoQueue.add("Please place your ships");
+  infoQueue.add("PLEASE PLACE YOUR SHIPS");
 
   numPlaced = 0;
   turn = 0;

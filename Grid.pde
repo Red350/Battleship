@@ -280,7 +280,7 @@ class Grid extends GameObject
     if(this == myGrid && numPlaced == 5)
     {
       infoQueue.remove();
-      infoQueue.add("Press Start to begin");
+      infoQueue.add("PRESS START TO BEGIN");
     }
   }
   
