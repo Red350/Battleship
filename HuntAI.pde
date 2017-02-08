@@ -1,3 +1,19 @@
+/* Hard and medium AIs extend this class.
+ * While in seek mode it searches randomly based on a list of targets.
+ * When a ship is hit, it enters hunt mode, loading adjacent cells into
+ * vertical and horizontal lists.
+ * These lists are targeted in turn, until the ship is sunk.
+ * Each time a target in these lists is a successful hit, it 
+ * adds the next target in that direction to the list.
+ *
+ * After a ship is sunk, it is possible that a second ship was
+ * partially hit while sinking the first. The AI iterates over
+ * the grid after sinking a ship to check for this.
+ * If it finds a partially sunk ship, it remains in hunt mode,
+ * and begins the algorithm again.
+ * If not, it returns to seek mode.
+ */
+
 class HuntAI extends AI
 {
   ArrayList<PVector> vertTargets;
@@ -12,15 +28,7 @@ class HuntAI extends AI
     horizTargets = new ArrayList<PVector>();
     backupTargets = new ArrayList<PVector>();
   }
-  
-  // Add the next node in line with the current hit
-  // Must take into account an adjacent node might
-  // be a successful hit on the same ship
-  void addNextNode()
-  {
-    
-  }
-  
+
   // Loads potential ship positions based on the current pivot 
   void loadHuntTargets(Grid g)
   {
@@ -48,9 +56,9 @@ class HuntAI extends AI
     {
       horizTargets.add(temp);
     }
-    println("Hit a pivot, targets as follows:");
-    println(vertTargets);
-    println(horizTargets);
+    //println("Hit a pivot, targets as follows:");
+    //println(vertTargets);
+    //println(horizTargets);
     mode = Mode.HUNT;
   }
   
@@ -66,14 +74,14 @@ class HuntAI extends AI
     if(mode == Mode.SEEK)
     {
       int i = (int)random(targets.size());
-      println("Index Generated: " + i);
+      //println("Index Generated: " + i);
       
-      println();
+      //println();
       //myGrid.printHitCells();
       pivot = targets.get(i);
       result =  g.AICheckHit(ships, pivot);
       updateInfo(result);
-      println("Ai just targeted " + pivot + "with a result of " + result);
+      //println("Ai just targeted " + pivot + "with a result of " + result);
 
       if(result == 1)
       {
@@ -81,14 +89,14 @@ class HuntAI extends AI
       }
       targets.remove(i);
     } else {
-      println("AI is hunting...");
+      //println("AI is hunting...");
       if(vertTargets.size() > 0)
       {
-        println("Vert Targets: " + vertTargets);
+        //println("Vert Targets: " + vertTargets);
         PVector check = vertTargets.get(0);  // Shoot the first cell in the vertical array
         targets.remove(check);  // remove the cell being checked from the targets
         backupTargets.remove(check);
-        println("Ai has chosen: " + check);
+        //println("Ai has chosen: " + check);
         result = g.AICheckHit(ships, check);
         updateInfo(result);
         switch(result)
@@ -97,7 +105,7 @@ class HuntAI extends AI
             vertTargets.remove(0);
             break;
           case 1:
-            println("Success");
+            //println("Success");
             // The target was successful. Add the
             // next target to the start of the list
             if(check.x > pivot.x)
@@ -124,20 +132,20 @@ class HuntAI extends AI
             pivot = g.findUnSunk();
             if(pivot.x == -1)
             {
-              println("RETURNING TO SEEK");
+              //println("RETURNING TO SEEK");
               mode = Mode.SEEK;
             } else {
-              println("NEW TARGET ACQUIRED");
+              //println("NEW TARGET ACQUIRED");
               loadHuntTargets(g);
             }
             break;
         }
       } else if(horizTargets.size() > 0) {
-        println("Horiz Targets: " + horizTargets);
+        //println("Horiz Targets: " + horizTargets);
         PVector check = horizTargets.get(0);  // Shoot the first cell in the horizontal array
         targets.remove(check);  // remove the cell being checked from the targets
         backupTargets.remove(check);
-        println("Ai has chosen: " + check);
+        //println("Ai has chosen: " + check);
         result = g.AICheckHit(ships, check);
         updateInfo(result);
         switch(result)
@@ -146,7 +154,7 @@ class HuntAI extends AI
             horizTargets.remove(0);
             break;
           case 1:
-            println("Success");
+            //println("Success");
             // The target was successful. Add the
             // next target to the start of the list
             if(check.y > pivot.y)
@@ -173,17 +181,17 @@ class HuntAI extends AI
             pivot = g.findUnSunk();
             if(pivot.x == -1)
             {
-              println("RETURNING TO SEEK");
+              //println("RETURNING TO SEEK");
               mode = Mode.SEEK;
             } else {
-              println("NEW TARGET ACQUIRED: " + pivot);
+              //println("NEW TARGET ACQUIRED: " + pivot);
               loadHuntTargets(g);
             }
             break;
         }
       } else {
         mode = Mode.SEEK;
-        println("I HAVE FAILED, RETURNING TO SEEK");
+        //println("I HAVE FAILED, RETURNING TO SEEK");
       }
     }
   }

@@ -4,7 +4,7 @@ Name: Pádraig Redmond
 Student Number: C15755659
 
 ## Video
-[![Video](placeholder)](placeholder)
+[![Video](http://img.youtube.com/vi/iw0ZykHvBwQ/0.jpg)](https://www.youtube.com/watch?v=iw0ZykHvBwQ)
 
 ## Screenshots
 ### System view

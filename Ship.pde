@@ -6,6 +6,8 @@ class Ship extends GameObject
   boolean selected;
   boolean orientation;  // true is horizontal, false is vertical
   boolean placed;
+  // Stores the coordinate of the top or leftmost part of the ship,
+  // depending on which orientation it is in.
   int cellI, cellJ;
   float cellSize;
   float shipGap;

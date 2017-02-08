@@ -1,3 +1,4 @@
+/* Button base class */
 abstract class Button
 {
   PVector pos;

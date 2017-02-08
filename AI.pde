@@ -1,3 +1,12 @@
+/* Base class for all AIs.
+ * Has two modes, seek and hunt.
+ * While seeking it is randomly targeting based on its target list.
+ * Hunting is entered when a ship is hit for the first time,
+ * and is described in more detail in the HuntAI class.
+ * Easy AI always remains in seek mode, medium
+ * and hard make use of hunt mode.
+ */
+
 abstract class AI
 {
   ArrayList<PVector> targets;
@@ -18,6 +27,7 @@ abstract class AI
   void shoot(Grid g, Ship[] ships)
   {}
   
+  // Update the info queue based on the outcome of a shot.
   void updateInfo(int result)
   {
     switch(result)
@@ -41,6 +51,7 @@ abstract class AI
     }
   }
   
+  // Randomly place ships on a grid
   void randomiseShips(Ship[] s, Grid g)
   {
    int x, y;
@@ -68,7 +79,8 @@ abstract class AI
   {
     for(PVector target : targets)
     {
-      println("(" + (int)target.x + "," + (int)target.y + ")");
+      print("(" + (int)target.x + "," + (int)target.y + ")");
     }
+    println();
   }
 }

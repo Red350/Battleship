@@ -1,3 +1,9 @@
+/*
+ * Very simple AI that never enters hunt mode.
+ * Simply targets a random target each turn
+ * regardless of outcome of previous shot.
+ */
+
 class EasyAI extends AI
 {
   

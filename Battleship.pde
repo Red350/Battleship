@@ -30,9 +30,11 @@ float buttonHeight;
 int numPlaced = 0;
 
 int enemyDelayTimer;
+// Set this to 0 to have the ai take its turn immediately
 final int enemyDelayInitial = 60;
 
 int demoResetDelayTimer;
+// Set this to 0 to have the demo reset immediately after completion
 final int demoResetDelayInitial = 60;
 int demoTurnDelay = 10;
 
@@ -77,6 +79,8 @@ PFont titleFont, buttonFont, headingFont, howToFont, infoFont;
 
 void setup()
 {
+  // The game should scale to any size as long as the dimensions are kept to a 3:2 ratio
+  // e.g.
   size(1200,800);
   frameRate(60);
   
@@ -330,8 +334,8 @@ void renderGame()
   textAlign(CENTER, CENTER);
   fill(255);
   textFont(headingFont);
-  text("YOUR GRID", myGrid.pos.x+myGrid.size/2, 30);
-  text("ENEMY GRID", enemyGrid.pos.x+enemyGrid.size/2, 30);
+  text("YOUR GRID", myGrid.pos.x+myGrid.size/2, 30*scaleValue);
+  text("ENEMY GRID", enemyGrid.pos.x+enemyGrid.size/2, 30*scaleValue);
   
   // Print info
   textFont(infoFont);
@@ -385,7 +389,7 @@ void keyPressed()
       // Print ai's current list of targets
       if (key == 't')
       {
-        println(ai.targets);
+        ai.printTargets();
       }
   
       // Print player ship locations

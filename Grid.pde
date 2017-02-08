@@ -1,3 +1,8 @@
+/* The grid stores some information that is also stored in the cell.
+ * I figured that it would be faster to check a locally stored array
+ * then to iterate over the list of cells each time.
+ */
+
 class Grid extends GameObject
 {
   Cell[][] cells = new Cell[10][10];
@@ -5,7 +10,7 @@ class Grid extends GameObject
   boolean[][] hit = new boolean[10][10];
   float size;
   int shipsAlive;
-  Cell lastHitCell;  // This keeps track of last hit cell, to allow for a different coloured marker
+  Cell lastHitCell;  // This is needed to clear the last hit cell's flag before setting the next.
 
   Grid(float x, float y, float size)
   {
@@ -50,7 +55,9 @@ class Grid extends GameObject
   }
   
   // Returns coordinates of a cell that's been hit
-  // but does not contain a sunk ship
+  // but does not contain a sunk ship.
+  // Used by the huntAI to find a partially sunk ship that it 
+  // hit while sinking a different ship.
   PVector findUnSunk()
   {
     for(int i = 0; i < 10; i++)
@@ -67,8 +74,10 @@ class Grid extends GameObject
   }
 
   // Checks if a PVector coordinate is within the grid
-  // and if it's not been hit.
+  // and if it has not been hit.
   // Returns true if in bounds and not hit.
+  // Used by the huntAI to determine if a cell should be added as
+  // a target after it scores a hit.
   boolean notHit(PVector p)
   {
     // Bounds check
@@ -170,6 +179,7 @@ class Grid extends GameObject
     }
   }
 
+  // Unlike player's checkHit, ai specifies which cell it's targeting.
   // Returns -1 on square already shot, 0 on miss, 1 on hit, 2 on hit and kill
   int AICheckHit(Ship[] ships, PVector shot)
   {
@@ -200,6 +210,7 @@ class Grid extends GameObject
     }
   }
 
+  // Called when the player clicks anywhere on the enemy grid.
   // Returns -1 on square already shot, 0 on miss, 1 on hit, 2 on hit and kill
   int checkHit(Ship[] ships)
   {
@@ -210,7 +221,7 @@ class Grid extends GameObject
       {
         if (cells[i][j].mouseOver())
         {
-          println("You clicked cell: " + i + " " + j);
+          //println("You clicked cell: " + i + " " + j);
           // Found the cell that was clicked
           if (hit[i][j] == false)
           {
@@ -272,6 +283,7 @@ class Grid extends GameObject
       infoQueue.add("Press Start to begin");
     }
   }
+  
   // Check if a ship can be placed at coordinates (i,j) in the grid
   boolean checkShipPlaceable(Ship s, int i, int j)
   {
@@ -315,6 +327,8 @@ class Grid extends GameObject
     return false;
   }
 
+  // If the grid is clicked with a ship selected,
+  // attempt to place the ship
   void mouseClicked()
   {
     if (selectedShip != null)
@@ -337,6 +351,7 @@ class Grid extends GameObject
     }
   }
 
+  // Reset grid to empty
   void reset()
   {
     for (int i = 0; i < 10; i++)

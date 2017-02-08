@@ -1,11 +1,14 @@
+/* Grid is made up of 10x10 of these cells.
+ * Stores information mostly for the purposes of rendering the cell.
+ */
 class Cell extends GameObject
 {
   float size;
-  boolean occupied;
-  boolean hit;
-  boolean lastHit;
-  boolean sunk;
-  int hovered;
+  boolean occupied; // Is there a ship in this cell
+  boolean hit;      // Is the cell hit
+  boolean lastHit;  // Is this the most recently targeted cell
+  boolean sunk;     // Has the ship in this cell been sunk
+  int hovered;      // Is the mouse over this cell
   
   Cell(float x, float y, float size)
   {
