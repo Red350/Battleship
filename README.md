@@ -15,7 +15,9 @@ Student Number: C15755659
 ![During](screenshots/board_play.png)
 
 ## Introduction
-This is a single-player implementation of the classic game, Battleship.
+This is a single-player implementation of the classic game, Battleship, with a choice of three difficulties of AI to play against.
+
+Note: Setting the debug flag to true prevents the AI from "thinking" before taking its turn. It's an artificial delay, and can get tedious to wait through if all you want to do is test it.
 
 ## Controls
 The game is mostly mouse controlled.
@@ -67,7 +69,24 @@ As the smallest ship is of size 2, this list of targets is guaranteed to hit eve
 The AI class deals with randomising ship placement both for itself and for the player.
 It's fairly simple, as the grid already has a method to ensure a ship is being placed validly. All it does is continually try to place a ship until it succeeds, then moves on to the next ship.
 
+## Other Notable Features
+
+### Main Menu Demo
+I couldn't decide how to present the main menu at first, as I don't have much artistic ability. In the end I decided to use it to display the most prominent feature of the game, the AI. 
+
+It uses the Hard AI to perpetually generate and solve boards, and as mentioned above, it can be sped up or slowed down using the arrow keys.
+
+### Info text
+When playing, the outcome last 3 actions are displayed to the player. They are stored in a queue of strings, everytime a new string is added, the oldest is removed.
+I wanted a way to make it clear which was the most recent action. The most recent is displayed in white, and they fade into grey as they get older.
+
+### Ship Placement Checking
+During setup, when holding a ship over the grid, the cell you hover over will highlight either red or green depending on whether the ship can be placed there.
+To check if a position is valid, it first checks if it an physically fit in the grid at that position. If so, it checks every cell it would occupy, to ensure there isn't already a ship in that position.
+
 ## Asset Credits
-http://www.dafont.com/game-over.font
-http://www.dafont.com/pixeled.font
-http://www.dafont.com/gameplay.font
+
+### Fonts
+http://www.dafont.com/pixeled.font 
+http://www.dafont.com/gameplay.font 
+http://www.dafont.com/coolvetica.font 

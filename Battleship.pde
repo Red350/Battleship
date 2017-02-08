@@ -22,7 +22,7 @@ private enum Mode
 // z: Print player ship locations.
 // x: Print ai ship locations.
 // q: Skip your turn. Holding this down allows AI to solve board very quickly.
-boolean debug = false;
+boolean debug = true;
 
 State state;
 

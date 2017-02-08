@@ -320,11 +320,7 @@ class Grid extends GameObject
       }
     }
 
-    if (validPos)
-    {
-      return true;
-    }
-    return false;
+    return validPos;
   }
 
   // If the grid is clicked with a ship selected,
