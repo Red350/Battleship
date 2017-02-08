@@ -7,8 +7,12 @@ Student Number: C15755659
 [![Video](http://img.youtube.com/vi/iw0ZykHvBwQ/0.jpg)](https://www.youtube.com/watch?v=iw0ZykHvBwQ)
 
 ## Screenshots
-### System view
-![Placeholder](screenshots/placeholder.png)
+### Main Menu
+![Main Menu](screenshots/main_menu.png)
+### Game screen before starting
+![Before](screenshots/board_reset.png)
+### Game screen during game
+![During](screenshots/board_play.png)
 
 ## Introduction
 This is a single-player implementation of the classic game, Battleship.
