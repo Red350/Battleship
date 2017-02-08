@@ -77,7 +77,7 @@ I couldn't decide how to present the main menu at first, as I don't have much ar
 It uses the Hard AI to perpetually generate and solve boards, and as mentioned above, it can be sped up or slowed down using the arrow keys.
 
 ### Info text
-When playing, the outcome of the last 3 actions are displayed to the player. They are stored in a queue of string. Everytime a new string is added, the oldest is removed.
+When playing, the outcome of the last 3 actions are displayed to the player, which are stored in a queue of strings. Everytime a new string is added, the oldest is removed.
 
 To make it clear which action happened most recently, that one is displayed in white, with the other two fading to grey as they get older.
 
