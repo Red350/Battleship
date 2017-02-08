@@ -1,6 +1,6 @@
 class Ship extends GameObject
 {
-  int size;
+  int size;  // Size in cells, not pixels
   float w, h;
   color c;
   boolean selected;

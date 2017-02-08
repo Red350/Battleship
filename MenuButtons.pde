@@ -1,3 +1,4 @@
+/* Button to move to the game screen */
 class PlayButton extends Button
 {
   PlayButton(String name, PVector pos, float w, float h, color c)
@@ -14,6 +15,7 @@ class PlayButton extends Button
   }
 }
 
+/* Button to the display the how to play page */
 class HowToButton extends Button
 {
   HowToButton(String name, PVector pos, float w, float h, color c)

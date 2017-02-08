@@ -19,7 +19,7 @@ class HuntAI extends AI
   ArrayList<PVector> vertTargets;
   ArrayList<PVector> horizTargets;
   ArrayList<PVector> backupTargets;
-  PVector pivot;
+  PVector pivot;  // Stores the most recent successful hit
   
   HuntAI()
   {

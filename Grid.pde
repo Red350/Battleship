@@ -1,5 +1,5 @@
-/* The grid stores some information that is also stored in the cell.
- * I figured that it would be faster to check a locally stored array
+/* The grid stores some information that is also stored in the cell,
+ * since I figured that it would be faster to check a locally stored array
  * then to iterate over the list of cells each time.
  */
 

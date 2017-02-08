@@ -1,3 +1,4 @@
+/* Randomises the players ship positions */
 class RandomiseButton extends Button
 {
   RandomiseButton(String name, PVector pos, float w, float h, color c)
@@ -15,6 +16,7 @@ class RandomiseButton extends Button
   }
 }
 
+/* Starts the game if all the ships are placed */
 class StartButton extends Button
 {
   StartButton(String name, PVector pos, float w, float h, color c)
@@ -41,6 +43,7 @@ class StartButton extends Button
   }
 }
 
+/* Reset the game */
 class ResetButton extends Button
 {
   ResetButton(String name, PVector pos, float w, float h, color c)
@@ -57,6 +60,7 @@ class ResetButton extends Button
   }
 }
 
+/* Return to main menu */
 class MainMenuButton extends Button
 {
   MainMenuButton(String name, PVector pos, float w, float h, color c)

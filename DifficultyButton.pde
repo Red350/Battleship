@@ -1,3 +1,7 @@
+/* Buttons to change the game difficutly
+ * Each button must inform the other buttons to fade
+ * out when clicked
+ */
 abstract class DifficultyButton extends Button
 {
   boolean selected;

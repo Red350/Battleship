@@ -15,6 +15,13 @@ private enum Mode
   SEEK, HUNT
 }
 
+// Setting this to true displays some debug info in the top left,
+// enables keys to print debug info and removes any AI delays.
+// Keys
+// t: Print list of AI targets.
+// z: Print player ship locations.
+// x: Print ai ship locations.
+// q: Skip your turn. Holding this down allows AI to solve board very quickly.
 boolean debug = false;
 
 State state;
@@ -31,11 +38,11 @@ int numPlaced = 0;
 
 int enemyDelayTimer;
 // Set this to 0 to have the ai take its turn immediately
-final int enemyDelayInitial = 60;
+int enemyDelayInitial = 60;
 
 int demoResetDelayTimer;
 // Set this to 0 to have the demo reset immediately after completion
-final int demoResetDelayInitial = 60;
+int demoResetDelayInitial = 60;
 int demoTurnDelay = 10;
 
 LinkedList<String> infoQueue;
@@ -124,6 +131,12 @@ void setup()
   howToFont = createFont("coolvetica rg.ttf", 25*scaleValue);
 
   difficulty = 2;
+  
+  if(debug)
+  {
+    enemyDelayInitial = 0;
+    demoResetDelayInitial = 0;
+  }
 
   reset();
   resetDemo();
@@ -366,12 +379,12 @@ void renderEnemy()
   }
 }
 
-// Print some debug info
 void keyPressed()
 {
   switch(state)
   {
   case MENU:
+    // Speed up or slow down ai demo
     if (keyCode == UP)
     {
       if (demoTurnDelay != 1)
