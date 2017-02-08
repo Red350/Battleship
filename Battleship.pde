@@ -498,10 +498,15 @@ void resetDemo()
 void loadHowToPlay()
 {
   String[] temp = loadStrings("howtoplay.txt");
-  for(String s : temp)
+  if(temp != null)
   {
-    howToPlay += s;
-    howToPlay += "\n";
+    for(String s : temp)
+    {
+      howToPlay += s;
+      howToPlay += "\n";
+    }
+  } else {
+    howToPlay = "Couldn't load \"How to Play\" file";
   }
 }
 
